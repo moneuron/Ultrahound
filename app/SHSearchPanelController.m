@@ -171,7 +171,7 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
 // Keep the panel's height while results fluctuate; shrink only after the query settles.
 - (void)fit {
  [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resize) object:nil];
- CGFloat height=self.fittingHeight;if(!self.window.isVisible || height>=NSHeight(self.window.frame))[self resize];else {[self place];[self performSelector:@selector(resize) withObject:nil afterDelay:0.15];}
+ CGFloat height=self.fittingHeight;if(!self.window.isVisible || height>=NSHeight(self.window.frame) || (!_history && !self.query.length))[self resize];else {[self place];[self performSelector:@selector(resize) withObject:nil afterDelay:0.15];}
 }
 - (void)resize {if(!_top)return;NSRect frame=self.window.frame;CGFloat height=self.fittingHeight;if(height!=NSHeight(frame) || NSMaxY(frame)!=_top){[self.window setFrame:NSMakeRect(NSMinX(frame),_top-height,Width,height) display:NO];[self.window invalidateShadow];}[self place];}
 // The logo and name sit at the right; the key hints take the rest and drop Close when they do not fit.
@@ -251,6 +251,7 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
  _pending=YES;
  if(changedQuery){_navigated=NO;_selectedID=nil;_queuedOpen=nil;}
  if(_history){_pending=NO;[self present:[_clipboard search:self.query limit:100]];return;}
+ if(!self.query.length){[_queries cancel];_pending=NO;[self present:@[]];return;}
  // The previous rows stay visible until the new results arrive; _pending stops Return opening them.
  __weak typeof(self) weak=self;NSDictionary *answer=[SHAnswer answerForQuery:self.query],*address=[SHWeb addressForQuery:self.query],*web=[SHWeb searchForQuery:self.query engine:[NSUserDefaults.standardUserDefaults stringForKey:@"searchEngine"]];
  NSArray<NSDictionary *> *preferred=[_usage preferredForQuery:self.query];
