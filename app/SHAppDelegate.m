@@ -78,7 +78,8 @@ static NSString *const LicensePublicKey=@"BB1mBfflJqWXPJerDDR+MLSwGOCcP/HFGM8f+H
 }
 - (void)about:(id)sender {
  (void)sender;[NSApp activateIgnoringOtherApps:YES];
- [NSApp orderFrontStandardAboutPanelWithOptions:@{}];
+ NSDictionary *info=NSBundle.mainBundle.infoDictionary;
+ [NSApp orderFrontStandardAboutPanelWithOptions:@{NSAboutPanelOptionApplicationName:@"Ultrahound",NSAboutPanelOptionVersion:info[@"CFBundleShortVersionString"]?:@"1",NSAboutPanelOptionApplicationVersion:@""}];
 }
 - (void)welcome:(id)sender {(void)sender;[_welcome show];}
 - (void)settings:(id)sender {(void)sender;[_settings show];}

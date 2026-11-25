@@ -1,6 +1,6 @@
-# UltraHound
+# Ultrahound
 
-UltraHound is a native macOS launcher and productivity app for finding apps and files, opening settings, calculating and converting values, searching the web, and using clipboard history.
+Ultrahound is a native macOS launcher and productivity app for finding apps and files, opening settings, calculating and converting values, searching the web, and using clipboard history.
 
 This is a personal-use fork, intended for the author and for sharing with friends and acquaintances. It is not an official release of the upstream project, and it has no commercial support or maintenance commitment.
 
@@ -33,15 +33,15 @@ scripts/test.sh
 scripts/build.sh
 ```
 
-The build script creates an app bundle in `.build/`. Copy it to Applications as `UltraHound.app`:
+The build script creates an app bundle in `.build/`. Copy it to Applications as `Ultrahound.app`:
 
 ```sh
 mkdir -p ~/Applications
-ditto .build/Ultrahound.app ~/Applications/UltraHound.app
-open ~/Applications/UltraHound.app
+ditto .build/Ultrahound.app ~/Applications/Ultrahound.app
+open ~/Applications/Ultrahound.app
 ```
 
-Quit UltraHound before replacing an existing copy. Local builds use the configured signing identity when available, or an ad-hoc signature otherwise; they are not notarized. macOS may ask for permissions again after a rebuild.
+Quit Ultrahound before replacing an existing copy. Local builds use the configured signing identity when available, or an ad-hoc signature otherwise; they are not notarized. macOS may ask for permissions again after a rebuild.
 
 On first launch, the Welcome window lets you set the search shortcut, add folders, and try a search. Apps are indexed automatically. Add folders in **Settings…** to search your files; allow access when macOS asks.
 
@@ -65,7 +65,7 @@ Click a result to open it. ⌘-click shows a file in Finder; right-click opens i
 
 ## Privacy and data
 
-Search and indexing run on your Mac. UltraHound reads file names, not file contents, and stores its index and clipboard history locally in `~/Library/Application Support/Ultrahound/`.
+Search and indexing run on your Mac. Ultrahound reads file names, not file contents, and stores its index and clipboard history locally in `~/Library/Application Support/Ultrahound/`.
 
 The app does not check for or download updates. Web searches and addresses are opened by your browser, which makes the relevant network request. The existing license activation/deactivation integration may contact its upstream licensing service with a license key and device identifier.
 
@@ -80,9 +80,9 @@ The clipboard history keeps up to 500 text copies. It skips copies marked privat
 | Automation | To run commands that control Finder, System Events, or the login window |
 
 - **A folder or file is missing:** Add the folder in **Settings…**, allow access, and wait for indexing. **Refresh Catalog** rescans selected locations.
-- **Clipboard Return copies but does not paste:** Allow UltraHound in **System Settings → Privacy & Security → Accessibility**.
-- **A system command is blocked:** Review UltraHound's permission in **System Settings → Privacy & Security → Automation**.
-- **A shortcut does not open the panel:** Change it in **Settings…** if another app or macOS already uses it. The Spotlight switch in Settings controls whether ⌘Space is used for UltraHound.
+- **Clipboard Return copies but does not paste:** Allow Ultrahound in **System Settings → Privacy & Security → Accessibility**.
+- **A system command is blocked:** Review Ultrahound's permission in **System Settings → Privacy & Security → Automation**.
+- **A shortcut does not open the panel:** Change it in **Settings…** if another app or macOS already uses it. The Spotlight switch in Settings controls whether ⌘Space is used for Ultrahound.
 
 To uninstall, choose the app's uninstall command from its menu bar menu. It removes the app and its local data; files in your selected folders are left untouched.
 
@@ -98,4 +98,4 @@ tests/install.sh      # Exercise the installer in a temporary location
 
 ## License and attribution
 
-Copyright (C) 2026 PGHQdev. This personal fork is distributed under the GNU Affero General Public License, version 3. Upstream copyright and attribution notices are retained; see [LICENSE](LICENSE).
+Copyright (C) 2026 moneuron. This personal fork is distributed under the GNU Affero General Public License, version 3. Upstream copyright and attribution notices are retained; see [LICENSE](LICENSE).

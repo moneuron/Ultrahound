@@ -3,8 +3,8 @@ set -euo pipefail
 umask 077
 cd "$(dirname "$0")/.."
 [[ "$(uname -s)" == Darwin && "$(uname -m)" == arm64 ]] || { echo 'Requires Apple Silicon macOS 15+.' >&2; exit 1; }
-version="${1:-1}" short="${2:-0.1.0}"
-[[ $# -le 2 && "$version" =~ ^[1-9][0-9]{0,5}$ && "$short" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Usage: build.sh [positive build number, 1–6 digits] [version, such as 0.2.0]' >&2; exit 2; }
+version="${1:-1}" short="${2:-1}"
+[[ $# -le 2 && "$version" =~ ^[1-9][0-9]{0,5}$ && "$short" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]] || { echo 'Usage: build.sh [positive build number, 1–6 digits] [version, such as 1]' >&2; exit 2; }
 mkdir -p .build
 stage="$(mktemp -d .build/stage.XXXXXX)"
 trap 'rm -rf -- "$stage"' EXIT
@@ -32,7 +32,7 @@ cat > "$bundle/Contents/Info.plist" <<PLIST
 <key>NSHighResolutionCapable</key><true/>
 <key>NSAppTransportSecurity</key><dict><key>NSAllowsLocalNetworking</key><true/></dict>
 <key>NSAppleEventsUsageDescription</key><string>Ultrahound sends Empty Trash to Finder, Dark Mode to System Events, and Sleep, Restart, Shut Down, and Log Out to the login window.</string>
-<key>NSHumanReadableCopyright</key><string>© 2026 PGHQdev. AGPL-3.0.</string>
+<key>NSHumanReadableCopyright</key><string>© 2026 moneuron</string>
 </dict></plist>
 PLIST
 sources=()
