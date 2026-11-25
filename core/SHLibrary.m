@@ -91,7 +91,7 @@ static NSString *Label(NSString *state){
 }
 - (void)start {dispatch_async(_worker,^{@autoreleasepool{
  double began=SHTime();NSError *error=nil;
- if(![NSFileManager.defaultManager createDirectoryAtURL:self->_stateURL withIntermediateDirectories:YES attributes:@{NSFilePosixPermissions:@0700} error:&error]){self->_message=NSLocalizedString(@"Cannot create Superhound’s local data directory.",nil);[self publish:NO];return;}
+ if(![NSFileManager.defaultManager createDirectoryAtURL:self->_stateURL withIntermediateDirectories:YES attributes:@{NSFilePosixPermissions:@0700} error:&error]){self->_message=NSLocalizedString(@"Cannot create Ultrahound’s local data directory.",nil);[self publish:NO];return;}
  chmod(self->_stateURL.fileSystemRepresentation,0700);
  self->_catalog=[[SHCatalog alloc] initWithURL:[self->_stateURL URLByAppendingPathComponent:@"catalog.sqlite"] error:&error];
  if(!self->_catalog){self->_message=NSLocalizedString(@"Cannot open the local catalog. Check available disk space and restart.",nil);[self publish:NO];return;}

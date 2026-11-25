@@ -12,10 +12,10 @@ from xml.sax.saxutils import unescape
 ROOT = Path(__file__).resolve().parent.parent
 APP = ROOT / 'app'
 EN = APP / 'en.lproj'
-SOURCES = sorted(APP.glob('*.m')) + sorted((ROOT / 'core').glob('*.m'))
+SOURCES = [p for p in sorted(APP.glob('*.m')) + sorted((ROOT / 'core').glob('*.m')) if p.name != 'SHUpdater.m']
 TABLES = ('Localizable.strings', 'InfoPlist.strings')
 # Comments for the Info.plist keys that macOS shows to the user.
-INFO_COMMENTS = {'NSAppleEventsUsageDescription': 'Privacy text that macOS shows when Superhound asks to control Finder, System Events, or the login window'}
+INFO_COMMENTS = {'NSAppleEventsUsageDescription': 'Privacy text that macOS shows when Ultrahound asks to control Finder, System Events, or the login window'}
 ESCAPES = {'n': '\n', 't': '\t', 'r': '\r', '"': '"', "'": "'", '\\': '\\', 'e': '\x1b', '0': '\0', 'a': '\a', 'b': '\b', 'f': '\f', 'v': '\v', '?': '?'}
 SPEC = re.compile(r"%(?:(\d+)\$)?[-+ #0']*(?:\d+|\*)?(\.(?:\d+|\*))?(hh|h|ll|l|q|L|z|t|j)?([@dDiuUxXoOfFeEgGcCsSpaA%])")
 
@@ -243,12 +243,31 @@ def write():
     return 0
 
 
+def sync_locales():
+    tables = {name: parse(EN / name) for name in TABLES}
+    for folder in sorted(APP.glob('*.lproj')):
+        if folder.name == 'en.lproj':
+            continue
+        for name, english in tables.items():
+            old = parse(folder / name)
+            entries = []
+            for key, value in english.items():
+                prior = key.replace('Ultrahound', 'Superhound')
+                translated = old.get(key, old.get(prior, value))
+                if prior in old:
+                    translated = translated.replace('Superhound', 'Ultrahound')
+                entries.append((key, translated, []))
+            (folder / name).write_text(render(entries), encoding='utf-8')
+    print('Synchronized locale keys with app/en.lproj')
+    return 0
+
+
 def main(argv):
-    if argv not in ([], ['--check']):
-        print('Usage: python3 -I scripts/strings.py [--check]', file=sys.stderr)
+    if argv not in ([], ['--check'], ['--sync-locales']):
+        print('Usage: python3 -I scripts/strings.py [--check|--sync-locales]', file=sys.stderr)
         return 2
     try:
-        return check() if argv else write()
+        return check() if argv == ['--check'] else sync_locales() if argv else write()
     except Failure as e:
         print(f'FAIL strings: {e}', file=sys.stderr)
         return 1

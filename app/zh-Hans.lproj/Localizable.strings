@@ -1,152 +1,145 @@
-/* Open With submenu item; the argument is an app name */
+/* No comment */
 "%@ (default)" = "%@（默认）";
 
-/* The argument is an error sentence from the license server or the network */
+/* No comment */
 "%@ Write to support@superhound.app to free it." = "%@\n请发送邮件至support@superhound.app以释放该激活。";
 
-/* The argument is an error sentence from the license server or the network */
+/* No comment */
 "%@ You can remove the license from this Mac anyway. Its activation then stays in use; write to support@superhound.app to free it." = "%@\n你仍可以从此Mac上移除许可证。移除后，该激活仍会处于使用状态；请发送邮件至support@superhound.app以释放该激活。";
 
-/* Update error; the argument is the path of the installed app */
-"%@ is a link, so Superhound cannot replace it. Run the install command from superhound.app instead." = "“%@”是一个链接，因此Superhound无法替换它。请改为运行superhound.app上的安装命令。";
+/* No comment */
+"%@ is a link, so Superhound cannot replace it. Run the install command from superhound.app instead." = "“%@”是一个链接，因此Ultrahound无法替换它。请改为运行superhound.app上的安装命令。";
 
-/* Settings status; both arguments are shortcuts such as ⌘Space */
-"%@ is in use by another app. Superhound keeps %@." = "%@已被其他App使用。Superhound将保留%@。";
+/* No comment */
+"%@ is in use by another app. Ultrahound keeps %@." = "%@已被其他App使用。Ultrahound将保留%@。";
 
-/* Settings status; the first argument is a shortcut such as ⌘Space, the second a menu item name such as Search */
+/* No comment */
 "%@ is in use by another app. Use %@ in the menu bar, or choose other keys." = "%@已被其他App使用。请使用菜单栏中的“%@”，或选择其他按键。";
 
-/* Settings status; the first argument is a shortcut such as ⌥⌘V, the second a menu item name such as Clipboard History */
+/* No comment */
 "%@ is the %@ shortcut. Choose other keys." = "%@是“%@”的快捷键。请选择其他按键。";
 
-/* Settings status; the first and third arguments are shortcuts, the second an error number */
-"%@ is unavailable (error %d). Superhound keeps %@." = "%@不可用（错误%d）。Superhound将保留%@。";
+/* No comment */
+"%@ is unavailable (error %d). Ultrahound keeps %@." = "%@不可用（错误%d）。Ultrahound将保留%@。";
 
-/* Settings status; the first argument is a shortcut, the second an error number, the third a menu item name such as Search; Retry is a button title */
+/* No comment */
 "%@ is unavailable (error %d). Use %@ in the menu bar, change the competing shortcut, then Retry." = "%@不可用（错误%d）。请使用菜单栏中的“%@”，更改冲突的快捷键，然后点按“重试”。";
 
-/* Note at the right of the clipboard history panel; the argument is 1 */
+/* No comment */
 "%@ item · Kept on this Mac only" = "%@个项目 · 仅保存在此Mac上";
 
-/* Note at the right of the clipboard history panel; the argument is a number other than 1 */
+/* No comment */
 "%@ items · Kept on this Mac only" = "%@个项目 · 仅保存在此Mac上";
 
-/* Settings status; the argument is a shortcut such as ⌘Space */
-"%@ registered. Try it from another app and confirm only Superhound opens." = "%@已注册。请在其他App中试用，并确认只有Superhound会打开。";
+/* No comment */
+"%@ registered. Try it from another app and confirm only Ultrahound opens." = "%@已注册。请在其他App中试用，并确认只有Ultrahound会打开。";
 
-/* Status line in Settings; the first argument is a number of items, the second is a status sentence */
+/* No comment */
 "%@ searchable items. %@" = "%@个可搜索项目。%@";
 
-/* Search location row in Settings; the first argument is a state such as Ready, the second a number */
+/* No comment */
 "%@ · %@ items" = "%@ · %@个项目";
 
-/* Search location row in Settings; the first argument is a state such as Ready, the second a number */
+/* No comment */
 "%@ · %@ items · applications only" = "%@ · %@个项目 · 仅限App";
 
-/* Clipboard row detail; the first argument is the app that copied the text, the second a relative time such as 5 min. ago; Return is the key name */
+/* No comment */
 "%@ · %@ · Return to paste" = "%@ · %@ · 按Return键粘贴";
 
-/* Row detail of a calculation, conversion, or colour; the argument is the typed input such as 2+2; Return is the key name */
+/* No comment */
 "%@ · Return to copy" = "%@ · 按Return键拷贝";
 
-/* Clipboard row detail; the argument is a relative time such as 5 min. ago; Return is the key name */
+/* No comment */
 "%@ · Return to paste" = "%@ · 按Return键粘贴";
 
-/* The first argument is the number of failed disks, the second the number of all disks */
+/* No comment */
 "%lu of %lu disks could not be ejected. An app may be using them." = "%2$lu个磁盘中有%1$lu个无法推出。可能有App正在使用它们。";
 
-/* Welcome window step title */
+/* No comment */
 "1. Your shortcut" = "1. 快捷键";
 
-/* Welcome window step title */
+/* No comment */
 "2. Your folders" = "2. 文件夹";
 
-/* Welcome window step title */
+/* No comment */
 "3. Your first search" = "3. 第一次搜索";
 
 /* No comment */
 "A command has no location in Finder." = "命令在访达中没有位置。";
 
-/* Menu bar menu item; keep it short */
-"About Superhound" = "关于Superhound";
+/* No comment */
+"About Ultrahound" = "关于Ultrahound";
 
-/* State of a search location */
+/* No comment */
 "Access needed — select this folder again" = "需要访问权限——请再次选择此文件夹";
 
-/* Footer hint next to ⌘K: show the action menu; keep it short */
+/* No comment */
 "Actions" = "操作";
 
-/* Alert button: activate the license key */
+/* No comment */
 "Activate" = "激活";
 
 /* No comment */
-"Activate Superhound" = "激活Superhound";
+"Activate Ultrahound" = "激活Ultrahound";
 
-/* Settings button; 120 points wide */
+/* No comment */
 "Add Folder…" = "添加文件夹…";
 
-/* The argument is the number of items */
+/* No comment */
 "All %@ copied items are deleted from this Mac. You cannot undo this." = "所有%@个已拷贝的项目都将从此Mac上删除。此操作无法撤销。";
 
 /* No comment */
 "Apps are included automatically. Files are searched only inside folders you select. File contents stay unread." = "App会自动包含在内。只会搜索你所选文件夹中的文件。不会读取文件内容。";
 
-/* Alert button */
+/* No comment */
 "Cancel" = "取消";
 
 /* No comment */
-"Cannot create Superhound’s local data directory." = "无法创建Superhound的本地数据目录。";
+"Cannot create Ultrahound’s local data directory." = "无法创建Ultrahound的本地数据目录。";
 
 /* No comment */
 "Cannot open the local catalog. Check available disk space and restart." = "无法打开本地索引。请检查可用磁盘空间，然后重新启动。";
 
-/* Note at the right of the search panel when a search location is unavailable; keep it short */
+/* No comment */
 "Check Settings for coverage" = "请在“设置”中查看覆盖范围";
 
-/* Menu bar menu item with a check mark */
-"Check for Updates Automatically" = "自动检查更新";
-
-/* Menu bar menu item; keep it short */
-"Check for Updates…" = "检查更新…";
-
-/* Menu bar menu item; keep it short */
+/* No comment */
 "Clear Clipboard History" = "清除剪贴板历史记录";
 
-/* Alert button */
+/* No comment */
 "Clear History" = "清除历史记录";
 
 /* No comment */
 "Clear the clipboard history?" = "要清除剪贴板历史记录吗？";
 
-/* Section label: the clipboard history; Settings row label (160 points wide) and search panel band; keep it short
-   Section label: the clipboard history; Settings row label and search panel band; keep it short */
+/* No comment */
 "Clipboard" = "剪贴板";
 
-/* Menu bar menu item that opens the clipboard history; keep it short */
+/* No comment */
 "Clipboard History" = "剪贴板历史记录";
 
-/* Footer hint next to Esc: close the panel; keep it short */
+/* No comment */
 "Close" = "关闭";
 
-/* Row detail of a system command such as Lock Screen; a noun */
+/* No comment */
 "Command" = "命令";
 
-/* Word that lists all system commands when typed in the search field, and the label above that list; one word */
+/* No comment */
 "Commands" = "命令";
 
-/* Settings check box */
+/* No comment */
 "Complete the top result as you type" = "输入时补全首个结果";
 
-/* Menu item verb: copy to the clipboard */
+/* No comment */
 "Copy" = "拷贝";
 
-/* Action menu item; the argument is a colour value such as #FF8800 or rgb(255, 136, 0) */
+/* No comment */
 "Copy %@" = "拷贝“%@”";
 
-/* Action menu item */
+/* No comment */
 "Copy Path" = "拷贝路径";
 
-/* Error when the app could not come to the front */
+/* No comment */
 "Could not activate this app." = "无法将此App切换到前台。";
 
 /* No comment */
@@ -167,7 +160,7 @@
 /* No comment */
 "Could not open this item. Check access and try again." = "无法打开此项目。请检查访问权限，然后重试。";
 
-/* A System Settings pane */
+/* No comment */
 "Could not open this setting." = "无法打开此设置。";
 
 /* No comment */
@@ -179,394 +172,296 @@
 /* No comment */
 "Could not start the screen saver." = "无法启动屏幕保护程序。";
 
-/* State of a search location inside another one; the argument is the other location's path */
+/* No comment */
 "Covered by %@" = "已包含在“%@”中";
 
-/* Standard Edit menu item */
+/* No comment */
 "Cut" = "剪切";
 
-/* Alert button: free this Mac’s license activation */
+/* No comment */
 "Deactivate" = "停用";
-
-/* Menu bar menu item; keep it short */
-"Deactivate License…" = "停用许可证…";
 
 /* No comment */
 "Deactivate this Mac?" = "要停用此Mac吗？";
 
-/* Action menu item for a clipboard history item */
+/* No comment */
 "Delete from History" = "从历史记录中删除";
 
-/* Welcome window line after the first opened search result */
-"Done. Superhound learns what you open." = "完成。Superhound会记住你打开的内容。";
+/* No comment */
+"Done. Ultrahound learns what you open." = "完成。Ultrahound会记住你打开的内容。";
 
-/* Alert button */
+/* No comment */
 "Don’t Relaunch" = "不重新开启";
 
-/* Standard Edit menu title */
+/* No comment */
 "Edit" = "编辑";
 
-/* System command name in search results */
+/* No comment */
 "Eject All Disks" = "推出所有磁盘";
 
-/* Word that lists all emoji when typed in the search field, and the label above that list; one word */
-"Emoji" = "表情符号";
-
-/* Row detail; Return is the key name */
-"Emoji · Return to copy" = "表情符号 · 按Return键拷贝";
-
-/* Alert button
-   System command name in search results */
+/* No comment */
 "Empty Trash" = "清倒废纸篓";
 
 /* No comment */
 "Empty the Trash?" = "要清倒废纸篓吗？";
 
-/* Menu bar menu item; keep it short */
-"Enter License…" = "输入许可证…";
-
-/* Tooltip of the Become a Supporter link in the panel footer */
-"Enter your license key, or get a Supporter License." = "输入你的许可证密钥，或获取支持者许可证。";
+/* No comment */
+"Enter the license key from your email. A license covers 3 Macs." = "输入邮件中的许可证密钥。一个许可证适用于3台Mac。";
 
 /* No comment */
 "Folder settings could not be saved. Check available disk space." = "无法存储文件夹设置。请检查可用磁盘空间。";
 
-/* About window credits */
-"Free, with every feature. A Supporter License, $15 once for 3 Macs at superhound.app, supports development." = "免费，包含所有功能。支持者许可证（一次性付费$15，适用于3台Mac，可在superhound.app购买）用于支持开发。";
-
-/* Button that opens the purchase page */
-"Get a Supporter License" = "获取支持者许可证";
+/* No comment */
+"Hidden descendants, package contents, online-only placeholders, and Ultrahound’s own data are skipped. Symbolic links are listed without following them." = "会跳过隐藏的子项、包内容、仅在线存储的占位项以及Ultrahound自身的数据。符号链接会被列出，但不会跟随其目标。";
 
 /* No comment */
-"Hidden descendants, package contents, online-only placeholders, and Superhound’s own data are skipped. Symbolic links are listed without following them." = "会跳过隐藏的子项、包内容、仅在线存储的占位项以及Superhound自身的数据。符号链接会被列出，但不会跟随其目标。";
-
-/* State of a search location during its scan */
 "Indexing" = "正在索引";
 
-/* Note at the right of the search panel; the argument is a number above 1; keep it short */
+/* No comment */
 "Indexing %@ locations" = "正在索引%@个位置";
 
-/* Note at the right of the search panel; keep it short */
+/* No comment */
 "Indexing 1 location" = "正在索引1个位置";
 
-/* Welcome window status; the argument is a number */
+/* No comment */
 "Indexing… %@ items so far" = "正在索引… 目前已有%@个项目";
 
-/* Alert button */
-"Install and Relaunch" = "安装并重新打开";
-
-/* Settings button that opens System Settings → Keyboard; 199 points wide */
+/* No comment */
 "Keyboard Settings…" = "键盘设置…";
 
-/* Settings row label; 160 points wide */
+/* No comment */
 "Language" = "语言";
 
-/* Alert after a language change; the argument is Superhound */
+/* No comment */
 "Language setting for %@ has changed. Do you want to relaunch the app now?" = "%@的语言设置已更改。你要立即重新开启该App吗？";
 
-/* Alert button: ask again later */
-"Later" = "以后";
-
-/* Placeholder of the license key field */
+/* No comment */
 "License key" = "许可证密钥";
 
-/* About window credits */
-"Supporter License for this Mac." = "此Mac已有支持者许可证。";
-
-/* System command name in search results */
+/* No comment */
 "Lock Screen" = "锁定屏幕";
 
-/* System command name in search results */
+/* No comment */
 "Log Out" = "退出登录";
 
-/* Action menu item */
+/* No comment */
 "Move to Trash" = "移到废纸篓";
 
-/* Label above the result list */
+/* No comment */
 "No matches" = "无匹配项";
 
-/* Label above the result list while a search location is still indexing; keep it short */
+/* No comment */
 "No matches yet. Still indexing." = "暂无匹配项。仍在索引。";
 
 /* No comment */
 "No sound output is available." = "没有可用的声音输出。";
 
-/* Alert button */
-"Not Now" = "以后";
-
 /* No comment */
 "Not enough memory to prepare search. Remove a large search location and refresh." = "内存不足，无法准备搜索。请移除一个较大的搜索位置，然后刷新。";
 
-/* Alert button */
+/* No comment */
 "OK" = "好";
 
-/* Add Folder… is the button title in Settings */
+/* No comment */
 "Only selected folders are searched. Click Add Folder… to add one." = "只会搜索所选的文件夹。点按“添加文件夹…”以添加文件夹。";
 
-/* Menu item and footer hint verb: open the selected result; keep it short */
+/* No comment */
 "Open" = "打开";
 
-/* Welcome window button; 170 points wide */
+/* No comment */
 "Open Search Panel" = "打开搜索面板";
 
-/* Action menu item with a submenu of apps */
+/* No comment */
 "Open With" = "打开方式";
 
-/* Menu bar menu item with a check mark: start Superhound when the user logs in */
+/* No comment */
 "Open at Login" = "登录时打开";
 
-/* Error in the search panel; the argument is the system error text */
+/* No comment */
 "Open at Login could not be changed. %@" = "无法更改“登录时打开”。%@";
 
-/* Settings row label for the search shortcut; 160 points wide */
+/* No comment */
 "Open search" = "打开搜索";
 
-/* State of a search location */
+/* No comment */
 "Partially indexed — access needed; previous catalog preserved" = "已部分索引——需要访问权限；已保留之前的索引";
 
-/* State of a search location */
+/* No comment */
 "Partially indexed — refresh manually; watching unavailable" = "已部分索引——请手动刷新；无法监视更改";
 
-/* Menu item and footer hint verb: paste the text */
+/* No comment */
 "Paste" = "粘贴";
 
-/* Status in Settings while the app starts */
+/* No comment */
 "Preparing catalog…" = "正在准备索引…";
 
-/* Note at the right of the search panel while the app starts; keep it short */
+/* No comment */
 "Preparing search" = "正在准备搜索";
 
-/* Status in Settings while the app starts */
+/* No comment */
 "Preparing search…" = "正在准备搜索…";
 
-/* Welcome window text; the argument is a shortcut such as ⌘Space; safri is a typing error for Safari, keep it as it is */
+/* No comment */
 "Press %@ and type part of an app name. Typos work, such as safri." = "按%@，然后输入App名称的一部分。拼写错误也能找到，例如safri。";
 
-/* Welcome window text; the arguments are shortcuts such as ⌘Space and ⌥⌘V */
+/* No comment */
 "Press %@ to search. Press %@ for the clipboard history." = "按%1$@搜索。按%2$@打开剪贴板历史记录。";
 
-/* Button in Settings while it records a shortcut; 170 points wide */
+/* No comment */
 "Press shortcut…" = "按下快捷键…";
 
-/* Action menu item; the name of the macOS preview feature */
+/* No comment */
 "Quick Look" = "快速查看";
 
-/* Menu bar menu item; keep it short */
-"Quit Superhound" = "退出Superhound";
+/* No comment */
+"Quit Ultrahound" = "退出Ultrahound";
 
 /* No comment */
-"Quit Superhound and open it again to use the new version." = "退出Superhound并重新打开以使用新版本。";
-
-/* State of a search location after its scan */
 "Ready" = "就绪";
 
-/* Welcome window status; the argument is a number */
+/* No comment */
 "Ready: %@ items" = "就绪：%@个项目";
 
 /* No comment */
 "Rebuilding a damaged or older catalog. Your selected folders are preserved." = "正在重建已损坏或较旧的索引。你所选的文件夹会被保留。";
 
-/* State of a search location */
+/* No comment */
 "Rechecking changed location" = "正在重新检查已更改的位置";
 
-/* VoiceOver label of the shortcut button */
+/* No comment */
 "Record clipboard history shortcut" = "录制剪贴板历史记录快捷键";
 
-/* VoiceOver label of the shortcut button */
+/* No comment */
 "Record global search shortcut" = "录制全局搜索快捷键";
 
-/* Standard Edit menu item */
+/* No comment */
 "Redo" = "重做";
 
-/* Menu item and Settings button: scan the search locations again */
+/* No comment */
 "Refresh Catalog" = "刷新索引";
 
-/* Alert button */
+/* No comment */
 "Relaunch Now" = "立即重新开启";
 
-/* Alert button that opens the release notes web page */
-"Release Notes" = "发布说明";
-
-/* Settings button: remove the selected search location; 90 points wide */
+/* No comment */
 "Remove" = "移除";
 
-/* Alert button */
+/* No comment */
 "Remove Anyway" = "仍然移除";
 
-/* System command name in search results: restart the Mac */
+/* No comment */
 "Restart" = "重新启动";
 
-/* Settings button: register the shortcuts again; 100 points wide */
+/* No comment */
 "Retry" = "重试";
 
-/* Action menu item */
+/* No comment */
 "Reveal in Finder" = "在访达中显示";
 
-/* Action menu item verb: run a system command */
+/* No comment */
 "Run" = "运行";
 
-/* Menu bar menu item that opens the search panel; keep it short */
+/* No comment */
 "Search" = "搜索";
 
-/* Last row of the search results; the first argument is a search engine name such as Google, the second is the typed text */
+/* No comment */
 "Search %@ for “%@”" = "在%@中搜索“%@”";
 
-/* Button of the folder selection window */
+/* No comment */
 "Search This Folder" = "搜索此文件夹";
 
-/* Placeholder of the search field */
+/* No comment */
 "Search apps and files" = "搜索App和文件";
 
-/* VoiceOver label of the search field */
+/* No comment */
 "Search apps and selected folders" = "搜索App和所选文件夹";
 
-/* Placeholder of the search field and its VoiceOver label in clipboard history mode */
+/* No comment */
 "Search clipboard history" = "搜索剪贴板历史记录";
 
-/* VoiceOver label of the list of search locations */
+/* No comment */
 "Search locations and coverage" = "搜索位置和覆盖范围";
 
-/* Message in the folder selection window */
+/* No comment */
 "Search names in this folder and its local subfolders. File contents are not read." = "搜索此文件夹及其本地子文件夹中的名称。不会读取文件内容。";
 
-/* VoiceOver label of the result list */
+/* No comment */
 "Search results" = "搜索结果";
 
-/* Settings button: select the folder again to give access; 135 points wide */
+/* No comment */
 "Select Again…" = "再次选择…";
 
-/* Standard Edit menu item */
+/* No comment */
 "Select All" = "全选";
 
-/* Shown in place of a search location whose path is unknown */
+/* No comment */
 "Selected folder" = "所选文件夹";
 
-/* Word that lists all System Settings panes when typed in the search field, and the label above that list; one word */
+/* No comment */
 "Settings" = "设置";
 
-/* Tooltip of the logo in the panel footer, which opens the app menu */
+/* No comment */
 "Settings and more" = "设置及更多";
 
-/* Menu bar menu item; keep it short */
+/* No comment */
 "Settings…" = "设置…";
 
-/* System command name in search results */
+/* No comment */
 "Shut Down" = "关机";
 
-/* Settings check box; keep the folder names as they are */
+/* No comment */
 "Skip generated folders (.git, node_modules, vendor, build, dist, DerivedData)" = "跳过生成的文件夹（.git、node_modules、vendor、build、dist、DerivedData）";
 
-/* System command name in search results: put the Mac to sleep */
+/* No comment */
 "Sleep" = "睡眠";
 
-/* System command name in search results: turn the display off */
+/* No comment */
 "Sleep Display" = "显示器睡眠";
 
-/* System command name in search results */
+/* No comment */
 "Start Screen Saver" = "启动屏幕保护程序";
 
-/* Section label above the apps shown before the user types */
-"Suggested" = "建议";
-
-/* The argument is a version number such as 0.5.0 */
-"Superhound %@ is available" = "Superhound %@已可用";
-
-/* Tooltip of the Update to link; the argument is a version number */
-"Superhound %@ is available. Click to install it." = "Superhound %@已可用。点按以安装。";
-
-/* Settings window title */
-"Superhound Settings" = "Superhound设置";
+/* No comment */
+"Superhound cannot keep a copy of the current version." = "Ultrahound无法保留当前版本的副本。";
 
 /* No comment */
-"Superhound cannot keep a copy of the current version." = "Superhound无法保留当前版本的副本。";
+"Superhound cannot move the current version." = "Ultrahound无法移动当前版本。";
 
 /* No comment */
-"Superhound cannot move the current version." = "Superhound无法移动当前版本。";
+"Superhound cannot put the new version in place." = "Ultrahound无法将新版本放到指定位置。";
 
 /* No comment */
-"Superhound cannot put the new version in place." = "Superhound无法将新版本放到指定位置。";
-
-/* Update error; the argument is a folder path */
-"Superhound cannot write to %@. Run the install command from superhound.app instead." = "Superhound无法写入“%@”。请改为运行superhound.app上的安装命令。";
+"Superhound cannot write to %@. Run the install command from superhound.app instead." = "Ultrahound无法写入“%@”。请改为运行superhound.app上的安装命令。";
 
 /* No comment */
-"Superhound could not check for updates" = "Superhound无法检查更新";
-
-/* Uninstall alert text when this Mac has no license */
-"Superhound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are." = "如果Superhound占用了⌘Space，它会将其还给“聚焦”，删除自身的设置、索引、学习到的排序和剪贴板历史记录，并将自身移到废纸篓。你的文件保持不变。";
-
-/* No comment */
-"Superhound is already licensed" = "Superhound已获得许可";
-
-/* No comment */
-"Superhound is free, and all features keep working. A Supporter License, $15 once for 3 Macs, supports development." = "Superhound免费，所有功能均可继续使用。支持者许可证（一次性付费$15，适用于3台Mac）用于支持开发。";
-
-/* No comment */
-"Superhound is licensed" = "Superhound已获得许可";
-
-/* No comment */
-"Superhound is not activated" = "Superhound未激活";
-
-/* No comment */
-"Superhound is not updated" = "Superhound未更新";
-
-/* No comment */
-"Superhound is up to date" = "Superhound已是最新版本";
-
-/* No comment */
-"Superhound is updated" = "Superhound已更新";
-
-/* VoiceOver label of the logo in the panel footer, which opens the app menu */
-"Superhound menu" = "Superhound菜单";
-
-/* No comment */
-"Enter the license key from your email. A license covers 3 Macs." = "输入邮件中的许可证密钥。一个许可证适用于3台Mac。";
-
-/* Tooltip of the menu bar icon */
-"Superhound — Search apps and files" = "Superhound——搜索App和文件";
-
-/* Link in the panel footer of an unlicensed copy, after a heart, and the title of the reminder every tenth opening; it opens the license key window; keep it short
-   Title of the alert that asks for a license every tenth opening */
-"Become a Supporter" = "成为支持者";
-
-/* First item of the language menu: use the macOS language order */
 "System Default" = "系统默认";
 
-/* Row detail of a System Settings pane; the name of the macOS app */
+/* No comment */
 "System Settings" = "系统设置";
 
-/* Note at the right of the clipboard history panel; keep it short */
+/* No comment */
 "Text you copy in any app comes here" = "你在任何App中拷贝的文本都会显示在这里";
 
 /* No comment */
-"Thank you for your purchase." = "感谢你的购买。";
+"The activation from the license server is not valid for this Mac." = "The activation from the license server is not valid for this Mac.";
 
 /* No comment */
-"The activation from superhound.app is not valid for this Mac." = "来自superhound.app的激活对此Mac无效。";
-
-/* Label above the result list */
 "The clipboard history is empty" = "剪贴板历史记录为空";
 
-/* Error in the search panel */
+/* No comment */
 "The command did not finish." = "命令未完成。";
 
 /* No comment */
 "The download could not be unpacked." = "无法解压下载的文件。";
 
 /* No comment */
-"The download does not have the Superhound signature." = "下载的文件没有Superhound签名。";
+"The download does not have the Superhound signature." = "下载的文件没有Ultrahound签名。";
 
 /* No comment */
 "The download does not match the published checksum." = "下载的文件与发布的校验和不匹配。";
 
-/* The argument is an HTTP status code such as 404 */
-"The download failed with error %ld." = "下载失败（错误%ld）。";
-
-/* The argument is the system network error text */
-"The download failed. %@" = "下载失败。%@";
-
 /* No comment */
-"The download is not the expected version of Superhound." = "下载的文件不是预期的Superhound版本。";
+"The download is not the expected version of Superhound." = "下载的文件不是预期的Ultrahound版本。";
 
 /* No comment */
 "The items in the Trash are deleted permanently. You cannot undo this." = "废纸篓中的项目将被永久删除。此操作无法撤销。";
@@ -577,20 +472,29 @@
 /* No comment */
 "The license activation is still in use" = "许可证激活仍处于使用状态";
 
-/* The argument is a web address */
-"The license server address %@ is not valid." = "许可证服务器地址“%@”无效。";
-
-/* Tab is the key name */
-"The rest of the top result’s name appears after your text, selected. Tab or → keeps it; any other key replaces it." = "首个结果名称的其余部分会以选中状态显示在你输入的文本之后。按Tab或→键保留；按其他任意键则替换它。";
-
-/* The argument is a web address */
-"The server address %@ is not valid." = "服务器地址“%@”无效。";
+/* No comment */
+"The license is active on this Mac." = "The license is active on this Mac.";
 
 /* No comment */
-"The text is copied. Superhound could not return to the previous app, so nothing was pasted." = "文本已拷贝。Superhound无法返回之前的App，因此未粘贴任何内容。";
+"The license server address %@ is not valid." = "许可证服务器地址“%@”无效。";
 
-/* System Settings → Privacy & Security → Accessibility is the place in System Settings */
-"The text is copied. To paste with Return, allow Superhound in System Settings → Privacy & Security → Accessibility." = "文本已拷贝。要按Return键粘贴，请在“系统设置”→“隐私与安全性”→“辅助功能”中允许Superhound。";
+/* No comment */
+"The license server answered with error %ld." = "The license server answered with error %ld.";
+
+/* No comment */
+"The license server could not be reached. %@" = "The license server could not be reached. %@";
+
+/* No comment */
+"The license server sent an answer that Ultrahound cannot read." = "The license server sent an answer that Ultrahound cannot read.";
+
+/* No comment */
+"The rest of the top result’s name appears after your text, selected. Tab or → keeps it; any other key replaces it." = "首个结果名称的其余部分会以选中状态显示在你输入的文本之后。按Tab或→键保留；按其他任意键则替换它。";
+
+/* No comment */
+"The text is copied. To paste with Return, allow Ultrahound in System Settings → Privacy & Security → Accessibility." = "文本已拷贝。要按Return键粘贴，请在“系统设置”→“隐私与安全性”→“辅助功能”中允许Ultrahound。";
+
+/* No comment */
+"The text is copied. Ultrahound could not return to the previous app, so nothing was pasted." = "文本已拷贝。Ultrahound无法返回之前的App，因此未粘贴任何内容。";
 
 /* No comment */
 "There are no disks to eject." = "没有可推出的磁盘。";
@@ -601,20 +505,14 @@
 /* No comment */
 "This Mac is still activated" = "此Mac仍处于激活状态";
 
-/* Uninstall alert text when this Mac has a license */
-"This Mac’s license activation is freed. Superhound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are." = "此Mac的许可证激活将被释放。如果Superhound占用了⌘Space，它会将其还给“聚焦”，删除自身的设置、索引、学习到的排序和剪贴板历史记录，并将自身移到废纸篓。你的文件保持不变。";
+/* No comment */
+"This Mac’s license activation is freed. Ultrahound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are." = "此Mac的许可证激活将被释放。如果Ultrahound占用了⌘Space，它会将其还给“聚焦”，删除自身的设置、索引、学习到的排序和剪贴板历史记录，并将自身移到废纸篓。你的文件保持不变。";
 
 /* No comment */
 "This command is not available." = "此命令不可用。";
 
 /* No comment */
-"This copy cannot update itself" = "此副本无法自行更新";
-
-/* No comment */
-"This copy of Superhound was built from source. To update it, pull the latest code, then run the build and install commands again." = "此Superhound副本是从源代码构建的。若要更新，请拉取最新代码，然后再次运行构建和安装命令。";
-
-/* No comment */
-"This frees one of the 3 activations of your license. Superhound keeps working and shows the unlicensed reminder again." = "你的许可证有3次激活，此操作会释放其中1次。Superhound会继续工作，并再次显示未获许可提醒。";
+"This frees one of the 3 activations of your license. Ultrahound keeps working on this Mac." = "This frees one of the 3 activations of your license. Ultrahound keeps working on this Mac.";
 
 /* No comment */
 "This item is unavailable. Refreshing its location…" = "此项目不可用。正在刷新其位置…";
@@ -628,125 +526,113 @@
 /* No comment */
 "This version is not newer than the installed one." = "此版本并不比已安装的版本新。";
 
-/* Welcome window text under the heading */
+/* No comment */
 "Three steps to your first search." = "三步完成第一次搜索。";
 
-/* System command name in search results: switch between dark and light appearance */
+/* No comment */
 "Toggle Dark Mode" = "切换深色模式";
 
-/* System command name in search results: mute or unmute the sound */
+/* No comment */
 "Toggle Mute" = "切换静音";
 
-/* Alert button */
+/* No comment */
 "Try Again" = "重试";
 
-/* Uninstall Superhound… is a menu item title */
-"Turns off Spotlight’s ⌘Space shortcut and opens Superhound with ⌘Space. To give ⌘Space back to Spotlight, turn this off, or choose Uninstall Superhound… in the menu bar." = "关闭“聚焦”的⌘Space快捷键，改用⌘Space打开Superhound。若要将⌘Space还给“聚焦”，请关闭此选项，或在菜单栏中选取“卸载Superhound…”。";
+/* No comment */
+"Turns off Spotlight’s ⌘Space shortcut and opens Ultrahound with ⌘Space. To give ⌘Space back to Spotlight, turn this off, or choose Uninstall Ultrahound… in the menu bar." = "关闭“聚焦”的⌘Space快捷键，改用⌘Space打开Ultrahound。若要将⌘Space还给“聚焦”，请关闭此选项，或在菜单栏中选取“卸载Ultrahound…”。";
 
-/* State of a search location that is missing */
+/* No comment */
+"Ultrahound Settings" = "Ultrahound设置";
+
+/* No comment */
+"Ultrahound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are." = "如果Ultrahound占用了⌘Space，它会将其还给“聚焦”，删除自身的设置、索引、学习到的排序和剪贴板历史记录，并将自身移到废纸篓。你的文件保持不变。";
+
+/* No comment */
+"Ultrahound is already licensed" = "Ultrahound已获得许可";
+
+/* No comment */
+"Ultrahound is licensed" = "Ultrahound已获得许可";
+
+/* No comment */
+"Ultrahound is not activated" = "Ultrahound未激活";
+
+/* No comment */
+"Ultrahound menu" = "Ultrahound菜单";
+
+/* No comment */
+"Ultrahound — Search apps and files" = "Ultrahound——搜索App和文件";
+
+/* No comment */
 "Unavailable" = "不可用";
 
-/* Standard Edit menu item */
+/* No comment */
 "Undo" = "撤销";
 
-/* Alert button */
+/* No comment */
 "Uninstall" = "卸载";
 
 /* No comment */
-"Uninstall Superhound?" = "要卸载Superhound吗？";
+"Uninstall Ultrahound?" = "要卸载Ultrahound吗？";
 
-/* Menu bar menu item; keep it short */
-"Uninstall Superhound…" = "卸载Superhound…";
+/* No comment */
+"Uninstall Ultrahound…" = "卸载Ultrahound…";
 
-/* Menu bar menu item; shown only when an update is ready */
-"Update" = "更新";
-
-/* Link in the panel footer; the argument is a version number such as 0.5.0; keep it short */
-"Update to %@" = "更新到%@";
-
-/* Menu bar menu item; the argument is a version number such as 0.5.0 */
-"Update to %@…" = "更新到%@…";
-
-/* Status in Settings */
+/* No comment */
 "Updating search locations…" = "正在更新搜索位置…";
 
-/* Settings button that restores the default shortcut; the argument is a shortcut such as ⌥⌘V; 120 points wide */
+/* No comment */
 "Use %@" = "使用%@";
 
-/* Settings status; Command, Option, and Control are the modifier keys */
+/* No comment */
 "Use Command, Option, or Control with a key. Bare typing keys are not allowed." = "请将Command、Option或Control键与其他键组合使用。不允许单独使用输入键。";
 
-/* Search is the menu item title */
+/* No comment */
 "Use Search in the menu bar while setting up your shortcut." = "设置快捷键期间，请使用菜单栏中的“搜索”。";
 
-/* Settings check box */
+/* No comment */
 "Use ⌘Space in place of Spotlight" = "用⌘Space替代“聚焦”";
 
-/* The argument is a version number such as 0.4.0 */
-"Version %@ is the latest version." = "版本%@是最新版本。";
-
-/* State of a search location before its scan */
+/* No comment */
 "Waiting" = "等待中";
 
-/* Row detail; Return is the key name */
+/* No comment */
 "Web address · Return to open in your browser" = "网址 · 按Return键在浏览器中打开";
 
-/* Settings row label; 160 points wide */
+/* No comment */
 "Web search" = "网页搜索";
 
-/* VoiceOver label of the search engine menu */
+/* No comment */
 "Web search engine" = "网页搜索引擎";
 
-/* Row detail; Return is the key name */
+/* No comment */
 "Web search · Return to open in your browser" = "网页搜索 · 按Return键在浏览器中打开";
 
-/* Welcome window title and heading */
-"Welcome to Superhound" = "欢迎使用Superhound";
+/* No comment */
+"Welcome to Ultrahound" = "欢迎使用Ultrahound";
 
-/* Menu bar menu item that opens the Welcome window; keep it short */
+/* No comment */
 "Welcome…" = "欢迎…";
 
-/* The argument is the installed version number */
-"You have version %@. Superhound downloads the update, checks its signature, and opens again." = "你当前的版本为%@。Superhound会下载更新、检查其签名，然后重新打开。";
-
-/* Heading at the top of Settings */
+/* No comment */
 "Your apps. Your folders. A shortcut away." = "你的App。你的文件夹。一个快捷键即达。";
 
-/* VoiceOver kind of a result: an application; a noun */
+/* No comment */
 "app" = "App";
 
-/* VoiceOver kind of a result; a noun */
+/* No comment */
 "file" = "文件";
 
-/* VoiceOver kind of a result; a noun */
+/* No comment */
 "folder" = "文件夹";
 
-/* VoiceOver kind of a result: a symbolic link or alias; a noun */
+/* No comment */
 "link" = "链接";
 
-/* Welcome window note; Allow is the button title in the macOS permission window; Accessibility is the System Settings item */
-"macOS asks once for access to folders such as Documents. Click Allow so Superhound can find your files. macOS also asks for Accessibility access the first time you paste from the clipboard history." = "macOS会询问一次是否允许访问“文稿”等文件夹。请点按“允许”，以便Superhound找到你的文件。首次从剪贴板历史记录粘贴时，macOS还会请求“辅助功能”权限。";
+/* No comment */
+"macOS asks once for access to folders such as Documents. Click Allow so Ultrahound can find your files. macOS also asks for Accessibility access the first time you paste from the clipboard history." = "macOS会询问一次是否允许访问“文稿”等文件夹。请点按“允许”，以便Ultrahound找到你的文件。首次从剪贴板历史记录粘贴时，macOS还会请求“辅助功能”权限。";
 
-/* Error in the search panel; Privacy & Security → Automation is the place in System Settings */
-"macOS blocked this command. Allow Superhound in Privacy & Security → Automation." = "macOS阻止了此命令。请在“隐私与安全性”→“自动化”中允许Superhound。";
+/* No comment */
+"macOS blocked this command. Allow Ultrahound in Privacy & Security → Automation." = "macOS阻止了此命令。请在“隐私与安全性”→“自动化”中允许Ultrahound。";
 
-/* Keyboard Settings… is the button title */
+/* No comment */
 "macOS did not save the Spotlight shortcut. Change it in Keyboard Settings…." = "macOS未存储“聚焦”快捷键。请在“键盘设置…”中更改。";
-
-/* The argument is an HTTP status code such as 500 */
-"superhound.app answered with error %ld." = "superhound.app返回了错误%ld。";
-
-/* The argument is the system network error text */
-"superhound.app could not be reached. %@" = "无法连接superhound.app。%@";
-
-/* No comment */
-"superhound.app sent an answer that Superhound cannot read." = "Superhound无法读取superhound.app发送的回复。";
-
-/* No comment */
-"superhound.app sent an answer that Superhound cannot read. Try again later." = "Superhound无法读取superhound.app发送的回复。请稍后再试。";
-
-/* Label in the panel footer of a licensed copy, after a heart; keep it short */
-"Supporter" = "支持者";
-
-/* Tooltip of the Supporter label in the panel footer */
-"Thank you for supporting Superhound." = "感谢你支持Superhound。";

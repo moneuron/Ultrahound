@@ -1,152 +1,145 @@
-/* Open With submenu item; the argument is an app name */
+/* No comment */
 "%@ (default)" = "%@ (predeterminada)";
 
-/* The argument is an error sentence from the license server or the network */
+/* No comment */
 "%@ Write to support@superhound.app to free it." = "%@ Escribe a support@superhound.app para liberarla.";
 
-/* The argument is an error sentence from the license server or the network */
+/* No comment */
 "%@ You can remove the license from this Mac anyway. Its activation then stays in use; write to support@superhound.app to free it." = "%@ Puedes eliminar la licencia de este Mac de todos modos. Su activación seguirá en uso; escribe a support@superhound.app para liberarla.";
 
-/* Update error; the argument is the path of the installed app */
-"%@ is a link, so Superhound cannot replace it. Run the install command from superhound.app instead." = "%@ es un enlace, por lo que Superhound no puede reemplazarlo. Ejecuta en su lugar el comando de instalación de superhound.app.";
+/* No comment */
+"%@ is a link, so Superhound cannot replace it. Run the install command from superhound.app instead." = "%@ es un enlace, por lo que Ultrahound no puede reemplazarlo. Ejecuta en su lugar el comando de instalación de superhound.app.";
 
-/* Settings status; both arguments are shortcuts such as ⌘Space */
-"%@ is in use by another app. Superhound keeps %@." = "Otra app usa %1$@. Superhound mantiene %2$@.";
+/* No comment */
+"%@ is in use by another app. Ultrahound keeps %@." = "Otra app usa %1$@. Ultrahound mantiene %2$@.";
 
-/* Settings status; the first argument is a shortcut such as ⌘Space, the second a menu item name such as Search */
+/* No comment */
 "%@ is in use by another app. Use %@ in the menu bar, or choose other keys." = "Otra app usa %1$@. Elige otras teclas o usa “%2$@” en la barra de menús.";
 
-/* Settings status; the first argument is a shortcut such as ⌥⌘V, the second a menu item name such as Clipboard History */
+/* No comment */
 "%@ is the %@ shortcut. Choose other keys." = "%1$@ es la función rápida de “%2$@”. Elige otras teclas.";
 
-/* Settings status; the first and third arguments are shortcuts, the second an error number */
-"%@ is unavailable (error %d). Superhound keeps %@." = "%1$@ no está disponible (error %2$d). Superhound mantiene %3$@.";
+/* No comment */
+"%@ is unavailable (error %d). Ultrahound keeps %@." = "%1$@ no está disponible (error %2$d). Ultrahound mantiene %3$@.";
 
-/* Settings status; the first argument is a shortcut, the second an error number, the third a menu item name such as Search; Retry is a button title */
+/* No comment */
 "%@ is unavailable (error %d). Use %@ in the menu bar, change the competing shortcut, then Retry." = "%1$@ no está disponible (error %2$d). Usa “%3$@” en la barra de menús, cambia la función rápida en conflicto y haz clic en “Repetir”.";
 
-/* Note at the right of the clipboard history panel; the argument is 1 */
+/* No comment */
 "%@ item · Kept on this Mac only" = "%@ ítem · Solo se guarda en este Mac";
 
-/* Note at the right of the clipboard history panel; the argument is a number other than 1 */
+/* No comment */
 "%@ items · Kept on this Mac only" = "%@ ítems · Solo se guardan en este Mac";
 
-/* Settings status; the argument is a shortcut such as ⌘Space */
-"%@ registered. Try it from another app and confirm only Superhound opens." = "%@ registrada. Pruébala desde otra app y comprueba que solo se abre Superhound.";
+/* No comment */
+"%@ registered. Try it from another app and confirm only Ultrahound opens." = "%@ registrada. Pruébala desde otra app y comprueba que solo se abre Ultrahound.";
 
-/* Status line in Settings; the first argument is a number of items, the second is a status sentence */
+/* No comment */
 "%@ searchable items. %@" = "%1$@ ítems disponibles para buscar. %2$@";
 
-/* Search location row in Settings; the first argument is a state such as Ready, the second a number */
+/* No comment */
 "%@ · %@ items" = "%@ · %@ ítems";
 
-/* Search location row in Settings; the first argument is a state such as Ready, the second a number */
+/* No comment */
 "%@ · %@ items · applications only" = "%@ · %@ ítems · solo aplicaciones";
 
-/* Clipboard row detail; the first argument is the app that copied the text, the second a relative time such as 5 min. ago; Return is the key name */
+/* No comment */
 "%@ · %@ · Return to paste" = "%@ · %@ · Retorno para pegar";
 
-/* Row detail of a calculation, conversion, or colour; the argument is the typed input such as 2+2; Return is the key name */
+/* No comment */
 "%@ · Return to copy" = "%@ · Retorno para copiar";
 
-/* Clipboard row detail; the argument is a relative time such as 5 min. ago; Return is the key name */
+/* No comment */
 "%@ · Return to paste" = "%@ · Retorno para pegar";
 
-/* The first argument is the number of failed disks, the second the number of all disks */
+/* No comment */
 "%lu of %lu disks could not be ejected. An app may be using them." = "No se han podido expulsar %1$lu de %2$lu discos. Puede que una app los esté usando.";
 
-/* Welcome window step title */
+/* No comment */
 "1. Your shortcut" = "1. Tu función rápida";
 
-/* Welcome window step title */
+/* No comment */
 "2. Your folders" = "2. Tus carpetas";
 
-/* Welcome window step title */
+/* No comment */
 "3. Your first search" = "3. Tu primera búsqueda";
 
 /* No comment */
 "A command has no location in Finder." = "Un comando no tiene ubicación en el Finder.";
 
-/* Menu bar menu item; keep it short */
-"About Superhound" = "Acerca de Superhound";
+/* No comment */
+"About Ultrahound" = "Acerca de Ultrahound";
 
-/* State of a search location */
+/* No comment */
 "Access needed — select this folder again" = "Se necesita acceso — vuelve a seleccionar esta carpeta";
 
-/* Footer hint next to ⌘K: show the action menu; keep it short */
+/* No comment */
 "Actions" = "Acciones";
 
-/* Alert button: activate the license key */
+/* No comment */
 "Activate" = "Activar";
 
 /* No comment */
-"Activate Superhound" = "Activar Superhound";
+"Activate Ultrahound" = "Activar Ultrahound";
 
-/* Settings button; 120 points wide */
+/* No comment */
 "Add Folder…" = "Añadir…";
 
-/* The argument is the number of items */
+/* No comment */
 "All %@ copied items are deleted from this Mac. You cannot undo this." = "Se eliminarán de este Mac los %@ ítems copiados. Esta acción no se puede deshacer.";
 
 /* No comment */
 "Apps are included automatically. Files are searched only inside folders you select. File contents stay unread." = "Las apps se incluyen automáticamente. Solo se buscan archivos dentro de las carpetas que selecciones. El contenido de los archivos no se lee.";
 
-/* Alert button */
+/* No comment */
 "Cancel" = "Cancelar";
 
 /* No comment */
-"Cannot create Superhound’s local data directory." = "No se puede crear la carpeta de datos local de Superhound.";
+"Cannot create Ultrahound’s local data directory." = "No se puede crear la carpeta de datos local de Ultrahound.";
 
 /* No comment */
 "Cannot open the local catalog. Check available disk space and restart." = "No se puede abrir el catálogo local. Comprueba el espacio disponible en el disco y reinicia.";
 
-/* Note at the right of the search panel when a search location is unavailable; keep it short */
+/* No comment */
 "Check Settings for coverage" = "Revisa la cobertura en Ajustes";
 
-/* Menu bar menu item with a check mark */
-"Check for Updates Automatically" = "Buscar actualizaciones automáticamente";
-
-/* Menu bar menu item; keep it short */
-"Check for Updates…" = "Buscar actualizaciones…";
-
-/* Menu bar menu item; keep it short */
+/* No comment */
 "Clear Clipboard History" = "Borrar historial del portapapeles";
 
-/* Alert button */
+/* No comment */
 "Clear History" = "Borrar historial";
 
 /* No comment */
 "Clear the clipboard history?" = "¿Borrar el historial del portapapeles?";
 
-/* Section label: the clipboard history; Settings row label (160 points wide) and search panel band; keep it short
-   Section label: the clipboard history; Settings row label and search panel band; keep it short */
+/* No comment */
 "Clipboard" = "Portapapeles";
 
-/* Menu bar menu item that opens the clipboard history; keep it short */
+/* No comment */
 "Clipboard History" = "Historial del portapapeles";
 
-/* Footer hint next to Esc: close the panel; keep it short */
+/* No comment */
 "Close" = "Cerrar";
 
-/* Row detail of a system command such as Lock Screen; a noun */
+/* No comment */
 "Command" = "Comando";
 
-/* Word that lists all system commands when typed in the search field, and the label above that list; one word */
+/* No comment */
 "Commands" = "Comandos";
 
-/* Settings check box */
+/* No comment */
 "Complete the top result as you type" = "Completar el primer resultado al escribir";
 
-/* Menu item verb: copy to the clipboard */
+/* No comment */
 "Copy" = "Copiar";
 
-/* Action menu item; the argument is a colour value such as #FF8800 or rgb(255, 136, 0) */
+/* No comment */
 "Copy %@" = "Copiar %@";
 
-/* Action menu item */
+/* No comment */
 "Copy Path" = "Copiar ruta";
 
-/* Error when the app could not come to the front */
+/* No comment */
 "Could not activate this app." = "No se ha podido activar esta app.";
 
 /* No comment */
@@ -167,7 +160,7 @@
 /* No comment */
 "Could not open this item. Check access and try again." = "No se ha podido abrir este ítem. Comprueba el acceso e inténtalo de nuevo.";
 
-/* A System Settings pane */
+/* No comment */
 "Could not open this setting." = "No se ha podido abrir este ajuste.";
 
 /* No comment */
@@ -179,394 +172,296 @@
 /* No comment */
 "Could not start the screen saver." = "No se ha podido iniciar el salvapantallas.";
 
-/* State of a search location inside another one; the argument is the other location's path */
+/* No comment */
 "Covered by %@" = "Incluida en %@";
 
-/* Standard Edit menu item */
+/* No comment */
 "Cut" = "Cortar";
 
-/* Alert button: free this Mac’s license activation */
+/* No comment */
 "Deactivate" = "Desactivar";
-
-/* Menu bar menu item; keep it short */
-"Deactivate License…" = "Desactivar licencia…";
 
 /* No comment */
 "Deactivate this Mac?" = "¿Desactivar este Mac?";
 
-/* Action menu item for a clipboard history item */
+/* No comment */
 "Delete from History" = "Eliminar del historial";
 
-/* Welcome window line after the first opened search result */
-"Done. Superhound learns what you open." = "Listo. Superhound aprende lo que abres.";
+/* No comment */
+"Done. Ultrahound learns what you open." = "Listo. Ultrahound aprende lo que abres.";
 
-/* Alert button */
+/* No comment */
 "Don’t Relaunch" = "No reiniciar";
 
-/* Standard Edit menu title */
+/* No comment */
 "Edit" = "Edición";
 
-/* System command name in search results */
+/* No comment */
 "Eject All Disks" = "Expulsar todos los discos";
 
-/* Word that lists all emoji when typed in the search field, and the label above that list; one word */
-"Emoji" = "Emoji";
-
-/* Row detail; Return is the key name */
-"Emoji · Return to copy" = "Emoji · Retorno para copiar";
-
-/* Alert button
-   System command name in search results */
+/* No comment */
 "Empty Trash" = "Vaciar papelera";
 
 /* No comment */
 "Empty the Trash?" = "¿Vaciar la papelera?";
 
-/* Menu bar menu item; keep it short */
-"Enter License…" = "Introducir licencia…";
-
-/* Tooltip of the Become a Supporter link in the panel footer */
-"Enter your license key, or get a Supporter License." = "Introduce tu clave de licencia u obtén una licencia de colaborador.";
+/* No comment */
+"Enter the license key from your email. A license covers 3 Macs." = "Introduce la clave de licencia de tu correo. Una licencia cubre 3 Mac.";
 
 /* No comment */
 "Folder settings could not be saved. Check available disk space." = "No se han podido guardar los ajustes de carpetas. Comprueba el espacio disponible en el disco.";
 
-/* About window credits */
-"Free, with every feature. A Supporter License, $15 once for 3 Macs at superhound.app, supports development." = "Gratis, con todas las funciones. Una licencia de colaborador, $15 en un pago único para 3 Mac en superhound.app, apoya el desarrollo.";
-
-/* Button that opens the purchase page */
-"Get a Supporter License" = "Obtener licencia de colaborador";
+/* No comment */
+"Hidden descendants, package contents, online-only placeholders, and Ultrahound’s own data are skipped. Symbolic links are listed without following them." = "Se omiten los ítems ocultos, el contenido de los paquetes, los marcadores de posición de archivos solo en línea y los datos propios de Ultrahound. Los enlaces simbólicos se listan sin seguirlos.";
 
 /* No comment */
-"Hidden descendants, package contents, online-only placeholders, and Superhound’s own data are skipped. Symbolic links are listed without following them." = "Se omiten los ítems ocultos, el contenido de los paquetes, los marcadores de posición de archivos solo en línea y los datos propios de Superhound. Los enlaces simbólicos se listan sin seguirlos.";
-
-/* State of a search location during its scan */
 "Indexing" = "Indexando";
 
-/* Note at the right of the search panel; the argument is a number above 1; keep it short */
+/* No comment */
 "Indexing %@ locations" = "Indexando %@ ubicaciones";
 
-/* Note at the right of the search panel; keep it short */
+/* No comment */
 "Indexing 1 location" = "Indexando 1 ubicación";
 
-/* Welcome window status; the argument is a number */
+/* No comment */
 "Indexing… %@ items so far" = "Indexando… %@ ítems por ahora";
 
-/* Alert button */
-"Install and Relaunch" = "Instalar y reiniciar";
-
-/* Settings button that opens System Settings → Keyboard; 199 points wide */
+/* No comment */
 "Keyboard Settings…" = "Ajustes del teclado…";
 
-/* Settings row label; 160 points wide */
+/* No comment */
 "Language" = "Idioma";
 
-/* Alert after a language change; the argument is Superhound */
+/* No comment */
 "Language setting for %@ has changed. Do you want to relaunch the app now?" = "El ajuste de idioma de la app %@ ha cambiado. ¿Quieres reiniciarla ahora?";
 
-/* Alert button: ask again later */
-"Later" = "Más tarde";
-
-/* Placeholder of the license key field */
+/* No comment */
 "License key" = "Clave de licencia";
 
-/* About window credits */
-"Supporter License for this Mac." = "Licencia de colaborador para este Mac.";
-
-/* System command name in search results */
+/* No comment */
 "Lock Screen" = "Bloquear pantalla";
 
-/* System command name in search results */
+/* No comment */
 "Log Out" = "Cerrar sesión";
 
-/* Action menu item */
+/* No comment */
 "Move to Trash" = "Trasladar a la papelera";
 
-/* Label above the result list */
+/* No comment */
 "No matches" = "Sin coincidencias";
 
-/* Label above the result list while a search location is still indexing; keep it short */
+/* No comment */
 "No matches yet. Still indexing." = "Aún no hay coincidencias. Indexación en curso.";
 
 /* No comment */
 "No sound output is available." = "No hay ninguna salida de sonido disponible.";
 
-/* Alert button */
-"Not Now" = "Ahora no";
-
 /* No comment */
 "Not enough memory to prepare search. Remove a large search location and refresh." = "No hay memoria suficiente para preparar la búsqueda. Elimina una ubicación de búsqueda grande y actualiza el catálogo.";
 
-/* Alert button */
+/* No comment */
 "OK" = "Aceptar";
 
-/* Add Folder… is the button title in Settings */
+/* No comment */
 "Only selected folders are searched. Click Add Folder… to add one." = "Solo se buscan las carpetas seleccionadas. Haz clic en “Añadir…” para añadir una.";
 
-/* Menu item and footer hint verb: open the selected result; keep it short */
+/* No comment */
 "Open" = "Abrir";
 
-/* Welcome window button; 170 points wide */
+/* No comment */
 "Open Search Panel" = "Abrir la búsqueda";
 
-/* Action menu item with a submenu of apps */
+/* No comment */
 "Open With" = "Abrir con";
 
-/* Menu bar menu item with a check mark: start Superhound when the user logs in */
+/* No comment */
 "Open at Login" = "Abrir al iniciar sesión";
 
-/* Error in the search panel; the argument is the system error text */
+/* No comment */
 "Open at Login could not be changed. %@" = "No se ha podido cambiar “Abrir al iniciar sesión”. %@";
 
-/* Settings row label for the search shortcut; 160 points wide */
+/* No comment */
 "Open search" = "Abrir búsqueda";
 
-/* State of a search location */
+/* No comment */
 "Partially indexed — access needed; previous catalog preserved" = "Indexada en parte — se necesita acceso; se conserva el catálogo anterior";
 
-/* State of a search location */
+/* No comment */
 "Partially indexed — refresh manually; watching unavailable" = "Indexada en parte — actualiza manualmente; detección de cambios no disponible";
 
-/* Menu item and footer hint verb: paste the text */
+/* No comment */
 "Paste" = "Pegar";
 
-/* Status in Settings while the app starts */
+/* No comment */
 "Preparing catalog…" = "Preparando el catálogo…";
 
-/* Note at the right of the search panel while the app starts; keep it short */
+/* No comment */
 "Preparing search" = "Preparando la búsqueda";
 
-/* Status in Settings while the app starts */
+/* No comment */
 "Preparing search…" = "Preparando la búsqueda…";
 
-/* Welcome window text; the argument is a shortcut such as ⌘Space; safri is a typing error for Safari, keep it as it is */
+/* No comment */
 "Press %@ and type part of an app name. Typos work, such as safri." = "Pulsa %@ y escribe parte del nombre de una app. Las erratas también funcionan, como «safri».";
 
-/* Welcome window text; the arguments are shortcuts such as ⌘Space and ⌥⌘V */
+/* No comment */
 "Press %@ to search. Press %@ for the clipboard history." = "Pulsa %@ para buscar. Pulsa %@ para el historial del portapapeles.";
 
-/* Button in Settings while it records a shortcut; 170 points wide */
+/* No comment */
 "Press shortcut…" = "Pulsar función rápida…";
 
-/* Action menu item; the name of the macOS preview feature */
+/* No comment */
 "Quick Look" = "Vista rápida";
 
-/* Menu bar menu item; keep it short */
-"Quit Superhound" = "Salir de Superhound";
+/* No comment */
+"Quit Ultrahound" = "Salir de Ultrahound";
 
 /* No comment */
-"Quit Superhound and open it again to use the new version." = "Sal de Superhound y vuelve a abrirlo para usar la nueva versión.";
-
-/* State of a search location after its scan */
 "Ready" = "Lista";
 
-/* Welcome window status; the argument is a number */
+/* No comment */
 "Ready: %@ items" = "Lista: %@ ítems";
 
 /* No comment */
 "Rebuilding a damaged or older catalog. Your selected folders are preserved." = "Reconstruyendo un catálogo dañado o antiguo. Se conservan las carpetas que has seleccionado.";
 
-/* State of a search location */
+/* No comment */
 "Rechecking changed location" = "Revisando la ubicación modificada";
 
-/* VoiceOver label of the shortcut button */
+/* No comment */
 "Record clipboard history shortcut" = "Grabar la función rápida del historial del portapapeles";
 
-/* VoiceOver label of the shortcut button */
+/* No comment */
 "Record global search shortcut" = "Grabar la función rápida de búsqueda global";
 
-/* Standard Edit menu item */
+/* No comment */
 "Redo" = "Rehacer";
 
-/* Menu item and Settings button: scan the search locations again */
+/* No comment */
 "Refresh Catalog" = "Actualizar catálogo";
 
-/* Alert button */
+/* No comment */
 "Relaunch Now" = "Reiniciar ahora";
 
-/* Alert button that opens the release notes web page */
-"Release Notes" = "Notas de la versión";
-
-/* Settings button: remove the selected search location; 90 points wide */
+/* No comment */
 "Remove" = "Eliminar";
 
-/* Alert button */
+/* No comment */
 "Remove Anyway" = "Eliminar de todos modos";
 
-/* System command name in search results: restart the Mac */
+/* No comment */
 "Restart" = "Reiniciar";
 
-/* Settings button: register the shortcuts again; 100 points wide */
+/* No comment */
 "Retry" = "Repetir";
 
-/* Action menu item */
+/* No comment */
 "Reveal in Finder" = "Mostrar en el Finder";
 
-/* Action menu item verb: run a system command */
+/* No comment */
 "Run" = "Ejecutar";
 
-/* Menu bar menu item that opens the search panel; keep it short */
+/* No comment */
 "Search" = "Buscar";
 
-/* Last row of the search results; the first argument is a search engine name such as Google, the second is the typed text */
+/* No comment */
 "Search %@ for “%@”" = "Buscar “%2$@” en %1$@";
 
-/* Button of the folder selection window */
+/* No comment */
 "Search This Folder" = "Buscar en esta carpeta";
 
-/* Placeholder of the search field */
+/* No comment */
 "Search apps and files" = "Buscar apps y archivos";
 
-/* VoiceOver label of the search field */
+/* No comment */
 "Search apps and selected folders" = "Buscar apps y carpetas seleccionadas";
 
-/* Placeholder of the search field and its VoiceOver label in clipboard history mode */
+/* No comment */
 "Search clipboard history" = "Buscar en el historial del portapapeles";
 
-/* VoiceOver label of the list of search locations */
+/* No comment */
 "Search locations and coverage" = "Ubicaciones de búsqueda y cobertura";
 
-/* Message in the folder selection window */
+/* No comment */
 "Search names in this folder and its local subfolders. File contents are not read." = "Se buscan los nombres de esta carpeta y de sus subcarpetas locales. El contenido de los archivos no se lee.";
 
-/* VoiceOver label of the result list */
+/* No comment */
 "Search results" = "Resultados de la búsqueda";
 
-/* Settings button: select the folder again to give access; 135 points wide */
+/* No comment */
 "Select Again…" = "Volver a elegir…";
 
-/* Standard Edit menu item */
+/* No comment */
 "Select All" = "Seleccionar todo";
 
-/* Shown in place of a search location whose path is unknown */
+/* No comment */
 "Selected folder" = "Carpeta seleccionada";
 
-/* Word that lists all System Settings panes when typed in the search field, and the label above that list; one word */
+/* No comment */
 "Settings" = "Ajustes";
 
-/* Tooltip of the logo in the panel footer, which opens the app menu */
+/* No comment */
 "Settings and more" = "Ajustes y más";
 
-/* Menu bar menu item; keep it short */
+/* No comment */
 "Settings…" = "Ajustes…";
 
-/* System command name in search results */
+/* No comment */
 "Shut Down" = "Apagar";
 
-/* Settings check box; keep the folder names as they are */
+/* No comment */
 "Skip generated folders (.git, node_modules, vendor, build, dist, DerivedData)" = "Omitir carpetas generadas (.git, node_modules, vendor, build, dist, DerivedData)";
 
-/* System command name in search results: put the Mac to sleep */
+/* No comment */
 "Sleep" = "Reposo";
 
-/* System command name in search results: turn the display off */
+/* No comment */
 "Sleep Display" = "Poner la pantalla en reposo";
 
-/* System command name in search results */
+/* No comment */
 "Start Screen Saver" = "Iniciar salvapantallas";
 
-/* Section label above the apps shown before the user types */
-"Suggested" = "Sugerencias";
-
-/* The argument is a version number such as 0.5.0 */
-"Superhound %@ is available" = "Superhound %@ está disponible";
-
-/* Tooltip of the Update to link; the argument is a version number */
-"Superhound %@ is available. Click to install it." = "Superhound %@ está disponible. Haz clic para instalarlo.";
-
-/* Settings window title */
-"Superhound Settings" = "Ajustes de Superhound";
+/* No comment */
+"Superhound cannot keep a copy of the current version." = "Ultrahound no puede conservar una copia de la versión actual.";
 
 /* No comment */
-"Superhound cannot keep a copy of the current version." = "Superhound no puede conservar una copia de la versión actual.";
+"Superhound cannot move the current version." = "Ultrahound no puede trasladar la versión actual.";
 
 /* No comment */
-"Superhound cannot move the current version." = "Superhound no puede trasladar la versión actual.";
+"Superhound cannot put the new version in place." = "Ultrahound no puede colocar la nueva versión en su sitio.";
 
 /* No comment */
-"Superhound cannot put the new version in place." = "Superhound no puede colocar la nueva versión en su sitio.";
-
-/* Update error; the argument is a folder path */
-"Superhound cannot write to %@. Run the install command from superhound.app instead." = "Superhound no puede escribir en %@. Ejecuta en su lugar el comando de instalación de superhound.app.";
+"Superhound cannot write to %@. Run the install command from superhound.app instead." = "Ultrahound no puede escribir en %@. Ejecuta en su lugar el comando de instalación de superhound.app.";
 
 /* No comment */
-"Superhound could not check for updates" = "Superhound no ha podido buscar actualizaciones";
-
-/* Uninstall alert text when this Mac has no license */
-"Superhound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are." = "Superhound devolverá ⌘Space a Spotlight si lo había tomado, eliminará sus ajustes, su catálogo, su clasificación aprendida y el historial del portapapeles, y se trasladará a la papelera. Tus archivos se quedarán como están.";
-
-/* No comment */
-"Superhound is already licensed" = "Superhound ya tiene licencia";
-
-/* No comment */
-"Superhound is free, and all features keep working. A Supporter License, $15 once for 3 Macs, supports development." = "Superhound es gratis, y todas las funciones siguen disponibles. Una licencia de colaborador, $15 en un pago único para 3 Mac, apoya el desarrollo.";
-
-/* No comment */
-"Superhound is licensed" = "Superhound tiene licencia";
-
-/* No comment */
-"Superhound is not activated" = "Superhound no está activado";
-
-/* No comment */
-"Superhound is not updated" = "Superhound no se ha actualizado";
-
-/* No comment */
-"Superhound is up to date" = "Superhound está actualizado";
-
-/* No comment */
-"Superhound is updated" = "Superhound se ha actualizado";
-
-/* VoiceOver label of the logo in the panel footer, which opens the app menu */
-"Superhound menu" = "Menú de Superhound";
-
-/* No comment */
-"Enter the license key from your email. A license covers 3 Macs." = "Introduce la clave de licencia de tu correo. Una licencia cubre 3 Mac.";
-
-/* Tooltip of the menu bar icon */
-"Superhound — Search apps and files" = "Superhound — Buscar apps y archivos";
-
-/* Link in the panel footer of an unlicensed copy, after a heart, and the title of the reminder every tenth opening; it opens the license key window; keep it short
-   Title of the alert that asks for a license every tenth opening */
-"Become a Supporter" = "Hazte colaborador";
-
-/* First item of the language menu: use the macOS language order */
 "System Default" = "Ajuste por omisión del sistema";
 
-/* Row detail of a System Settings pane; the name of the macOS app */
+/* No comment */
 "System Settings" = "Ajustes del Sistema";
 
-/* Note at the right of the clipboard history panel; keep it short */
+/* No comment */
 "Text you copy in any app comes here" = "Aquí aparece el texto copiado en cualquier app";
 
 /* No comment */
-"Thank you for your purchase." = "Gracias por tu compra.";
+"The activation from the license server is not valid for this Mac." = "The activation from the license server is not valid for this Mac.";
 
 /* No comment */
-"The activation from superhound.app is not valid for this Mac." = "La activación de superhound.app no es válida para este Mac.";
-
-/* Label above the result list */
 "The clipboard history is empty" = "El historial del portapapeles está vacío";
 
-/* Error in the search panel */
+/* No comment */
 "The command did not finish." = "El comando no ha terminado.";
 
 /* No comment */
 "The download could not be unpacked." = "No se ha podido descomprimir la descarga.";
 
 /* No comment */
-"The download does not have the Superhound signature." = "La descarga no tiene la firma de Superhound.";
+"The download does not have the Superhound signature." = "La descarga no tiene la firma de Ultrahound.";
 
 /* No comment */
 "The download does not match the published checksum." = "La descarga no coincide con la suma de control publicada.";
 
-/* The argument is an HTTP status code such as 404 */
-"The download failed with error %ld." = "La descarga ha fallado con el error %ld.";
-
-/* The argument is the system network error text */
-"The download failed. %@" = "La descarga ha fallado. %@";
-
 /* No comment */
-"The download is not the expected version of Superhound." = "La descarga no es la versión esperada de Superhound.";
+"The download is not the expected version of Superhound." = "La descarga no es la versión esperada de Ultrahound.";
 
 /* No comment */
 "The items in the Trash are deleted permanently. You cannot undo this." = "Los ítems de la papelera se eliminarán permanentemente. Esta acción no se puede deshacer.";
@@ -577,20 +472,29 @@
 /* No comment */
 "The license activation is still in use" = "La activación de la licencia sigue en uso";
 
-/* The argument is a web address */
-"The license server address %@ is not valid." = "La dirección del servidor de licencias %@ no es válida.";
-
-/* Tab is the key name */
-"The rest of the top result’s name appears after your text, selected. Tab or → keeps it; any other key replaces it." = "El resto del nombre del primer resultado aparece seleccionado tras tu texto. Tabulador o → lo mantiene; otra tecla lo sustituye.";
-
-/* The argument is a web address */
-"The server address %@ is not valid." = "La dirección del servidor %@ no es válida.";
+/* No comment */
+"The license is active on this Mac." = "The license is active on this Mac.";
 
 /* No comment */
-"The text is copied. Superhound could not return to the previous app, so nothing was pasted." = "El texto se ha copiado. Superhound no ha podido volver a la app anterior, así que no se ha pegado nada.";
+"The license server address %@ is not valid." = "La dirección del servidor de licencias %@ no es válida.";
 
-/* System Settings → Privacy & Security → Accessibility is the place in System Settings */
-"The text is copied. To paste with Return, allow Superhound in System Settings → Privacy & Security → Accessibility." = "El texto se ha copiado. Para pegar con Retorno, activa Superhound en Ajustes del Sistema → Privacidad y seguridad → Accesibilidad.";
+/* No comment */
+"The license server answered with error %ld." = "The license server answered with error %ld.";
+
+/* No comment */
+"The license server could not be reached. %@" = "The license server could not be reached. %@";
+
+/* No comment */
+"The license server sent an answer that Ultrahound cannot read." = "The license server sent an answer that Ultrahound cannot read.";
+
+/* No comment */
+"The rest of the top result’s name appears after your text, selected. Tab or → keeps it; any other key replaces it." = "El resto del nombre del primer resultado aparece seleccionado tras tu texto. Tabulador o → lo mantiene; otra tecla lo sustituye.";
+
+/* No comment */
+"The text is copied. To paste with Return, allow Ultrahound in System Settings → Privacy & Security → Accessibility." = "El texto se ha copiado. Para pegar con Retorno, activa Ultrahound en Ajustes del Sistema → Privacidad y seguridad → Accesibilidad.";
+
+/* No comment */
+"The text is copied. Ultrahound could not return to the previous app, so nothing was pasted." = "El texto se ha copiado. Ultrahound no ha podido volver a la app anterior, así que no se ha pegado nada.";
 
 /* No comment */
 "There are no disks to eject." = "No hay discos que expulsar.";
@@ -601,20 +505,14 @@
 /* No comment */
 "This Mac is still activated" = "Este Mac sigue activado";
 
-/* Uninstall alert text when this Mac has a license */
-"This Mac’s license activation is freed. Superhound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are." = "Se liberará la activación de la licencia de este Mac. Superhound devolverá ⌘Space a Spotlight si lo había tomado, eliminará sus ajustes, su catálogo, su clasificación aprendida y el historial del portapapeles, y se trasladará a la papelera. Tus archivos se quedarán como están.";
+/* No comment */
+"This Mac’s license activation is freed. Ultrahound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are." = "Se liberará la activación de la licencia de este Mac. Ultrahound devolverá ⌘Space a Spotlight si lo había tomado, eliminará sus ajustes, su catálogo, su clasificación aprendida y el historial del portapapeles, y se trasladará a la papelera. Tus archivos se quedarán como están.";
 
 /* No comment */
 "This command is not available." = "Este comando no está disponible.";
 
 /* No comment */
-"This copy cannot update itself" = "Esta copia no puede actualizarse";
-
-/* No comment */
-"This copy of Superhound was built from source. To update it, pull the latest code, then run the build and install commands again." = "Esta copia de Superhound se ha compilado a partir del código fuente. Para actualizarla, obtén el código más reciente y vuelve a ejecutar los comandos de compilación e instalación.";
-
-/* No comment */
-"This frees one of the 3 activations of your license. Superhound keeps working and shows the unlicensed reminder again." = "Se liberará una de las 3 activaciones de tu licencia. Superhound seguirá funcionando y volverá a mostrar el recordatorio de que no tiene licencia.";
+"This frees one of the 3 activations of your license. Ultrahound keeps working on this Mac." = "This frees one of the 3 activations of your license. Ultrahound keeps working on this Mac.";
 
 /* No comment */
 "This item is unavailable. Refreshing its location…" = "Este ítem no está disponible. Actualizando su ubicación…";
@@ -628,125 +526,113 @@
 /* No comment */
 "This version is not newer than the installed one." = "Esta versión no es más reciente que la instalada.";
 
-/* Welcome window text under the heading */
+/* No comment */
 "Three steps to your first search." = "Tres pasos hasta tu primera búsqueda.";
 
-/* System command name in search results: switch between dark and light appearance */
+/* No comment */
 "Toggle Dark Mode" = "Activar/desactivar modo oscuro";
 
-/* System command name in search results: mute or unmute the sound */
+/* No comment */
 "Toggle Mute" = "Activar/desactivar silencio";
 
-/* Alert button */
+/* No comment */
 "Try Again" = "Reintentar";
 
-/* Uninstall Superhound… is a menu item title */
-"Turns off Spotlight’s ⌘Space shortcut and opens Superhound with ⌘Space. To give ⌘Space back to Spotlight, turn this off, or choose Uninstall Superhound… in the menu bar." = "Desactiva la función rápida ⌘Space de Spotlight y abre Superhound con ⌘Space. Para devolver ⌘Space a Spotlight, desactiva esta opción o elige “Desinstalar Superhound…” en la barra de menús.";
+/* No comment */
+"Turns off Spotlight’s ⌘Space shortcut and opens Ultrahound with ⌘Space. To give ⌘Space back to Spotlight, turn this off, or choose Uninstall Ultrahound… in the menu bar." = "Desactiva la función rápida ⌘Space de Spotlight y abre Ultrahound con ⌘Space. Para devolver ⌘Space a Spotlight, desactiva esta opción o elige “Desinstalar Ultrahound…” en la barra de menús.";
 
-/* State of a search location that is missing */
+/* No comment */
+"Ultrahound Settings" = "Ajustes de Ultrahound";
+
+/* No comment */
+"Ultrahound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are." = "Ultrahound devolverá ⌘Space a Spotlight si lo había tomado, eliminará sus ajustes, su catálogo, su clasificación aprendida y el historial del portapapeles, y se trasladará a la papelera. Tus archivos se quedarán como están.";
+
+/* No comment */
+"Ultrahound is already licensed" = "Ultrahound ya tiene licencia";
+
+/* No comment */
+"Ultrahound is licensed" = "Ultrahound tiene licencia";
+
+/* No comment */
+"Ultrahound is not activated" = "Ultrahound no está activado";
+
+/* No comment */
+"Ultrahound menu" = "Menú de Ultrahound";
+
+/* No comment */
+"Ultrahound — Search apps and files" = "Ultrahound — Buscar apps y archivos";
+
+/* No comment */
 "Unavailable" = "No disponible";
 
-/* Standard Edit menu item */
+/* No comment */
 "Undo" = "Deshacer";
 
-/* Alert button */
+/* No comment */
 "Uninstall" = "Desinstalar";
 
 /* No comment */
-"Uninstall Superhound?" = "¿Desinstalar Superhound?";
+"Uninstall Ultrahound?" = "¿Desinstalar Ultrahound?";
 
-/* Menu bar menu item; keep it short */
-"Uninstall Superhound…" = "Desinstalar Superhound…";
+/* No comment */
+"Uninstall Ultrahound…" = "Desinstalar Ultrahound…";
 
-/* Menu bar menu item; shown only when an update is ready */
-"Update" = "Actualizar";
-
-/* Link in the panel footer; the argument is a version number such as 0.5.0; keep it short */
-"Update to %@" = "Actualizar a %@";
-
-/* Menu bar menu item; the argument is a version number such as 0.5.0 */
-"Update to %@…" = "Actualizar a %@…";
-
-/* Status in Settings */
+/* No comment */
 "Updating search locations…" = "Actualizando ubicaciones de búsqueda…";
 
-/* Settings button that restores the default shortcut; the argument is a shortcut such as ⌥⌘V; 120 points wide */
+/* No comment */
 "Use %@" = "Usar %@";
 
-/* Settings status; Command, Option, and Control are the modifier keys */
+/* No comment */
 "Use Command, Option, or Control with a key. Bare typing keys are not allowed." = "Usa Comando, Opción o Control con una tecla. No se permiten teclas sin modificador.";
 
-/* Search is the menu item title */
+/* No comment */
 "Use Search in the menu bar while setting up your shortcut." = "Usa “Buscar” en la barra de menús mientras configuras tu función rápida.";
 
-/* Settings check box */
+/* No comment */
 "Use ⌘Space in place of Spotlight" = "Usar ⌘Space en lugar de Spotlight";
 
-/* The argument is a version number such as 0.4.0 */
-"Version %@ is the latest version." = "La versión %@ es la más reciente.";
-
-/* State of a search location before its scan */
+/* No comment */
 "Waiting" = "En espera";
 
-/* Row detail; Return is the key name */
+/* No comment */
 "Web address · Return to open in your browser" = "Dirección web · Retorno para abrir en el navegador";
 
-/* Settings row label; 160 points wide */
+/* No comment */
 "Web search" = "Búsqueda web";
 
-/* VoiceOver label of the search engine menu */
+/* No comment */
 "Web search engine" = "Buscador web";
 
-/* Row detail; Return is the key name */
+/* No comment */
 "Web search · Return to open in your browser" = "Búsqueda web · Retorno para abrir en el navegador";
 
-/* Welcome window title and heading */
-"Welcome to Superhound" = "Te damos la bienvenida a Superhound";
+/* No comment */
+"Welcome to Ultrahound" = "Te damos la bienvenida a Ultrahound";
 
-/* Menu bar menu item that opens the Welcome window; keep it short */
+/* No comment */
 "Welcome…" = "Bienvenida…";
 
-/* The argument is the installed version number */
-"You have version %@. Superhound downloads the update, checks its signature, and opens again." = "Tienes la versión %@. Superhound descargará la actualización, comprobará su firma y se volverá a abrir.";
-
-/* Heading at the top of Settings */
+/* No comment */
 "Your apps. Your folders. A shortcut away." = "Tus apps. Tus carpetas. A una función rápida de distancia.";
 
-/* VoiceOver kind of a result: an application; a noun */
+/* No comment */
 "app" = "app";
 
-/* VoiceOver kind of a result; a noun */
+/* No comment */
 "file" = "archivo";
 
-/* VoiceOver kind of a result; a noun */
+/* No comment */
 "folder" = "carpeta";
 
-/* VoiceOver kind of a result: a symbolic link or alias; a noun */
+/* No comment */
 "link" = "enlace";
 
-/* Welcome window note; Allow is the button title in the macOS permission window; Accessibility is the System Settings item */
-"macOS asks once for access to folders such as Documents. Click Allow so Superhound can find your files. macOS also asks for Accessibility access the first time you paste from the clipboard history." = "macOS pide acceso una sola vez a carpetas como Documentos. Haz clic en Permitir para que Superhound encuentre tus archivos. macOS también pide acceso a Accesibilidad la primera vez que pegas desde el historial del portapapeles.";
+/* No comment */
+"macOS asks once for access to folders such as Documents. Click Allow so Ultrahound can find your files. macOS also asks for Accessibility access the first time you paste from the clipboard history." = "macOS pide acceso una sola vez a carpetas como Documentos. Haz clic en Permitir para que Ultrahound encuentre tus archivos. macOS también pide acceso a Accesibilidad la primera vez que pegas desde el historial del portapapeles.";
 
-/* Error in the search panel; Privacy & Security → Automation is the place in System Settings */
-"macOS blocked this command. Allow Superhound in Privacy & Security → Automation." = "macOS ha bloqueado este comando. Activa Superhound en Privacidad y seguridad → Automatización.";
+/* No comment */
+"macOS blocked this command. Allow Ultrahound in Privacy & Security → Automation." = "macOS ha bloqueado este comando. Activa Ultrahound en Privacidad y seguridad → Automatización.";
 
-/* Keyboard Settings… is the button title */
+/* No comment */
 "macOS did not save the Spotlight shortcut. Change it in Keyboard Settings…." = "macOS no ha guardado la función rápida de Spotlight. Cámbiala en “Ajustes del teclado…”.";
-
-/* The argument is an HTTP status code such as 500 */
-"superhound.app answered with error %ld." = "superhound.app ha respondido con el error %ld.";
-
-/* The argument is the system network error text */
-"superhound.app could not be reached. %@" = "No se ha podido conectar con superhound.app. %@";
-
-/* No comment */
-"superhound.app sent an answer that Superhound cannot read." = "superhound.app ha enviado una respuesta que Superhound no puede leer.";
-
-/* No comment */
-"superhound.app sent an answer that Superhound cannot read. Try again later." = "superhound.app ha enviado una respuesta que Superhound no puede leer. Inténtalo de nuevo más tarde.";
-
-/* Label in the panel footer of a licensed copy, after a heart; keep it short */
-"Supporter" = "Colaborador";
-
-/* Tooltip of the Supporter label in the panel footer */
-"Thank you for supporting Superhound." = "Gracias por apoyar Superhound.";

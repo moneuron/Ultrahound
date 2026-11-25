@@ -3,7 +3,7 @@
 #import "SHAnswer.h"
 #import "SHWeb.h"
 #import <Quartz/Quartz.h>
-NSString *const SHOwnCopyType=@"com.superhound.copy";
+NSString *const SHOwnCopyType=@"com.ultrahound.copy";
 static NSString *Copied(NSDictionary *result){
  static NSRelativeDateTimeFormatter *format;if(!format){format=NSRelativeDateTimeFormatter.new;format.unitsStyle=NSRelativeDateTimeFormatterUnitsStyleShort;}
  NSString *when=[format localizedStringForDate:[NSDate dateWithTimeIntervalSince1970:[result[@"date"] doubleValue]] relativeToDate:NSDate.date];
@@ -122,7 +122,6 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
  NSMutableSet *_loadingIcons;
  dispatch_queue_t _iconQueue;
  NSURL *_preview;
- NSButton *_support,*_updateLink;
  SHBrandButton *_menuButton;
  NSView *_tint;
  CGFloat _top,_floor;
@@ -130,17 +129,17 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
 - (instancetype)initWithQueries:(SHQueryController *)queries {
  SHPanel *panel=[[SHPanel alloc] initWithContentRect:NSMakeRect(0,0,Width,Top+MaxRows+Bottom) styleMask:NSWindowStyleMaskBorderless backing:NSBackingStoreBuffered defer:NO];
  if(!(self=[super initWithWindow:panel]))return nil;
- _queries=queries;_results=@[];_indexing=YES;_coverage=NSLocalizedString(@"Preparing search",@"Note at the right of the search panel while the app starts; keep it short");_icons=NSCache.new;_icons.countLimit=128;_loadingIcons=NSMutableSet.set;_iconQueue=dispatch_queue_create("com.superhound.icons",DISPATCH_QUEUE_SERIAL);
- panel.title=@"Superhound";panel.level=NSFloatingWindowLevel;panel.hidesOnDeactivate=NO;panel.collectionBehavior=NSWindowCollectionBehaviorCanJoinAllSpaces|NSWindowCollectionBehaviorFullScreenAuxiliary;panel.delegate=self;panel.releasedWhenClosed=NO;
- panel.opaque=NO;panel.backgroundColor=NSColor.clearColor;panel.hasShadow=YES;panel.appearance=[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua];panel.accessibilityIdentifier=@"superhound.search.panel";
+ _queries=queries;_results=@[];_indexing=YES;_coverage=NSLocalizedString(@"Preparing search",@"Note at the right of the search panel while the app starts; keep it short");_icons=NSCache.new;_icons.countLimit=128;_loadingIcons=NSMutableSet.set; _iconQueue=dispatch_queue_create("com.ultrahound.icons",DISPATCH_QUEUE_SERIAL);
+ panel.title=@"Ultrahound";panel.level=NSFloatingWindowLevel;panel.hidesOnDeactivate=NO;panel.collectionBehavior=NSWindowCollectionBehaviorCanJoinAllSpaces|NSWindowCollectionBehaviorFullScreenAuxiliary;panel.delegate=self;panel.releasedWhenClosed=NO;
+ panel.opaque=NO;panel.backgroundColor=NSColor.clearColor;panel.hasShadow=YES;panel.appearance=[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua];panel.accessibilityIdentifier=@"ultrahound.search.panel";
  // A dark blur with a charcoal tint keeps strong wallpaper colors out; the tint carries the one border.
  NSVisualEffectView *view=[[NSVisualEffectView alloc] initWithFrame:NSMakeRect(0,0,Width,Top+MaxRows+Bottom)];view.material=NSVisualEffectMaterialHUDWindow;view.blendingMode=NSVisualEffectBlendingModeBehindWindow;view.state=NSVisualEffectStateActive;view.maskImage=Mask(12);panel.contentView=view;
  _tint=[[NSView alloc] initWithFrame:view.bounds];_tint.autoresizingMask=NSViewWidthSizable|NSViewHeightSizable;_tint.wantsLayer=YES;_tint.layer.cornerRadius=12;_tint.layer.borderWidth=1;_tint.layer.borderColor=[NSColor colorWithWhite:1 alpha:0.12].CGColor;[view addSubview:_tint];[self applyTransparency];
  [NSWorkspace.sharedWorkspace.notificationCenter addObserver:self selector:@selector(applyTransparency) name:NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification object:nil];
  // The system search bezel has a fixed height that clips 22-point text, so the field draws no bezel.
  NSImageView *glass=[NSImageView imageViewWithImage:[[NSImage imageWithSystemSymbolName:@"magnifyingglass" accessibilityDescription:nil] imageWithSymbolConfiguration:[NSImageSymbolConfiguration configurationWithPointSize:18 weight:NSFontWeightRegular]]];glass.frame=NSMakeRect(16,Bottom+MaxRows+12,28,32);glass.autoresizingMask=NSViewMinYMargin;glass.contentTintColor=NSColor.secondaryLabelColor;[view addSubview:glass];
- _field=[[NSTextField alloc] initWithFrame:NSMakeRect(52,Bottom+MaxRows+12,Width-68,32)];_field.autoresizingMask=NSViewMinYMargin;_field.bordered=NO;_field.drawsBackground=NO;_field.focusRingType=NSFocusRingTypeNone;_field.usesSingleLineMode=YES;_field.cell.scrollable=YES;_field.font=[NSFont systemFontOfSize:22];_field.delegate=self;_field.accessibilityIdentifier=@"superhound.search.input";_field.accessibilityLabel=NSLocalizedString(@"Search apps and selected folders",@"VoiceOver label of the search field");[view addSubview:_field];
- _section=[NSTextField labelWithString:@""];_section.font=[NSFont systemFontOfSize:12 weight:NSFontWeightMedium];_section.textColor=NSColor.secondaryLabelColor;_section.lineBreakMode=NSLineBreakByWordWrapping;_section.cell.wraps=YES;_section.cell.truncatesLastVisibleLine=YES;_section.maximumNumberOfLines=2;_section.accessibilityIdentifier=@"superhound.search.status";[view addSubview:_section];
+ _field=[[NSTextField alloc] initWithFrame:NSMakeRect(52,Bottom+MaxRows+12,Width-68,32)];_field.autoresizingMask=NSViewMinYMargin;_field.bordered=NO;_field.drawsBackground=NO;_field.focusRingType=NSFocusRingTypeNone;_field.usesSingleLineMode=YES;_field.cell.scrollable=YES;_field.font=[NSFont systemFontOfSize:22];_field.delegate=self;_field.accessibilityIdentifier=@"ultrahound.search.input";_field.accessibilityLabel=NSLocalizedString(@"Search apps and selected folders",@"VoiceOver label of the search field");[view addSubview:_field];
+ _section=[NSTextField labelWithString:@""];_section.font=[NSFont systemFontOfSize:12 weight:NSFontWeightMedium];_section.textColor=NSColor.secondaryLabelColor;_section.lineBreakMode=NSLineBreakByWordWrapping;_section.cell.wraps=YES;_section.cell.truncatesLastVisibleLine=YES;_section.maximumNumberOfLines=2;_section.accessibilityIdentifier=@"ultrahound.search.status";[view addSubview:_section];
  _note=[NSTextField labelWithString:@""];_note.font=[NSFont systemFontOfSize:12];_note.textColor=NSColor.tertiaryLabelColor;_note.alignment=NSTextAlignmentRight;_note.lineBreakMode=NSLineBreakByTruncatingHead;[view addSubview:_note];
  NSScrollView *scroll=_scroll=[[NSScrollView alloc] initWithFrame:NSMakeRect(8,Bottom,Width-16,MaxRows)];scroll.hasVerticalScroller=NO;scroll.drawsBackground=NO;
  _table=[[SHResultsTable alloc] initWithFrame:scroll.bounds];
@@ -148,16 +147,13 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
  panel.shortcut=^BOOL(NSEvent *event){return [weak shortcut:event];};
  // A click in the field places the caret in the typed text, so the completion goes first.
  [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent *(NSEvent *event){SHSearchPanelController *self=weak;if(self && event.window==self.window && NSPointInRect([self->_field convertPoint:event.locationInWindow fromView:nil],self->_field.bounds))[self clearCompletion];return event;}];
- ((SHResultsTable *)_table).command=^BOOL(NSEvent *event){if(event.keyCode==53){[weak escape];return YES;}if(event.keyCode==36 || event.keyCode==76){[weak openSelected:(event.modifierFlags&NSEventModifierFlagCommand)!=0];return YES;}return NO;};_table.headerView=nil;_table.style=NSTableViewStylePlain;_table.intercellSpacing=NSMakeSize(0,0);_table.backgroundColor=NSColor.clearColor;_table.selectionHighlightStyle=NSTableViewSelectionHighlightStyleRegular;_table.delegate=self;_table.dataSource=self;_table.allowsEmptySelection=YES;_table.target=self;_table.action=@selector(openClicked:);_table.menu=NSMenu.new;_table.menu.delegate=self;_table.accessibilityIdentifier=@"superhound.search.results";_table.accessibilityLabel=NSLocalizedString(@"Search results",@"VoiceOver label of the result list");
+ ((SHResultsTable *)_table).command=^BOOL(NSEvent *event){if(event.keyCode==53){[weak escape];return YES;}if(event.keyCode==36 || event.keyCode==76){[weak openSelected:(event.modifierFlags&NSEventModifierFlagCommand)!=0];return YES;}return NO;};_table.headerView=nil;_table.style=NSTableViewStylePlain;_table.intercellSpacing=NSMakeSize(0,0);_table.backgroundColor=NSColor.clearColor;_table.selectionHighlightStyle=NSTableViewSelectionHighlightStyleRegular;_table.delegate=self;_table.dataSource=self;_table.allowsEmptySelection=YES;_table.target=self;_table.action=@selector(openClicked:);_table.menu=NSMenu.new;_table.menu.delegate=self;_table.accessibilityIdentifier=@"ultrahound.search.results";_table.accessibilityLabel=NSLocalizedString(@"Search results",@"VoiceOver label of the result list");
  NSTableColumn *column=[[NSTableColumn alloc] initWithIdentifier:@"result"];column.width=Width-16;[_table addTableColumn:column];scroll.documentView=_table;[view addSubview:scroll];
  NSView *rule=[[NSView alloc] initWithFrame:NSMakeRect(16,40,Width-32,1)];rule.wantsLayer=YES;rule.layer.backgroundColor=[NSColor colorWithWhite:1 alpha:0.1].CGColor;[view addSubview:rule];
  _help=[NSTextField labelWithString:@""];_help.lineBreakMode=NSLineBreakByClipping;[view addSubview:_help];
  _logo=[NSImageView imageViewWithImage:[NSBundle.mainBundle imageForResource:@"LogoTemplate"]?:NSImage.new];_logo.image.template=YES;_logo.imageScaling=NSImageScaleProportionallyUpOrDown;_logo.contentTintColor=NSColor.secondaryLabelColor;_logo.accessibilityElement=NO;[view addSubview:_logo];
- _brand=[NSTextField labelWithString:@"Superhound"];_brand.font=[NSFont systemFontOfSize:12 weight:NSFontWeightMedium];_brand.textColor=NSColor.secondaryLabelColor;_brand.accessibilityElement=NO;[view addSubview:_brand];
- _menuButton=[[SHBrandButton alloc] initWithFrame:NSZeroRect];_menuButton.bordered=NO;_menuButton.transparent=YES;_menuButton.title=@"";_menuButton.target=self;_menuButton.action=@selector(showMenu:);_menuButton.toolTip=NSLocalizedString(@"Settings and more",@"Tooltip of the logo in the panel footer, which opens the app menu");_menuButton.accessibilityLabel=NSLocalizedString(@"Superhound menu",@"VoiceOver label of the logo in the panel footer, which opens the app menu");_menuButton.hovered=^(BOOL hovered){[weak hover:hovered];};[view addSubview:_menuButton];
- _support=[NSButton buttonWithTitle:@"" target:self action:nil];_support.bordered=NO;_support.image=[[NSImage imageWithSystemSymbolName:@"heart.fill" accessibilityDescription:nil] imageWithSymbolConfiguration:[NSImageSymbolConfiguration configurationWithPointSize:10 weight:NSFontWeightRegular]];_support.imagePosition=NSImageLeading;_support.imageHugsTitle=YES;_support.contentTintColor=NSColor.systemYellowColor;[view addSubview:_support];
- _updateLink=[NSButton buttonWithTitle:@"" target:self action:@selector(openUpdate:)];_updateLink.bordered=NO;_updateLink.hidden=YES;[view addSubview:_updateLink];
- self.licensed=NO;
+ _brand=[NSTextField labelWithString:@"Ultrahound"];_brand.font=[NSFont systemFontOfSize:12 weight:NSFontWeightMedium];_brand.textColor=NSColor.secondaryLabelColor;_brand.accessibilityElement=NO;[view addSubview:_brand];
+ _menuButton=[[SHBrandButton alloc] initWithFrame:NSZeroRect];_menuButton.bordered=NO;_menuButton.transparent=YES;_menuButton.title=@"";_menuButton.target=self;_menuButton.action=@selector(showMenu:);_menuButton.toolTip=NSLocalizedString(@"Settings and more",@"Tooltip of the logo in the panel footer, which opens the app menu");_menuButton.accessibilityLabel=NSLocalizedString(@"Ultrahound menu",@"VoiceOver label of the logo in the panel footer, which opens the app menu");_menuButton.hovered=^(BOOL hovered){[weak hover:hovered];};[view addSubview:_menuButton];
  return self;
 }
 // Reduce Transparency gets an opaque charcoal panel.
@@ -178,37 +174,21 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
  CGFloat height=self.fittingHeight;if(height>=NSHeight(self.window.frame) || !self.window.isVisible)[self resize];else {[self place];[self performSelector:@selector(resize) withObject:nil afterDelay:0.15];}
 }
 - (void)resize {if(!_top)return;NSRect frame=self.window.frame;CGFloat height=self.fittingHeight;if(height!=NSHeight(frame) || NSMaxY(frame)!=_top){[self.window setFrame:NSMakeRect(NSMinX(frame),_top-height,Width,height) display:YES];[self.window invalidateShadow];}[self place];}
-// Right to left: the logo and name, Supporter or Become a Supporter, and Update to; the key hints take the rest and drop Close when they do not fit.
+// The logo and name sit at the right; the key hints take the rest and drop Close when they do not fit.
 - (void)layoutFooter {
  CGFloat width=ceil(_brand.fittingSize.width),left=Width-16-width;Seat(_brand,left,width);left-=6+14;_logo.frame=NSMakeRect(left,12,14,14);_menuButton.frame=NSMakeRect(left-4,6,Width-16-left+8,28);
- for(NSButton *link in @[_support,_updateLink])if(!link.hidden){width=ceil(link.fittingSize.width);left-=18+width;Seat(link,left,width);}
  NSString *action=_history?NSLocalizedString(@"Paste",@"Menu item and footer hint verb: paste the text"):NSLocalizedString(@"Open",@"Menu item and footer hint verb: open the selected result; keep it short"),*actions=NSLocalizedString(@"Actions",@"Footer hint next to ⌘K: show the action menu; keep it short");_help.attributedStringValue=Hints(@[@"↩",action,@"⌘K",actions,@"Esc",NSLocalizedString(@"Close",@"Footer hint next to Esc: close the panel; keep it short")]);
  if(_help.fittingSize.width>left-18-16)_help.attributedStringValue=Hints(@[@"↩",action,@"⌘K",actions]);
  Seat(_help,16,left-18-16);
 }
-// A licensed copy shows Supporter as a thank-you; an unlicensed one shows Become a Supporter, which opens the license key window.
-- (void)setLicensed:(BOOL)licensed {
- _licensed=licensed;NSString *title=licensed?NSLocalizedString(@"Supporter",@"Label in the panel footer of a licensed copy, after a heart; keep it short"):NSLocalizedString(@"Become a Supporter",@"Link in the panel footer of an unlicensed copy, after a heart, and the title of the reminder every tenth opening; it opens the license key window; keep it short");
- _support.attributedTitle=[[NSAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[NSFont systemFontOfSize:12],NSForegroundColorAttributeName:NSColor.systemYellowColor}];_support.accessibilityLabel=title;_support.action=licensed?nil:@selector(enterLicense:);
- _support.toolTip=licensed?NSLocalizedString(@"Thank you for supporting Superhound.",@"Tooltip of the Supporter label in the panel footer"):NSLocalizedString(@"Enter your license key, or get a Supporter License.",@"Tooltip of the Become a Supporter link in the panel footer");
- [self hover:NO];[self layoutFooter];
-}
-- (void)setUpdate:(NSString *)update {
- _update=[update copy];_updateLink.hidden=!update;
- if(update){_updateLink.attributedTitle=[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"Update to %@",@"Link in the panel footer; the argument is a version number such as 0.5.0; keep it short"),update] attributes:@{NSFontAttributeName:[NSFont systemFontOfSize:12],NSForegroundColorAttributeName:NSColor.controlAccentColor}];_updateLink.toolTip=[NSString stringWithFormat:NSLocalizedString(@"Superhound %@ is available. Click to install it.",@"Tooltip of the Update to link; the argument is a version number"),update];_updateLink.accessibilityLabel=_updateLink.toolTip;}
- [self layoutFooter];
-}
-// A licensed copy shows the logo and name in full white; an unlicensed one shows them gray until the pointer is over them.
-- (void)hover:(BOOL)hovered {NSColor *color=hovered || _licensed?NSColor.labelColor:NSColor.secondaryLabelColor;_logo.contentTintColor=color;_brand.textColor=color;}
+// Hovering the footer logo and name makes their click target clear.
+- (void)hover:(BOOL)hovered {NSColor *color=hovered?NSColor.labelColor:NSColor.secondaryLabelColor;_logo.contentTintColor=color;_brand.textColor=color;}
 // The menu opens above the logo with its right edge at the right margin; the pointer may leave during the menu, so the tint follows its place when the menu closes.
 - (void)showMenu:(id)sender {
  (void)sender;if(!_appMenu)return;[_appMenu update];NSRect frame=_menuButton.frame;
  [_appMenu popUpMenuPositioningItem:nil atLocation:NSMakePoint(NSMaxX(frame)-4-_appMenu.size.width,NSMaxY(frame)+_appMenu.size.height) inView:self.window.contentView];
  [self hover:self.window.isVisible && NSPointInRect([_menuButton convertPoint:self.window.mouseLocationOutsideOfEventStream fromView:nil],_menuButton.bounds)];
 }
-- (void)openUpdate:(id)sender {(void)sender;[self dismiss:NO];if(self.installUpdate)self.installUpdate();}
-- (void)buy:(id)sender {(void)sender;[self dismiss:NO];[NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://superhound.app/buy"]];}
-- (void)enterLicense:(id)sender {(void)sender;[self dismiss:NO];if(self.enterLicense)self.enterLicense();}
 - (void)toggle {[self show:NO];}
 - (void)toggleHistory {[self show:YES];}
 // The other shortcut switches the open panel to its mode and keeps the app to return to.
@@ -224,14 +204,6 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
  NSRect frame=screen.visibleFrame;_top=NSMaxY(frame)-MAX(0,MIN(100,NSHeight(frame)-(Top+MaxRows+Bottom)-10));_floor=NSMinY(frame);[self.window setFrameOrigin:NSMakePoint(NSMidX(frame)-Width/2,NSMinY(self.window.frame))];[self resize];
  [NSApp activateIgnoringOtherApps:YES];[self.window makeKeyAndOrderFront:nil];[self.window makeFirstResponder:_field];
  [_field selectText:nil];[self search:YES];SHMeasure(@"panel_activation",activated);
- if(!open && !_licensed)[self remind];
-}
-// Every tenth opening asks for a license. Return does nothing, so a fast Return press cannot open the purchase page.
-- (void)remind {
- NSUserDefaults *d=NSUserDefaults.standardUserDefaults;NSInteger opens=[d integerForKey:@"unlicensedOpens"]+1;[d setInteger:opens forKey:@"unlicensedOpens"];if(opens%10)return;
- NSAlert *alert=NSAlert.new;alert.messageText=NSLocalizedString(@"Become a Supporter",@"Title of the alert that asks for a license every tenth opening");alert.informativeText=NSLocalizedString(@"Superhound is free, and all features keep working. A Supporter License, $15 once for 3 Macs, supports development.",nil);
- NSButton *buy=[alert addButtonWithTitle:NSLocalizedString(@"Get a Supporter License",@"Button that opens the purchase page")];buy.keyEquivalent=@"";NSButton *later=[alert addButtonWithTitle:NSLocalizedString(@"Not Now",@"Alert button")];later.keyEquivalent=@"\e";
- [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse response){if(response==NSAlertFirstButtonReturn)[self buy:nil];else [self.window makeFirstResponder:self->_field];}];
 }
 - (void)dismiss:(BOOL)restore {
  [self clearCompletion];[_queries cancel];_queuedOpen=nil;[self hover:NO];if(self.window.attachedSheet)[self.window endSheet:self.window.attachedSheet];[self.window orderOut:nil];_error=nil;
@@ -251,7 +223,7 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
  // The web search row alone still counts as no matches.
  NSString *category=_history?nil:SHCategory(self.query);NSUInteger found=0,members=0;for(NSDictionary *r in _results){if(![r[@"type"] isEqual:@"web"])found++;if([r[@"type"] isEqual:category])members++;}
  BOOL empty=!self.query.length,none=!found && !_pending;
- NSString *label=_error?:_history && !_clipboard.count?NSLocalizedString(@"The clipboard history is empty",@"Label above the result list"):empty?(_history?NSLocalizedString(@"Clipboard",@"Section label: the clipboard history; Settings row label and search panel band; keep it short"):NSLocalizedString(@"Suggested",@"Section label above the apps shown before the user types")):members && !_pending?[NSString stringWithFormat:@"%@ · %@",SHCategoryName(category),Count(members)]:none?(_indexing && !_history?NSLocalizedString(@"No matches yet. Still indexing.",@"Label above the result list while a search location is still indexing; keep it short"):NSLocalizedString(@"No matches",@"Label above the result list")):nil;
+ NSString *label=_error?:_history && !_clipboard.count?NSLocalizedString(@"The clipboard history is empty",@"Label above the result list"):empty?(_history?NSLocalizedString(@"Clipboard",@"Section label: the clipboard history; Settings row label and search panel band; keep it short"):nil):members && !_pending?[NSString stringWithFormat:@"%@ · %@",SHCategoryName(category),Count(members)]:none?(_indexing && !_history?NSLocalizedString(@"No matches yet. Still indexing.",@"Label above the result list while a search location is still indexing; keep it short"):NSLocalizedString(@"No matches",@"Label above the result list")):nil;
  _section.hidden=_note.hidden=!label;_section.stringValue=label?:@"";_section.textColor=_error?NSColor.labelColor:NSColor.secondaryLabelColor;
  _note.stringValue=_error?@"":_history?(!_clipboard.count?NSLocalizedString(@"Text you copy in any app comes here",@"Note at the right of the clipboard history panel; keep it short"):empty?[NSString stringWithFormat:_clipboard.count==1?NSLocalizedString(@"%@ item · Kept on this Mac only",@"Note at the right of the clipboard history panel; the argument is 1"):NSLocalizedString(@"%@ items · Kept on this Mac only",@"Note at the right of the clipboard history panel; the argument is a number other than 1"),Count(_clipboard.count)]:@""):_coverage?:@"";
  [self fit];
@@ -281,39 +253,35 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
  if(_history){_pending=NO;[self present:[_clipboard search:self.query limit:100]];return;}
  // The previous rows stay visible until the new results arrive; _pending stops Return opening them.
  __weak typeof(self) weak=self;NSDictionary *answer=[SHAnswer answerForQuery:self.query],*address=[SHWeb addressForQuery:self.query],*web=[SHWeb searchForQuery:self.query engine:[NSUserDefaults.standardUserDefaults stringForKey:@"searchEngine"]];
- NSArray<NSDictionary *> *preferred=[_usage preferredForQuery:self.query],*emoji=[_emoji search:self.query limit:8];
+ NSArray<NSDictionary *> *preferred=[_usage preferredForQuery:self.query];
  // Shorter queries would match too much copied text.
  NSArray<NSDictionary *> *clips=[self.query stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet].length>=3?[_clipboard search:self.query limit:2]:@[];
  NSString *query=self.query;_submitted=query;
  [_queries submit:query preferred:preferred completion:^(NSArray<NSDictionary *> *results){
   SHSearchPanelController *self=weak;if(!self || !self.window.isVisible || self->_history)return;
   // A web address or a calculation takes the first of the eight rows. A result whose name or file name is the typed text, such as Safari.app or logo.ai, stays above the address.
-  // Order: web address, answer, results the user chose before, applications, settings panes, and commands, up to 3 emoji, up to 2 clipboard items, files and folders, then the web search, which keeps the last of the eight rows.
-  NSMutableArray *rows=NSMutableArray.array,*otherEmoji=[emoji mutableCopy];NSUInteger named=NSNotFound;NSString *typed=[query stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
+  // Order: web address, answer, results the user chose before, applications, settings panes, and commands, up to 2 clipboard items, files and folders, then the web search, which keeps the last of the eight rows.
+  NSMutableArray *rows=NSMutableArray.array;NSUInteger named=NSNotFound;NSString *typed=[query stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
   for(NSUInteger i=0;i<results.count && named==NSNotFound;i++)if([results[i][@"name"] caseInsensitiveCompare:typed]==NSOrderedSame || [[results[i][@"path"] lastPathComponent] caseInsensitiveCompare:typed]==NSOrderedSame)named=i;
   if(address && named==NSNotFound)[rows addObject:address];if(answer)[rows addObject:answer];
   NSSet *chosen=[NSSet setWithArray:[preferred valueForKey:@"path"]];
-  for(NSDictionary *p in preferred)for(NSDictionary *e in emoji)if([e[@"path"] isEqual:p[@"path"]]){[rows addObject:e];[otherEmoji removeObjectIdenticalTo:e];}
   NSUInteger lead=0;while(lead<results.count && (SHLaunchable(results[lead]) || [chosen containsObject:results[lead][@"path"]]))lead++;
   // The result named like the address leads with the rows above it, also when it is a plain file.
   if(address && named!=NSNotFound)lead=MAX(lead,named+1);
-  NSString *category=SHCategory(query);NSArray<NSDictionary *> *group=!category?nil:[category isEqual:@"emoji"]?self->_emoji.list:[self->_queries.snapshot entriesOfType:category];
+  NSString *category=SHCategory(query);NSArray<NSDictionary *> *group=!category?nil:[self->_queries.snapshot entriesOfType:category];
   if(group.count){
    // A category word lists its whole group, with no row limit, after the results chosen before and the matching applications outside the group; the other matches follow it.
    NSSet *members=[NSSet setWithArray:[group valueForKey:@"path"]];NSMutableSet *added=[NSMutableSet setWithArray:[rows valueForKey:@"path"]];
    void (^add)(NSDictionary *)=^(NSDictionary *r){if(![added containsObject:r[@"path"]]){[added addObject:r[@"path"]];[rows addObject:r];}};
    for(NSUInteger i=0;i<lead;i++)if([chosen containsObject:results[i][@"path"]] || ![members containsObject:results[i][@"path"]])add(results[i]);
    if(address && named!=NSNotFound)[rows addObject:address];
-   for(NSDictionary *e in group)add(e);for(NSDictionary *e in otherEmoji)add(e);for(NSDictionary *clip in clips)add(clip);for(NSUInteger i=lead;i<results.count;i++)add(results[i]);
+   for(NSDictionary *e in group)add(e);for(NSDictionary *clip in clips)add(clip);for(NSUInteger i=lead;i<results.count;i++)add(results[i]);
   }else{
-   NSUInteger shown=MIN((NSUInteger)3,otherEmoji.count),limit=web?7:8,reserve=address && named!=NSNotFound?1:0;
-   for(NSUInteger i=0;i<lead && rows.count+shown+clips.count+reserve<limit;i++)[rows addObject:results[i]];
+   NSUInteger limit=web?7:8,reserve=address && named!=NSNotFound?1:0;
+   for(NSUInteger i=0;i<lead && rows.count+clips.count+reserve<limit;i++)[rows addObject:results[i]];
    if(address && named!=NSNotFound)[rows addObject:address];
-   for(NSUInteger i=0;i<shown;i++)[rows addObject:otherEmoji[i]];
    for(NSDictionary *clip in clips)if(rows.count<limit)[rows addObject:clip];
    for(NSUInteger i=lead;i<results.count && rows.count<limit;i++)[rows addObject:results[i]];
-   // With few other results, more emoji fill the free rows.
-   for(NSUInteger i=shown;i<otherEmoji.count && rows.count<limit;i++)[rows addObject:otherEmoji[i]];
   }
   if(web)[rows addObject:web];
   self->_pending=NO;[self present:rows];
@@ -335,15 +303,15 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {(void)tableView;return (NSInteger)_results.count;}
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)column row:(NSInteger)row {
  (void)column;
- NSDictionary *result=_results[(NSUInteger)row];NSString *path=result[@"path"],*kind=result[@"type"];BOOL emoji=[kind isEqual:@"emoji"],clip=[kind isEqual:@"clipboard"],web=[kind isEqual:@"url"] || [kind isEqual:@"web"],answer=emoji || clip || web || [kind isEqual:@"answer"],compact=SHLaunchable(result),located=!answer && !compact;
+ NSDictionary *result=_results[(NSUInteger)row];NSString *path=result[@"path"],*kind=result[@"type"];BOOL clip=[kind isEqual:@"clipboard"],web=[kind isEqual:@"url"] || [kind isEqual:@"web"],answer=clip || web || [kind isEqual:@"answer"],compact=SHLaunchable(result),located=!answer && !compact;
  CGFloat height=compact?40:48;SHResultCell *cell=[tableView makeViewWithIdentifier:@"result" owner:self]?:SHResultCell.new;cell.frame=NSMakeRect(0,0,Width-16,height);
  // Every row has the same 28-point icon box; file icons scale with their proportions and symbols keep one size.
- NSString *symbol=emoji?nil:clip?@"doc.on.clipboard":[kind isEqual:@"web"]?@"magnifyingglass":web?@"globe":answer?@"equal.circle":result[@"symbol"];
- NSImageView *icon=cell.imageView;icon.frame=NSMakeRect(8,(height-28)/2,28,28);icon.imageScaling=symbol?NSImageScaleNone:NSImageScaleProportionallyUpOrDown;icon.image=symbol?[[NSImage imageWithSystemSymbolName:symbol accessibilityDescription:nil] imageWithSymbolConfiguration:[NSImageSymbolConfiguration configurationWithPointSize:17 weight:NSFontWeightRegular]]:emoji?nil:[_icons objectForKey:path];if(result[@"color"])icon.image=Swatch(result[@"color"]);
- cell.glyph.hidden=!emoji;if(emoji){cell.glyph.stringValue=result[@"emoji"];cell.glyph.frame=NSMakeRect(4,(height-30)/2,36,30);}
+ NSString *symbol=clip?@"doc.on.clipboard":[kind isEqual:@"web"]?@"magnifyingglass":web?@"globe":answer?@"equal.circle":result[@"symbol"];
+ NSImageView *icon=cell.imageView;icon.frame=NSMakeRect(8,(height-28)/2,28,28);icon.imageScaling=symbol?NSImageScaleNone:NSImageScaleProportionallyUpOrDown;icon.image=symbol?[[NSImage imageWithSystemSymbolName:symbol accessibilityDescription:nil] imageWithSymbolConfiguration:[NSImageSymbolConfiguration configurationWithPointSize:17 weight:NSFontWeightRegular]]:[_icons objectForKey:path];if(result[@"color"])icon.image=Swatch(result[@"color"]);
+ cell.glyph.hidden=YES;
  // An app shows its folder only when another result has the same name.
  BOOL shared=NO;for(NSDictionary *other in _results)if(other!=result && [other[@"name"] caseInsensitiveCompare:result[@"name"]]==NSOrderedSame)shared=YES;
- NSString *detail=emoji?NSLocalizedString(@"Emoji · Return to copy",@"Row detail; Return is the key name"):clip?Copied(result):[kind isEqual:@"web"]?NSLocalizedString(@"Web search · Return to open in your browser",@"Row detail; Return is the key name"):web?NSLocalizedString(@"Web address · Return to open in your browser",@"Row detail; Return is the key name"):answer?[NSString stringWithFormat:NSLocalizedString(@"%@ · Return to copy",@"Row detail of a calculation, conversion, or colour; the argument is the typed input such as 2+2; Return is the key name"),result[@"detail"]]:[kind isEqual:@"settings"]?NSLocalizedString(@"System Settings",@"Row detail of a System Settings pane; the name of the macOS app"):[kind isEqual:@"command"]?NSLocalizedString(@"Command",@"Row detail of a system command such as Lock Screen; a noun"):[kind isEqual:@"app"] && !shared?@"":Context(result,_results);
+ NSString *detail=clip?Copied(result):[kind isEqual:@"web"]?NSLocalizedString(@"Web search · Return to open in your browser",@"Row detail; Return is the key name"):web?NSLocalizedString(@"Web address · Return to open in your browser",@"Row detail; Return is the key name"):answer?[NSString stringWithFormat:NSLocalizedString(@"%@ · Return to copy",@"Row detail of a calculation, conversion, or colour; the argument is the typed input such as 2+2; Return is the key name"),result[@"detail"]]:[kind isEqual:@"settings"]?NSLocalizedString(@"System Settings",@"Row detail of a System Settings pane; the name of the macOS app"):[kind isEqual:@"command"]?NSLocalizedString(@"Command",@"Row detail of a system command such as Lock Screen; a noun"):[kind isEqual:@"app"] && !shared?@"":Context(result,_results);
  NSTextField *name=cell.textField;name.attributedStringValue=Marked(result[@"name"],[kind isEqual:@"web"]?@"":self.query);
  NSTextField *info=cell.info;info.stringValue=detail;info.lineBreakMode=located || [kind isEqual:@"app"]?NSLineBreakByTruncatingHead:NSLineBreakByTruncatingTail;info.alignment=NSTextAlignmentNatural;
  if(compact){CGFloat width=detail.length?MIN(ceil(info.intrinsicContentSize.width),Text/2):0;name.frame=NSMakeRect(44,(height-18)/2,Text-width-(width?8:0),18);info.frame=NSMakeRect(44+Text-width,(height-16)/2,width,16);info.alignment=NSTextAlignmentRight;}
@@ -382,7 +350,7 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
  if([self action:action appliesTo:result])[self perform:action result:result application:nil];else NSBeep();
  return YES;
 }
-static BOOL Located(NSDictionary *result){return ![@[@"command",@"emoji",@"answer",@"clipboard",@"url",@"web"] containsObject:result[@"type"]];}
+static BOOL Located(NSDictionary *result){return ![@[@"command",@"answer",@"clipboard",@"url",@"web"] containsObject:result[@"type"]];}
 - (BOOL)action:(NSString *)action appliesTo:(NSDictionary *)result {
  if([action isEqual:@"quickLook"])return Located(result) && ![result[@"type"] isEqual:@"settings"];
  if([action isEqual:@"copyPath"])return Located(result);
@@ -432,7 +400,6 @@ static BOOL Located(NSDictionary *result){return ![@[@"command",@"emoji",@"answe
   _reloading=YES;[_table reloadData];if(row>=0)[_table selectRowIndexes:[NSIndexSet indexSetWithIndex:(NSUInteger)row] byExtendingSelection:NO];else [_table deselectAll:nil];_reloading=NO;
   _selectedID=row>=0?rows[(NSUInteger)row][@"id"]:nil;[self updateStatus];if(self.openResult)self.openResult(result,action,nil);return;
  }
- if([result[@"type"] isEqual:@"emoji"])[_usage recordQuery:self.query result:result];
  if(result[@"copy"]){Copy(result[@"copy"]);[self dismiss:YES];return;}
  // A web address or search exists only for the text typed, so it teaches the ranking nothing.
  if(![@[@"url",@"web"] containsObject:result[@"type"]])[_usage recordQuery:self.query result:result];[self dismiss:[result[@"type"] isEqual:@"command"]];if(self.openResult)self.openResult(result,action,application);

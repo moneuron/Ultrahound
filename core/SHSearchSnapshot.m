@@ -11,11 +11,11 @@ NSString *SHCompletion(NSString *name,NSString *typed) {
  return range.location==0?[name substringFromIndex:NSMaxRange(range)]:nil;
 }
 NSString *SHCategoryName(NSString *category) {
- return [category isEqual:@"command"]?NSLocalizedString(@"Commands",@"Word that lists all system commands when typed in the search field, and the label above that list; one word"):[category isEqual:@"settings"]?NSLocalizedString(@"Settings",@"Word that lists all System Settings panes when typed in the search field, and the label above that list; one word"):NSLocalizedString(@"Emoji",@"Word that lists all emoji when typed in the search field, and the label above that list; one word");
+ return [category isEqual:@"command"]?NSLocalizedString(@"Commands",@"Word that lists all system commands when typed in the search field, and the label above that list; one word"):NSLocalizedString(@"Settings",@"Word that lists all System Settings panes when typed in the search field, and the label above that list; one word");
 }
 NSString *SHCategory(NSString *query) {
  NSString *typed=SHFold([query stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet]);
- for(NSArray *c in @[@[@"command",@"commands"],@[@"settings",@"settings"],@[@"emoji",@"emoji"]])if([typed isEqual:c[1]] || [typed isEqual:SHFold(SHCategoryName(c[0]))])return c[0];
+ for(NSArray *c in @[@[@"command",@"commands"],@[@"settings",@"settings"]])if([typed isEqual:c[1]] || [typed isEqual:SHFold(SHCategoryName(c[0]))])return c[0];
  return nil;
 }
 // Names are usually unique; aliases and parent paths commonly repeat across entries.
@@ -185,14 +185,7 @@ static BOOL SameText(SHText a,SHText b) {return a.length==b.length && !memcmp(a.
  NSArray *raw=[query componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
  NSMutableArray *terms=NSMutableArray.array; for(NSString *t in raw)if(t.length)[terms addObject:t];
  if(cancelled && cancelled())return @[];
- if(!terms.count){
-  // The most opened applications lead; applications by name fill the remaining rows.
-  NSMutableArray *apps=NSMutableArray.array;NSMutableIndexSet *chosen=NSMutableIndexSet.indexSet;
-  void (^consider)(NSUInteger)=^(NSUInteger i){if(apps.count<8 && (self->_records[i].flags&App) && ![self->_excludedRoots containsObject:self->_roots[self->_records[i].root]] && ![chosen containsIndex:i]){[chosen addIndex:i];[apps addObject:[self entryAt:i]];}};
-  for(NSDictionary *p in preferred){NSUInteger i=[self indexOfName:p[@"name"] path:p[@"path"]];if(i!=NSNotFound)consider(i);}
-  for(NSUInteger i=0;i<_size && apps.count<8;i++)consider(i);
-  return apps;
- }
+ if(!terms.count)return @[];
  if(terms.count>SIZE_MAX/sizeof(SHText))return @[];
  SHText *texts=calloc(terms.count,sizeof(SHText)); if(!texts)return @[];
  BOOL valid=YES; for(NSUInteger j=0;j<terms.count;j++){texts[j]=Text(terms[j]);if(!texts[j].points)valid=NO;}

@@ -1,7 +1,10 @@
 #import "SHSettingsController.h"
 #import "SHSpotlight.h"
 #import "SHWeb.h"
-#import "SHUpdater.h"
+static BOOL SHRelaunch(NSURL *url) {
+ NSTask *task=NSTask.new;task.executableURL=[NSURL fileURLWithPath:@"/bin/sh"];task.arguments=@[@"-c",@"while /bin/kill -0 \"$0\" 2>/dev/null; do /bin/sleep 0.2; done; /usr/bin/open \"$1\"",[NSString stringWithFormat:@"%d",NSProcessInfo.processInfo.processIdentifier],url.path];
+ if(![task launchAndReturnError:nil])return NO;[NSApp terminate:nil];return YES;
+}
 @implementation SHShortcutButton {SHHotKey *_hotKey;id _monitor;}
 - (instancetype)initWithFrame:(NSRect)frame hotKey:(SHHotKey *)hotKey {
  if((self=[super initWithFrame:frame])){_hotKey=hotKey;self.bezelStyle=NSBezelStyleRounded;self.title=hotKey.label;self.target=self;self.action=@selector(record:);}return self;
@@ -36,49 +39,49 @@ NSButton *SHButton(NSView *view,NSString *title,NSRect frame,id target,SEL actio
 - (instancetype)initWithLibrary:(SHLibrary *)library hotKey:(SHHotKey *)hotKey historyKey:(SHHotKey *)historyKey {
  NSWindow *window=[[NSWindow alloc] initWithContentRect:NSMakeRect(0,0,740,834) styleMask:NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable backing:NSBackingStoreBuffered defer:NO];
  if(!(self=[super initWithWindow:window]))return nil;
- _library=library;_hotKey=hotKey;_historyKey=historyKey;_roots=@[];window.title=NSLocalizedString(@"Superhound Settings",@"Settings window title");window.releasedWhenClosed=NO;window.accessibilityIdentifier=@"superhound.settings";
+ _library=library;_hotKey=hotKey;_historyKey=historyKey;_roots=@[];window.title=NSLocalizedString(@"Ultrahound Settings",@"Settings window title");window.releasedWhenClosed=NO;window.accessibilityIdentifier=@"ultrahound.settings";
  NSView *view=window.contentView;
  SHLabel(view,NSLocalizedString(@"Your apps. Your folders. A shortcut away.",@"Heading at the top of Settings"),NSMakeRect(24,540,690,30),22,NO);
  SHLabel(view,NSLocalizedString(@"Apps are included automatically. Files are searched only inside folders you select. File contents stay unread.",nil),NSMakeRect(24,492,690,40),13,YES);
  NSScrollView *scroll=[[NSScrollView alloc] initWithFrame:NSMakeRect(24,326,692,156)];scroll.hasVerticalScroller=YES;scroll.borderType=NSBezelBorder;
- _table=[[NSTableView alloc] initWithFrame:scroll.bounds];_table.headerView=nil;_table.rowHeight=49;_table.delegate=self;_table.dataSource=self;_table.allowsEmptySelection=YES;_table.accessibilityIdentifier=@"superhound.locations";_table.accessibilityLabel=NSLocalizedString(@"Search locations and coverage",@"VoiceOver label of the list of search locations");NSTableColumn *column=[[NSTableColumn alloc] initWithIdentifier:@"location"];column.width=670;[_table addTableColumn:column];scroll.documentView=_table;[view addSubview:scroll];
+ _table=[[NSTableView alloc] initWithFrame:scroll.bounds];_table.headerView=nil;_table.rowHeight=49;_table.delegate=self;_table.dataSource=self;_table.allowsEmptySelection=YES;_table.accessibilityIdentifier=@"ultrahound.locations";_table.accessibilityLabel=NSLocalizedString(@"Search locations and coverage",@"VoiceOver label of the list of search locations");NSTableColumn *column=[[NSTableColumn alloc] initWithIdentifier:@"location"];column.width=670;[_table addTableColumn:column];scroll.documentView=_table;[view addSubview:scroll];
  SHButton(view,NSLocalizedString(@"Add Folder…",@"Settings button; 120 points wide"),NSMakeRect(20,286,120,32),self,@selector(add:));
  _remove=SHButton(view,NSLocalizedString(@"Remove",@"Settings button: remove the selected search location; 90 points wide"),NSMakeRect(144,286,90,32),self,@selector(remove:));
  _reselect=SHButton(view,NSLocalizedString(@"Select Again…",@"Settings button: select the folder again to give access; 135 points wide"),NSMakeRect(238,286,135,32),self,@selector(reselect:));
  SHButton(view,NSLocalizedString(@"Refresh Catalog",@"Menu item and Settings button: scan the search locations again"),NSMakeRect(568,286,152,32),self,@selector(refresh:));
- _message=SHLabel(view,NSLocalizedString(@"Preparing catalog…",@"Status in Settings while the app starts"),NSMakeRect(24,248,690,34),11,YES);_message.accessibilityIdentifier=@"superhound.locations.status";
+ _message=SHLabel(view,NSLocalizedString(@"Preparing catalog…",@"Status in Settings while the app starts"),NSMakeRect(24,248,690,34),11,YES);_message.accessibilityIdentifier=@"ultrahound.locations.status";
  NSButton *exclude=[NSButton checkboxWithTitle:NSLocalizedString(@"Skip generated folders (.git, node_modules, vendor, build, dist, DerivedData)",@"Settings check box; keep the folder names as they are") target:self action:@selector(exclude:)];exclude.frame=NSMakeRect(24,214,690,24);
  NSDictionary *settings=[NSDictionary dictionaryWithContentsOfURL:[library.stateURL URLByAppendingPathComponent:@"folders.plist"]];exclude.state=settings[@"excludeGenerated"] && ![settings[@"excludeGenerated"] boolValue]?NSControlStateValueOff:NSControlStateValueOn;[view addSubview:exclude];
- SHLabel(view,NSLocalizedString(@"Hidden descendants, package contents, online-only placeholders, and Superhound’s own data are skipped. Symbolic links are listed without following them.",nil),NSMakeRect(24,176,690,32),11,YES);
+ SHLabel(view,NSLocalizedString(@"Hidden descendants, package contents, online-only placeholders, and Ultrahound’s own data are skipped. Symbolic links are listed without following them.",nil),NSMakeRect(24,176,690,32),11,YES);
  SHLabel(view,NSLocalizedString(@"Open search",@"Settings row label for the search shortcut; 160 points wide"),NSMakeRect(24,142,160,24),15,NO);
  _recorder=[[SHShortcutButton alloc] initWithFrame:NSMakeRect(189,136,170,32) hotKey:hotKey];_recorder.accessibilityLabel=NSLocalizedString(@"Record global search shortcut",@"VoiceOver label of the shortcut button");[view addSubview:_recorder];
  __weak typeof(self) weak=self;_recorder.changed=^{[weak shortcutStatus];};
  SHButton(view,NSLocalizedString(@"Retry",@"Settings button: register the shortcuts again; 100 points wide"),NSMakeRect(365,136,100,32),self,@selector(retry:));SHButton(view,NSLocalizedString(@"Keyboard Settings…",@"Settings button that opens System Settings → Keyboard; 199 points wide"),NSMakeRect(473,136,199,32),self,@selector(keyboardSettings:));
- _shortcutStatus=SHLabel(view,@"",NSMakeRect(24,91,690,40),12,NO);_shortcutStatus.accessibilityIdentifier=@"superhound.shortcut.status";
- _spotlight=[NSButton checkboxWithTitle:NSLocalizedString(@"Use ⌘Space in place of Spotlight",@"Settings check box") target:self action:@selector(spotlight:)];_spotlight.frame=NSMakeRect(24,58,690,24);_spotlight.accessibilityIdentifier=@"superhound.spotlight";[view addSubview:_spotlight];
- SHLabel(view,NSLocalizedString(@"Turns off Spotlight’s ⌘Space shortcut and opens Superhound with ⌘Space. To give ⌘Space back to Spotlight, turn this off, or choose Uninstall Superhound… in the menu bar.",@"Uninstall Superhound… is a menu item title"),NSMakeRect(44,15,670,38),11,YES);
+ _shortcutStatus=SHLabel(view,@"",NSMakeRect(24,91,690,40),12,NO);_shortcutStatus.accessibilityIdentifier=@"ultrahound.shortcut.status";
+ _spotlight=[NSButton checkboxWithTitle:NSLocalizedString(@"Use ⌘Space in place of Spotlight",@"Settings check box") target:self action:@selector(spotlight:)];_spotlight.frame=NSMakeRect(24,58,690,24);_spotlight.accessibilityIdentifier=@"ultrahound.spotlight";[view addSubview:_spotlight];
+ SHLabel(view,NSLocalizedString(@"Turns off Spotlight’s ⌘Space shortcut and opens Ultrahound with ⌘Space. To give ⌘Space back to Spotlight, turn this off, or choose Uninstall Ultrahound… in the menu bar.",@"Uninstall Ultrahound… is a menu item title"),NSMakeRect(44,15,670,38),11,YES);
  // The clipboard history row sits under the search shortcut text, with its status under it.
  for(NSView *v in view.subviews)[v setFrameOrigin:NSMakePoint(v.frame.origin.x,v.frame.origin.y+96)];
  SHLabel(view,NSLocalizedString(@"Clipboard",@"Section label: the clipboard history; Settings row label (160 points wide) and search panel band; keep it short"),NSMakeRect(24,68,160,24),15,NO);
  _historyRecorder=[[SHShortcutButton alloc] initWithFrame:NSMakeRect(189,62,170,32) hotKey:historyKey];_historyRecorder.accessibilityLabel=NSLocalizedString(@"Record clipboard history shortcut",@"VoiceOver label of the shortcut button");[view addSubview:_historyRecorder];
  _historyRecorder.changed=^{[weak shortcutStatus];};
  SHButton(view,[NSString stringWithFormat:NSLocalizedString(@"Use %@",@"Settings button that restores the default shortcut; the argument is a shortcut such as ⌥⌘V; 120 points wide"),historyKey.defaultLabel],NSMakeRect(365,62,120,32),self,@selector(defaultHistoryShortcut:));
- _historyStatus=SHLabel(view,@"",NSMakeRect(24,12,690,44),12,NO);_historyStatus.accessibilityIdentifier=@"superhound.history.shortcut.status";
+ _historyStatus=SHLabel(view,@"",NSMakeRect(24,12,690,44),12,NO);_historyStatus.accessibilityIdentifier=@"ultrahound.history.shortcut.status";
  // The web search row sits under the clipboard row.
  for(NSView *v in view.subviews)[v setFrameOrigin:NSMakePoint(v.frame.origin.x,v.frame.origin.y+44)];
  SHLabel(view,NSLocalizedString(@"Web search",@"Settings row label; 160 points wide"),NSMakeRect(24,24,160,24),15,NO);
- NSPopUpButton *engines=[[NSPopUpButton alloc] initWithFrame:NSMakeRect(189,20,170,28) pullsDown:NO];engines.target=self;engines.action=@selector(engine:);engines.accessibilityIdentifier=@"superhound.search.engine";engines.accessibilityLabel=NSLocalizedString(@"Web search engine",@"VoiceOver label of the search engine menu");
+ NSPopUpButton *engines=[[NSPopUpButton alloc] initWithFrame:NSMakeRect(189,20,170,28) pullsDown:NO];engines.target=self;engines.action=@selector(engine:);engines.accessibilityIdentifier=@"ultrahound.search.engine";engines.accessibilityLabel=NSLocalizedString(@"Web search engine",@"VoiceOver label of the search engine menu");
  NSString *chosen=[NSUserDefaults.standardUserDefaults stringForKey:@"searchEngine"];for(NSDictionary *e in SHWeb.engines){[engines addItemWithTitle:e[@"name"]];if([e[@"id"] isEqual:chosen])[engines selectItemAtIndex:engines.numberOfItems-1];}[view addSubview:engines];
  SHLabel(view,NSLocalizedString(@"The last row of each search opens your text with this engine in your browser.",nil),NSMakeRect(365,14,349,36),11,YES);
  // The completion switch sits under the web search row; completion stays off until the user turns it on.
  for(NSView *v in view.subviews)[v setFrameOrigin:NSMakePoint(v.frame.origin.x,v.frame.origin.y+56)];
- NSButton *complete=[NSButton checkboxWithTitle:NSLocalizedString(@"Complete the top result as you type",@"Settings check box") target:self action:@selector(complete:)];complete.frame=NSMakeRect(24,34,690,24);complete.accessibilityIdentifier=@"superhound.completion";
+ NSButton *complete=[NSButton checkboxWithTitle:NSLocalizedString(@"Complete the top result as you type",@"Settings check box") target:self action:@selector(complete:)];complete.frame=NSMakeRect(24,34,690,24);complete.accessibilityIdentifier=@"ultrahound.completion";
  complete.state=[NSUserDefaults.standardUserDefaults boolForKey:@"inlineCompletion"]?NSControlStateValueOn:NSControlStateValueOff;[view addSubview:complete];
  SHLabel(view,NSLocalizedString(@"The rest of the top result’s name appears after your text, selected. Tab or → keeps it; any other key replaces it.",@"Tab is the key name"),NSMakeRect(44,6,670,26),11,YES);
  // The language row sits at the bottom. Each language shows its own name; System Default follows the macOS language order.
  for(NSView *v in view.subviews)[v setFrameOrigin:NSMakePoint(v.frame.origin.x,v.frame.origin.y+44)];
  SHLabel(view,NSLocalizedString(@"Language",@"Settings row label; 160 points wide"),NSMakeRect(24,20,160,24),15,NO);
- NSPopUpButton *languages=[[NSPopUpButton alloc] initWithFrame:NSMakeRect(189,16,300,28) pullsDown:NO];languages.target=self;languages.action=@selector(language:);languages.accessibilityIdentifier=@"superhound.language";languages.accessibilityLabel=NSLocalizedString(@"Language",@"Settings row label; 160 points wide");
+ NSPopUpButton *languages=[[NSPopUpButton alloc] initWithFrame:NSMakeRect(189,16,300,28) pullsDown:NO];languages.target=self;languages.action=@selector(language:);languages.accessibilityIdentifier=@"ultrahound.language";languages.accessibilityLabel=NSLocalizedString(@"Language",@"Settings row label; 160 points wide");
  [languages addItemWithTitle:NSLocalizedString(@"System Default",@"First item of the language menu: use the macOS language order")];NSString *own=[[NSUserDefaults.standardUserDefaults persistentDomainForName:NSBundle.mainBundle.bundleIdentifier][@"AppleLanguages"] firstObject];
  for(NSArray *l in Languages()){[languages addItemWithTitle:l[1]];if([own isKindOfClass:NSString.class] && ([own isEqual:l[0]] || [own hasPrefix:[l[0] stringByAppendingString:@"-"]]))[languages selectItemAtIndex:languages.numberOfItems-1];}[view addSubview:languages];
  [self shortcutStatus];[self updateButtons];[window center];return self;
@@ -121,7 +124,7 @@ void SHChooseFolders(NSWindow *window,SHLibrary *library,NSString *replacing) {
 // AppKit reads the language only at launch, so a change offers to relaunch, with the alert text of the macOS Language & Region pane.
 - (void)language:(NSPopUpButton *)sender {
  NSInteger i=sender.indexOfSelectedItem;if(i<=0)[NSUserDefaults.standardUserDefaults removeObjectForKey:@"AppleLanguages"];else [NSUserDefaults.standardUserDefaults setObject:@[Languages()[(NSUInteger)i-1][0]] forKey:@"AppleLanguages"];
- NSAlert *alert=NSAlert.new;alert.messageText=[NSString stringWithFormat:NSLocalizedString(@"Language setting for %@ has changed. Do you want to relaunch the app now?",@"Alert after a language change; the argument is Superhound"),@"Superhound"];
+ NSAlert *alert=NSAlert.new;alert.messageText=[NSString stringWithFormat:NSLocalizedString(@"Language setting for %@ has changed. Do you want to relaunch the app now?",@"Alert after a language change; the argument is Ultrahound"),@"Ultrahound"];
  [alert addButtonWithTitle:NSLocalizedString(@"Relaunch Now",@"Alert button")];[alert addButtonWithTitle:NSLocalizedString(@"Don’t Relaunch",@"Alert button")];
  [alert beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse response){if(response==NSAlertFirstButtonReturn)SHRelaunch(NSBundle.mainBundle.bundleURL);}];
 }

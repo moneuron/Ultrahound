@@ -8,19 +8,18 @@
 #import "SHMetrics.h"
 #import "SHClipboard.h"
 #import "SHActivation.h"
-#import "SHUpdater.h"
 #import "SHSpotlight.h"
 #import <Carbon/Carbon.h>
 #import <ServiceManagement/ServiceManagement.h>
 @implementation SHAppDelegate {
- NSStatusItem *_statusItem;SHLibrary *_library;SHHotKey *_hotKey,*_historyKey;SHSettingsController *_settings;SHWelcomeController *_welcome;SHSearchPanelController *_panel;SHClipboard *_clipboard;NSInteger _pasteboardCount;NSTimer *_pasteboardTimer;SHLicense *_license;SHActivation *_activation;SHUpdater *_updater;
+ NSStatusItem *_statusItem;SHLibrary *_library;SHHotKey *_hotKey,*_historyKey;SHSettingsController *_settings;SHWelcomeController *_welcome;SHSearchPanelController *_panel;SHClipboard *_clipboard;NSInteger _pasteboardCount;NSTimer *_pasteboardTimer;SHLicense *_license;SHActivation *_activation;
 }
 // The public half of the key that superhound.app signs activations with.
 static NSString *const LicensePublicKey=@"BB1mBfflJqWXPJerDDR+MLSwGOCcP/HFGM8f+HPNMfzveASmPB5nxJDLeVq75oJGlcI+vaNjTXAJLArVLjLUFi4=";
-// The license exists before launch ends, because a superhound://activate link can launch the app.
+// The license exists before launch ends, because an ultrahound://activate link can launch the app.
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
  (void)notification;NSURL *base=[NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
- _license=[[SHLicense alloc] initWithURL:[base URLByAppendingPathComponent:@"Superhound/license.plist"] publicKey:[[NSData alloc] initWithBase64EncodedString:LicensePublicKey options:0] device:SHLicenseDevice(SHHardwareUUID())];_activation=[[SHActivation alloc] initWithLicense:_license];
+ _license=[[SHLicense alloc] initWithURL:[base URLByAppendingPathComponent:@"Ultrahound/license.plist"] publicKey:[[NSData alloc] initWithBase64EncodedString:LicensePublicKey options:0] device:SHLicenseDevice(SHHardwareUUID())];_activation=[[SHActivation alloc] initWithLicense:_license];
  [NSAppleEventManager.sharedAppleEventManager setEventHandler:self andSelector:@selector(openURLEvent:reply:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
 }
 - (void)openURLEvent:(NSAppleEventDescriptor *)event reply:(NSAppleEventDescriptor *)reply {
@@ -30,16 +29,13 @@ static NSString *const LicensePublicKey=@"BB1mBfflJqWXPJerDDR+MLSwGOCcP/HFGM8f+H
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
  (void)notification;double launched=SHTime();
  NSURL *base=[NSFileManager.defaultManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject;
- NSURL *state=[base URLByAppendingPathComponent:@"Superhound" isDirectory:YES];
+ NSURL *state=[base URLByAppendingPathComponent:@"Ultrahound" isDirectory:YES];
  _library=[[SHLibrary alloc] initWithStateURL:state];
  _hotKey=[[SHHotKey alloc] initWithName:@"shortcut" identifier:1 code:kVK_Space modifiers:cmdKey label:@"⌘Space" menu:NSLocalizedString(@"Search",@"Menu bar menu item that opens the search panel; keep it short")];[_hotKey registerSaved];
  _historyKey=[[SHHotKey alloc] initWithName:@"historyShortcut" identifier:2 code:kVK_ANSI_V modifiers:cmdKey|optionKey label:@"⌥⌘V" menu:NSLocalizedString(@"Clipboard History",@"Menu bar menu item that opens the clipboard history; keep it short")];[_historyKey registerSaved];
- _panel=[[SHSearchPanelController alloc] initWithQueries:SHQueryController.new];_panel.emoji=[[SHEmoji alloc] initWithURL:[NSBundle.mainBundle URLForResource:@"emoji" withExtension:@"tsv"]];_panel.usage=[[SHUsage alloc] initWithURL:[state URLByAppendingPathComponent:@"usage.plist"]];_settings=[[SHSettingsController alloc] initWithLibrary:_library hotKey:_hotKey historyKey:_historyKey];_welcome=[[SHWelcomeController alloc] initWithLibrary:_library hotKey:_hotKey historyKey:_historyKey];
- _panel.licensed=_license.licensed;
+ _panel=[[SHSearchPanelController alloc] initWithQueries:SHQueryController.new];_panel.usage=[[SHUsage alloc] initWithURL:[state URLByAppendingPathComponent:@"usage.plist"]];_settings=[[SHSettingsController alloc] initWithLibrary:_library hotKey:_hotKey historyKey:_historyKey];_welcome=[[SHWelcomeController alloc] initWithLibrary:_library hotKey:_hotKey historyKey:_historyKey];
  _clipboard=[[SHClipboard alloc] initWithURL:[state URLByAppendingPathComponent:@"clipboard.plist"]];_panel.clipboard=_clipboard;_pasteboardCount=NSPasteboard.generalPasteboard.changeCount;
  __weak typeof(self) weak=self;
- _activation.changed=^{SHAppDelegate *self=weak;if(self)self->_panel.licensed=self->_license.licensed;};_panel.enterLicense=^{SHAppDelegate *self=weak;[self->_activation enterKey:nil];};
- _updater=SHUpdater.new;_updater.changed=^{SHAppDelegate *self=weak;if(self)self->_panel.update=self->_updater.busy?nil:self->_updater.latest.version;};_panel.installUpdate=^{SHAppDelegate *self=weak;[self->_updater install];};
  _welcome.openSearch=^{[weak search:nil];};_hotKey.invoked=^{[weak search:nil];};_historyKey.invoked=^{[weak history:nil];};_hotKey.other=_historyKey;_historyKey.other=_hotKey;
  // macOS sends no notice when the pasteboard changes, so its change count is read twice a second.
  _pasteboardTimer=[NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer *timer){(void)timer;[weak readPasteboard];}];_pasteboardTimer.tolerance=0.25;
@@ -52,16 +48,16 @@ static NSString *const LicensePublicKey=@"BB1mBfflJqWXPJerDDR+MLSwGOCcP/HFGM8f+H
   NSString *status=indexing?(indexing==1?NSLocalizedString(@"Indexing 1 location",@"Note at the right of the search panel; keep it short"):[NSString stringWithFormat:NSLocalizedString(@"Indexing %@ locations",@"Note at the right of the search panel; the argument is a number above 1; keep it short"),[NSNumberFormatter localizedStringFromNumber:@(indexing) numberStyle:NSNumberFormatterDecimalStyle]]):unavailable?NSLocalizedString(@"Check Settings for coverage",@"Note at the right of the search panel when a search location is unavailable; keep it short"):@"";
   [self->_welcome updateRoots:roots count:snapshot.count indexing:indexing>0];self->_panel.indexing=indexing>0;[self->_panel updateSnapshot:snapshot status:status];
  };
- NSMenu *menu=NSMenu.new;[menu addItemWithTitle:NSLocalizedString(@"Update",@"Menu bar menu item; shown only when an update is ready") action:@selector(installUpdate:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Search",@"Menu bar menu item that opens the search panel; keep it short") action:@selector(search:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Clipboard History",@"Menu bar menu item that opens the clipboard history; keep it short") action:@selector(history:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Welcome…",@"Menu bar menu item that opens the Welcome window; keep it short") action:@selector(welcome:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Settings…",@"Menu bar menu item; keep it short") action:@selector(settings:) keyEquivalent:@","];[menu addItemWithTitle:NSLocalizedString(@"Refresh Catalog",@"Menu item and Settings button: scan the search locations again") action:@selector(refresh:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Clear Clipboard History",@"Menu bar menu item; keep it short") action:@selector(clearHistory:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Open at Login",@"Menu bar menu item with a check mark: start Superhound when the user logs in") action:@selector(loginItem:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Enter License…",@"Menu bar menu item; keep it short") action:@selector(license:) keyEquivalent:@""];[menu addItem:NSMenuItem.separatorItem];[menu addItemWithTitle:NSLocalizedString(@"About Superhound",@"Menu bar menu item; keep it short") action:@selector(about:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Check for Updates…",@"Menu bar menu item; keep it short") action:@selector(checkUpdates:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Check for Updates Automatically",@"Menu bar menu item with a check mark") action:@selector(automaticUpdates:) keyEquivalent:@""];[menu addItem:NSMenuItem.separatorItem];[menu addItemWithTitle:NSLocalizedString(@"Uninstall Superhound…",@"Menu bar menu item; keep it short") action:@selector(uninstall:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Quit Superhound",@"Menu bar menu item; keep it short") action:@selector(terminate:) keyEquivalent:@"q"];
+ NSMenu *menu=NSMenu.new;[menu addItemWithTitle:NSLocalizedString(@"Search",@"Menu bar menu item that opens the search panel; keep it short") action:@selector(search:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Clipboard History",@"Menu bar menu item that opens the clipboard history; keep it short") action:@selector(history:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Welcome…",@"Menu bar menu item that opens the Welcome window; keep it short") action:@selector(welcome:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Settings…",@"Menu bar menu item; keep it short") action:@selector(settings:) keyEquivalent:@","];[menu addItemWithTitle:NSLocalizedString(@"Refresh Catalog",@"Menu item and Settings button: scan the search locations again") action:@selector(refresh:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Clear Clipboard History",@"Menu bar menu item; keep it short") action:@selector(clearHistory:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Open at Login",@"Menu bar menu item with a check mark: start Ultrahound when the user logs in") action:@selector(loginItem:) keyEquivalent:@""];[menu addItem:NSMenuItem.separatorItem];[menu addItemWithTitle:NSLocalizedString(@"About Ultrahound",@"Menu bar menu item; keep it short") action:@selector(about:) keyEquivalent:@""];[menu addItem:NSMenuItem.separatorItem];[menu addItemWithTitle:NSLocalizedString(@"Uninstall Ultrahound…",@"Menu bar menu item; keep it short") action:@selector(uninstall:) keyEquivalent:@""];[menu addItemWithTitle:NSLocalizedString(@"Quit Ultrahound",@"Menu bar menu item; keep it short") action:@selector(terminate:) keyEquivalent:@"q"];
  for(NSMenuItem *item in menu.itemArray)if(item.action!=@selector(terminate:))item.target=self;_panel.appMenu=menu;
  _statusItem=[NSStatusBar.systemStatusBar statusItemWithLength:NSVariableStatusItemLength];
  // The hound template takes the menu bar's color in light and dark mode.
- NSImage *hound=[NSBundle.mainBundle imageForResource:@"LogoTemplate"];hound.size=NSMakeSize(18,18);hound.template=YES;hound.accessibilityDescription=@"Superhound";_statusItem.button.image=hound?:[NSImage imageWithSystemSymbolName:@"magnifyingglass.circle.fill" accessibilityDescription:@"Superhound"];
- _statusItem.button.accessibilityIdentifier=@"superhound.menu";_statusItem.button.toolTip=NSLocalizedString(@"Superhound — Search apps and files",@"Tooltip of the menu bar icon");_statusItem.menu=menu;
+ NSImage *hound=[NSBundle.mainBundle imageForResource:@"LogoTemplate"];hound.size=NSMakeSize(18,18);hound.template=YES;hound.accessibilityDescription=@"Ultrahound";_statusItem.button.image=hound?:[NSImage imageWithSystemSymbolName:@"magnifyingglass.circle.fill" accessibilityDescription:@"Ultrahound"];
+ _statusItem.button.accessibilityIdentifier=@"ultrahound.menu";_statusItem.button.toolTip=NSLocalizedString(@"Ultrahound — Search apps and files",@"Tooltip of the menu bar icon");_statusItem.menu=menu;
  NSMenu *main=NSMenu.new;NSMenuItem *app=NSMenuItem.new;app.submenu=[menu copy];[main addItem:app];
  NSMenuItem *edit=NSMenuItem.new;edit.title=NSLocalizedString(@"Edit",@"Standard Edit menu title");NSMenu *editMenu=[[NSMenu alloc] initWithTitle:edit.title];[editMenu addItemWithTitle:NSLocalizedString(@"Undo",@"Standard Edit menu item") action:@selector(undo:) keyEquivalent:@"z"];[editMenu addItemWithTitle:NSLocalizedString(@"Redo",@"Standard Edit menu item") action:@selector(redo:) keyEquivalent:@"Z"];[editMenu addItem:NSMenuItem.separatorItem];[editMenu addItemWithTitle:NSLocalizedString(@"Cut",@"Standard Edit menu item") action:@selector(cut:) keyEquivalent:@"x"];[editMenu addItemWithTitle:NSLocalizedString(@"Copy",@"Menu item verb: copy to the clipboard") action:@selector(copy:) keyEquivalent:@"c"];[editMenu addItemWithTitle:NSLocalizedString(@"Paste",@"Menu item and footer hint verb: paste the text") action:@selector(paste:) keyEquivalent:@"v"];[editMenu addItemWithTitle:NSLocalizedString(@"Select All",@"Standard Edit menu item") action:@selector(selectAll:) keyEquivalent:@"a"];edit.submenu=editMenu;[main addItem:edit];NSApp.mainMenu=main;
  [NSWorkspace.sharedWorkspace.notificationCenter addObserver:self selector:@selector(wake:) name:NSWorkspaceDidWakeNotification object:nil];
- [_library start];[_updater start];
+ [_library start];
  // The key keeps its old name, so users of a version that opened Settings once do not see the Welcome window after an update.
  if(![NSUserDefaults.standardUserDefaults boolForKey:@"setupShown"]){[_welcome show];[NSUserDefaults.standardUserDefaults setBool:YES forKey:@"setupShown"];}
  // Registered once; later launches respect the choice made in the menu or System Settings.
@@ -76,18 +72,13 @@ static NSString *const LicensePublicKey=@"BB1mBfflJqWXPJerDDR+MLSwGOCcP/HFGM8f+H
 }
 - (void)readPasteboard {
  NSPasteboard *board=NSPasteboard.generalPasteboard;NSInteger count=board.changeCount;if(count==_pasteboardCount)return;_pasteboardCount=count;
- // The app in front when the change is read is named as the source; Superhound marks its own copies.
+ // The app in front when the change is read is named as the source; Ultrahound marks its own copies.
  NSArray<NSString *> *types=board.types;NSRunningApplication *front=NSWorkspace.sharedWorkspace.frontmostApplication;BOOL own=[types containsObject:SHOwnCopyType];
- [_clipboard addText:[board stringForType:NSPasteboardTypeString] types:types application:own?nil:front.bundleIdentifier source:own?@"Superhound":front.localizedName];
+ [_clipboard addText:[board stringForType:NSPasteboardTypeString] types:types application:own?nil:front.bundleIdentifier source:own?@"Ultrahound":front.localizedName];
 }
-- (void)license:(id)sender {(void)sender;if(_license.licensed)[_activation deactivate];else [_activation enterKey:nil];}
-- (void)installUpdate:(id)sender {(void)sender;[_updater install];}
-- (void)checkUpdates:(id)sender {(void)sender;[_updater check];}
-- (void)automaticUpdates:(id)sender {(void)sender;_updater.automatic=!_updater.automatic;}
 - (void)about:(id)sender {
  (void)sender;[NSApp activateIgnoringOtherApps:YES];
- NSString *credits=_license.licensed?NSLocalizedString(@"Supporter License for this Mac.",@"About window credits"):NSLocalizedString(@"Free, with every feature. A Supporter License, $15 once for 3 Macs at superhound.app, supports development.",@"About window credits");
- [NSApp orderFrontStandardAboutPanelWithOptions:@{NSAboutPanelOptionCredits:[[NSAttributedString alloc] initWithString:credits attributes:@{NSFontAttributeName:[NSFont systemFontOfSize:11],NSForegroundColorAttributeName:NSColor.secondaryLabelColor}]}];
+ [NSApp orderFrontStandardAboutPanelWithOptions:@{}];
 }
 - (void)welcome:(id)sender {(void)sender;[_welcome show];}
 - (void)settings:(id)sender {(void)sender;[_settings show];}
@@ -97,23 +88,21 @@ static NSString *const LicensePublicKey=@"BB1mBfflJqWXPJerDDR+MLSwGOCcP/HFGM8f+H
  if(!(service.status==SMAppServiceStatusEnabled?[service unregisterAndReturnError:&error]:[service registerAndReturnError:&error]))[_panel showError:[NSString stringWithFormat:NSLocalizedString(@"Open at Login could not be changed. %@",@"Error in the search panel; the argument is the system error text"),error.localizedDescription]];
 }
 - (BOOL)validateMenuItem:(NSMenuItem *)item {
- if(item.action==@selector(installUpdate:)){item.hidden=!_updater.latest;item.title=_updater.latest?[NSString stringWithFormat:NSLocalizedString(@"Update to %@…",@"Menu bar menu item; the argument is a version number such as 0.5.0"),_updater.latest.version]:NSLocalizedString(@"Update",@"Menu bar menu item; shown only when an update is ready");return !_updater.busy;}
- if(item.action==@selector(checkUpdates:))return !_updater.busy;if(item.action==@selector(automaticUpdates:)){item.hidden=!_updater.supported;item.state=_updater.automatic?NSControlStateValueOn:NSControlStateValueOff;}
- if(item.action==@selector(license:))item.title=_license.licensed?NSLocalizedString(@"Deactivate License…",@"Menu bar menu item; keep it short"):NSLocalizedString(@"Enter License…",@"Menu bar menu item; keep it short");if(item.action==@selector(clearHistory:))return _clipboard.count>0;if(item.action==@selector(loginItem:))item.state=SMAppService.mainAppService.status==SMAppServiceStatusEnabled?NSControlStateValueOn:NSControlStateValueOff;return YES;}
-// Takes back what Superhound added to this Mac: the license activation, Spotlight's ⌘Space change, the login item, its data and settings, and the app with its kept previous versions.
+ if(item.action==@selector(clearHistory:))return _clipboard.count>0;if(item.action==@selector(loginItem:))item.state=SMAppService.mainAppService.status==SMAppServiceStatusEnabled?NSControlStateValueOn:NSControlStateValueOff;return YES;}
+// Takes back what Ultrahound added to this Mac: the license activation, Spotlight's ⌘Space change, the login item, its data and settings, and the app with its kept previous versions.
 - (void)uninstall:(id)sender {
- (void)sender;[NSApp activateIgnoringOtherApps:YES];NSAlert *alert=NSAlert.new;alert.messageText=NSLocalizedString(@"Uninstall Superhound?",nil);
- alert.informativeText=_license.licensed?NSLocalizedString(@"This Mac’s license activation is freed. Superhound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are.",@"Uninstall alert text when this Mac has a license"):NSLocalizedString(@"Superhound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are.",@"Uninstall alert text when this Mac has no license");
+ (void)sender;[NSApp activateIgnoringOtherApps:YES];NSAlert *alert=NSAlert.new;alert.messageText=NSLocalizedString(@"Uninstall Ultrahound?",nil);
+ alert.informativeText=_license.licensed?NSLocalizedString(@"This Mac’s license activation is freed. Ultrahound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are.",@"Uninstall alert text when this Mac has a license"):NSLocalizedString(@"Ultrahound gives ⌘Space back to Spotlight if it took it, deletes its settings, catalog, learned ranking, and clipboard history, and moves itself to the Trash. Your files stay as they are.",@"Uninstall alert text when this Mac has no license");
  [alert addButtonWithTitle:NSLocalizedString(@"Uninstall",@"Alert button")];[alert addButtonWithTitle:NSLocalizedString(@"Cancel",@"Alert button")];if([alert runModal]!=NSAlertFirstButtonReturn)return;
  [_activation releaseThen:^(NSString *error){
   if(error){NSAlert *note=NSAlert.new;note.messageText=NSLocalizedString(@"The license activation is still in use",nil);note.informativeText=[NSString stringWithFormat:NSLocalizedString(@"%@ Write to support@superhound.app to free it.",@"The argument is an error sentence from the license server or the network"),error];[note runModal];}
   NSUserDefaults *d=NSUserDefaults.standardUserDefaults;NSFileManager *files=NSFileManager.defaultManager;
   if(SHSpotlightTakenOver(SHHotKey.spotlightHotKeys,[d integerForKey:@"shortcutCode"],[d integerForKey:@"shortcutModifiers"]))[SHHotKey setSpotlightEnabled:YES];
   [self->_pasteboardTimer invalidate];[SMAppService.mainAppService unregisterAndReturnError:nil];
-  [files removeItemAtURL:[[files URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject URLByAppendingPathComponent:@"Superhound" isDirectory:YES] error:nil];
+  [files removeItemAtURL:[[files URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask].firstObject URLByAppendingPathComponent:@"Ultrahound" isDirectory:YES] error:nil];
   [d removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
   NSURL *app=NSBundle.mainBundle.bundleURL,*folder=app.URLByDeletingLastPathComponent;
-  for(NSURL *item in [files contentsOfDirectoryAtURL:folder includingPropertiesForKeys:nil options:0 error:nil])if([item.lastPathComponent hasPrefix:@".superhound-backup."])[files trashItemAtURL:item resultingItemURL:nil error:nil];
+  for(NSURL *item in [files contentsOfDirectoryAtURL:folder includingPropertiesForKeys:nil options:0 error:nil])if([item.lastPathComponent hasPrefix:@".ultrahound-backup."])[files trashItemAtURL:item resultingItemURL:nil error:nil];
   [files trashItemAtURL:app resultingItemURL:nil error:nil];[NSApp terminate:nil];
  }];
 }

@@ -1,22 +1,14 @@
 #import <AppKit/AppKit.h>
 #import "SHQueryController.h"
 #import "SHUsage.h"
-#import "SHEmoji.h"
 #import "SHClipboard.h"
-// A pasteboard type on each copy Superhound makes, so the clipboard history can name Superhound as the source.
+// A pasteboard type on each copy Ultrahound makes, so the clipboard history can name Ultrahound as the source.
 extern NSString *const SHOwnCopyType;
 @interface SHSearchPanelController : NSWindowController
 // action: open, reveal, openWith, or trash; see SHResultActions.
 @property(nonatomic,copy) void (^openResult)(NSDictionary *result,NSString *action,NSURL *application);
 @property(nonatomic,strong) SHUsage *usage;
-@property(nonatomic,strong) SHEmoji *emoji;
 @property(nonatomic,strong) SHClipboard *clipboard;
-// NO shows the Become a Supporter link and the reminder on every tenth opening; enterLicense runs when the user clicks the link.
-@property(nonatomic) BOOL licensed;
-@property(nonatomic,copy) void (^enterLicense)(void);
-// A newer version shows an UPDATE TO link in the footer; installUpdate runs when the user clicks it.
-@property(nonatomic,copy) NSString *update;
-@property(nonatomic,copy) void (^installUpdate)(void);
 // The menu bar menu; the logo and name in the footer open it.
 @property(nonatomic,strong) NSMenu *appMenu;
 - (instancetype)initWithQueries:(SHQueryController *)queries;

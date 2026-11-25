@@ -1,5 +1,5 @@
 #!/bin/bash
-# Builds a release from the current commit: the tests, a build signed with the "Superhound" certificate, Superhound.zip, and its SHA-256.
+# Builds a release from the current commit: the tests, a build signed with the "Superhound" certificate, Ultrahound.zip, and its SHA-256.
 # Publishing stays manual; the script prints the commands and the superhound-web vars.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -10,20 +10,20 @@ version="$1" build="$2"
 security find-identity -p codesigning | grep -q '"Superhound"' || { echo 'The "Superhound" certificate is not in the keychain.' >&2; exit 1; }
 scripts/test.sh
 scripts/build.sh "$build" "$version"
-codesign -d -r- .build/Superhound.app 2>&1 | grep -q 'certificate root' || { echo 'The build does not have the certificate signature.' >&2; exit 1; }
+codesign -d -r- .build/Ultrahound.app 2>&1 | grep -q 'certificate root' || { echo 'The build does not have the certificate signature.' >&2; exit 1; }
 out=".build/release/$version"
 rm -rf "$out"
 mkdir -p "$out"
-ditto -c -k --norsrc --noextattr --noacl --keepParent .build/Superhound.app "$out/Superhound.zip"
-sha="$(shasum -a 256 "$out/Superhound.zip" | cut -d' ' -f1)"
+ditto -c -k --norsrc --noextattr --noacl --keepParent .build/Ultrahound.app "$out/Ultrahound.zip"
+sha="$(shasum -a 256 "$out/Ultrahound.zip" | cut -d' ' -f1)"
 cat <<EOF
 
-Built $out/Superhound.zip
+Built $out/Ultrahound.zip
 SHA-256 $sha
 
 Publish:
   git tag v$version && git push origin main v$version
-  gh release create v$version $out/Superhound.zip --title "Superhound $version" --notes-file <release notes file>
+  gh release create v$version $out/Ultrahound.zip --title "Ultrahound $version" --notes-file <release notes file>
 
 Then set these vars in superhound-web/wrangler.jsonc and deploy:
   "RELEASE_VERSION": "$version",

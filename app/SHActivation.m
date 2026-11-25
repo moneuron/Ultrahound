@@ -22,29 +22,28 @@ static NSInteger Ask(NSString *title,NSString *text,NSString *action,NSView *acc
  _busy=YES;
  [[_session dataTaskWithRequest:request completionHandler:^(NSData *data,NSURLResponse *response,NSError *error){
   NSInteger status=[response isKindOfClass:NSHTTPURLResponse.class]?((NSHTTPURLResponse *)response).statusCode:0;id answer=data?[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]:nil;if(![answer isKindOfClass:NSDictionary.class])answer=nil;
-  NSString *message=error?[NSString stringWithFormat:NSLocalizedString(@"superhound.app could not be reached. %@",@"The argument is the system network error text"),error.localizedDescription]:status!=200?([answer[@"error"] isKindOfClass:NSString.class]?answer[@"error"]:[NSString stringWithFormat:NSLocalizedString(@"superhound.app answered with error %ld.",@"The argument is an HTTP status code such as 500"),(long)status]):nil;
+  NSString *message=error?[NSString stringWithFormat:NSLocalizedString(@"The license server could not be reached. %@",@"The argument is the system network error text"),error.localizedDescription]:status!=200?([answer[@"error"] isKindOfClass:NSString.class]?answer[@"error"]:[NSString stringWithFormat:NSLocalizedString(@"The license server answered with error %ld.",@"The argument is an HTTP status code such as 500"),(long)status]):nil;
   dispatch_async(dispatch_get_main_queue(),^{self->_busy=NO;reply(message?nil:answer,message);});
  }] resume];
 }
 - (void)enterKey:(NSString *)key {
  if(_busy)return;
  NSTextField *field=[[NSTextField alloc] initWithFrame:NSMakeRect(0,0,320,24)];field.stringValue=key?:@"";field.placeholderString=NSLocalizedString(@"License key",@"Placeholder of the license key field");
- [NSApp activateIgnoringOtherApps:YES];NSAlert *alert=NSAlert.new;alert.messageText=NSLocalizedString(@"Activate Superhound",nil);alert.informativeText=NSLocalizedString(@"Enter the license key from your email. A license covers 3 Macs.",nil);alert.accessoryView=field;
- [alert addButtonWithTitle:NSLocalizedString(@"Activate",@"Alert button: activate the license key")];[alert addButtonWithTitle:NSLocalizedString(@"Cancel",@"Alert button")];[alert addButtonWithTitle:NSLocalizedString(@"Get a Supporter License",@"Button that opens the purchase page")];alert.window.initialFirstResponder=field;
+ [NSApp activateIgnoringOtherApps:YES];NSAlert *alert=NSAlert.new;alert.messageText=NSLocalizedString(@"Activate Ultrahound",nil);alert.informativeText=NSLocalizedString(@"Enter the license key from your email. A license covers 3 Macs.",nil);alert.accessoryView=field;
+ [alert addButtonWithTitle:NSLocalizedString(@"Activate",@"Alert button: activate the license key")];[alert addButtonWithTitle:NSLocalizedString(@"Cancel",@"Alert button")];alert.window.initialFirstResponder=field;
  _busy=YES;NSInteger answer=[alert runModal];_busy=NO;
- if(answer==NSAlertThirdButtonReturn){[NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:@"https://superhound.app/buy"]];return;}
  // A key has no spaces or line breaks, so remove the ones that a copy from an email adds, also inside the key.
  NSString *entered=[[field.stringValue componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet] componentsJoinedByString:@""];if(answer!=NSAlertFirstButtonReturn || !entered.length)return;
  [self post:@"/api/activate" body:@{@"key":entered,@"device":_license.device,@"label":[@"Mac " stringByAppendingString:[_license.device substringToIndex:8]]} reply:^(NSDictionary *answer,NSString *error){
-  if(!error && ![answer[@"token"] isKindOfClass:NSString.class])error=NSLocalizedString(@"superhound.app sent an answer that Superhound cannot read.",nil);
-  if(!error && ![self->_license saveKey:entered token:answer[@"token"]])error=NSLocalizedString(@"The activation from superhound.app is not valid for this Mac.",nil);
-  if(error){if(Ask(NSLocalizedString(@"Superhound is not activated",nil),error,NSLocalizedString(@"Try Again",@"Alert button"),nil)==NSAlertFirstButtonReturn)[self enterKey:entered];return;}
-  if(self.changed)self.changed();Ask(NSLocalizedString(@"Superhound is licensed",nil),NSLocalizedString(@"Thank you for your purchase.",nil),@"OK",nil);
+  if(!error && ![answer[@"token"] isKindOfClass:NSString.class])error=NSLocalizedString(@"The license server sent an answer that Ultrahound cannot read.",nil);
+  if(!error && ![self->_license saveKey:entered token:answer[@"token"]])error=NSLocalizedString(@"The activation from the license server is not valid for this Mac.",nil);
+  if(error){if(Ask(NSLocalizedString(@"Ultrahound is not activated",nil),error,NSLocalizedString(@"Try Again",@"Alert button"),nil)==NSAlertFirstButtonReturn)[self enterKey:entered];return;}
+  if(self.changed)self.changed();Ask(NSLocalizedString(@"Ultrahound is licensed",nil),NSLocalizedString(@"The license is active on this Mac.",nil),@"OK",nil);
  }];
 }
 - (void)deactivate {
  if(_busy || !_license.licensed)return;
- _busy=YES;NSInteger answer=Ask(NSLocalizedString(@"Deactivate this Mac?",nil),NSLocalizedString(@"This frees one of the 3 activations of your license. Superhound keeps working and shows the unlicensed reminder again.",nil),NSLocalizedString(@"Deactivate",@"Alert button: free this Mac’s license activation"),nil);_busy=NO;if(answer!=NSAlertFirstButtonReturn)return;
+ _busy=YES;NSInteger answer=Ask(NSLocalizedString(@"Deactivate this Mac?",nil),NSLocalizedString(@"This frees one of the 3 activations of your license. Ultrahound keeps working on this Mac.",nil),NSLocalizedString(@"Deactivate",@"Alert button: free this Mac’s license activation"),nil);_busy=NO;if(answer!=NSAlertFirstButtonReturn)return;
  [self post:@"/api/deactivate" body:@{@"key":_license.key,@"device":_license.device} reply:^(NSDictionary *answer,NSString *error){
   (void)answer;if(error && Ask(NSLocalizedString(@"This Mac is still activated",nil),[NSString stringWithFormat:NSLocalizedString(@"%@ You can remove the license from this Mac anyway. Its activation then stays in use; write to support@superhound.app to free it.",@"The argument is an error sentence from the license server or the network"),error],NSLocalizedString(@"Remove Anyway",@"Alert button"),nil)!=NSAlertFirstButtonReturn)return;
   [self->_license remove];if(self.changed)self.changed();
@@ -55,9 +54,9 @@ static NSInteger Ask(NSString *title,NSString *text,NSString *action,NSView *acc
  [self post:@"/api/deactivate" body:@{@"key":_license.key,@"device":_license.device} reply:^(NSDictionary *answer,NSString *error){(void)answer;[self->_license remove];done(error);}];
 }
 - (void)openURL:(NSURL *)url {
- NSURLComponents *parts=[NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];if(![parts.scheme isEqual:@"superhound"] || ![parts.host isEqual:@"activate"])return;
+ NSURLComponents *parts=[NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];if(![parts.scheme isEqual:@"ultrahound"] || ![parts.host isEqual:@"activate"])return;
  NSString *key=nil;for(NSURLQueryItem *item in parts.queryItems)if([item.name isEqual:@"key"])key=item.value;
  // A link from any web page can open this, so the user always confirms in the key window.
- if(!_license.licensed)[self enterKey:key];else Ask(NSLocalizedString(@"Superhound is already licensed",nil),NSLocalizedString(@"This Mac already has an active license.",nil),@"OK",nil);
+ if(!_license.licensed)[self enterKey:key];else Ask(NSLocalizedString(@"Ultrahound is already licensed",nil),NSLocalizedString(@"This Mac already has an active license.",nil),@"OK",nil);
 }
 @end

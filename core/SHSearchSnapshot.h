@@ -5,7 +5,7 @@ NSString *SHFold(NSString *text);
 BOOL SHLaunchable(NSDictionary *entry);
 // The rest of name after typed when typed starts name, ignoring case, accents, and width; "" when they are equal; nil otherwise.
 NSString *_Nullable SHCompletion(NSString *name,NSString *typed);
-// The group that a whole query lists: "command", "settings", or "emoji" for the word commands, settings, or emoji in English or the user's language; nil otherwise.
+// The group that a whole query lists: "command" or "settings" for the word commands or settings in English or the user's language; nil otherwise.
 NSString *_Nullable SHCategory(NSString *query);
 // The name of a group from SHCategory in the user's language.
 NSString *SHCategoryName(NSString *category);

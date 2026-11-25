@@ -5,7 +5,7 @@
 #import <Carbon/Carbon.h>
 static NSString *Script(NSString *source){
  NSDictionary *error=nil;[[[NSAppleScript alloc] initWithSource:source] executeAndReturnError:&error];NSInteger code=[error[NSAppleScriptErrorNumber] integerValue];
- return !error || code==userCanceledErr?nil:code==errAEEventNotPermitted?NSLocalizedString(@"macOS blocked this command. Allow Superhound in Privacy & Security → Automation.",@"Error in the search panel; Privacy & Security → Automation is the place in System Settings"):NSLocalizedString(@"The command did not finish.",@"Error in the search panel");
+ return !error || code==userCanceledErr?nil:code==errAEEventNotPermitted?NSLocalizedString(@"macOS blocked this command. Allow Ultrahound in Privacy & Security → Automation.",@"Error in the search panel; Privacy & Security → Automation is the place in System Settings"):NSLocalizedString(@"The command did not finish.",@"Error in the search panel");
 }
 static NSString *ToggleMute(void){
  AudioObjectID device=0;UInt32 size=sizeof(device),muted=0;AudioObjectPropertyAddress address={kAudioHardwarePropertyDefaultOutputDevice,kAudioObjectPropertyScopeGlobal,kAudioObjectPropertyElementMain};
@@ -29,7 +29,7 @@ static NSString *EjectAll(void){
 static void PressPaste(NSUInteger tries,void (^completion)(NSString *)){
  BOOL waiting=NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier==NSProcessInfo.processInfo.processIdentifier;
  if(waiting && tries){dispatch_after(dispatch_time(DISPATCH_TIME_NOW,50*NSEC_PER_MSEC),dispatch_get_main_queue(),^{PressPaste(tries-1,completion);});return;}
- if(waiting){completion(NSLocalizedString(@"The text is copied. Superhound could not return to the previous app, so nothing was pasted.",nil));return;}
+ if(waiting){completion(NSLocalizedString(@"The text is copied. Ultrahound could not return to the previous app, so nothing was pasted.",nil));return;}
  CGEventSourceRef source=CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
  for(int down=1;down>=0;down--){CGEventRef key=CGEventCreateKeyboardEvent(source,kVK_ANSI_V,down);CGEventSetFlags(key,kCGEventFlagMaskCommand);CGEventPost(kCGHIDEventTap,key);CFRelease(key);}
  if(source)CFRelease(source);completion(nil);
@@ -37,7 +37,7 @@ static void PressPaste(NSUInteger tries,void (^completion)(NSString *)){
 // A key press into another app needs Accessibility access. macOS asks once in each launch; without access the text stays copied.
 static void Paste(void (^completion)(NSString *)){
  static BOOL asked;BOOL trusted=AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)@{(__bridge NSString *)kAXTrustedCheckOptionPrompt:@(!asked)});asked=YES;
- if(trusted)PressPaste(20,completion);else completion(NSLocalizedString(@"The text is copied. To paste with Return, allow Superhound in System Settings → Privacy & Security → Accessibility.",@"System Settings → Privacy & Security → Accessibility is the place in System Settings"));
+ if(trusted)PressPaste(20,completion);else completion(NSLocalizedString(@"The text is copied. To paste with Return, allow Ultrahound in System Settings → Privacy & Security → Accessibility.",@"System Settings → Privacy & Security → Accessibility is the place in System Settings"));
 }
 @implementation SHResultActions
 + (void)run:(NSString *)command completion:(void (^)(NSString *))completion {
@@ -46,7 +46,7 @@ static void Paste(void (^completion)(NSString *)){
  NSNumber *event=@{@"command:sleep":@(kAESleep),@"command:restart":@(kAEShowRestartDialog),@"command:shutdown":@(kAEShowShutdownDialog),@"command:logout":@(kAELogOut)}[command];
  if(event){NSError *error=nil;NSAppleEventDescriptor *target=[NSAppleEventDescriptor descriptorWithBundleIdentifier:@"com.apple.loginwindow"];
   [[NSAppleEventDescriptor appleEventWithEventClass:kCoreEventClass eventID:event.unsignedIntValue targetDescriptor:target returnID:kAutoGenerateReturnID transactionID:kAnyTransactionID] sendEventWithOptions:NSAppleEventSendNoReply timeout:5 error:&error];
-  completion(!error?nil:error.code==errAEEventNotPermitted?NSLocalizedString(@"macOS blocked this command. Allow Superhound in Privacy & Security → Automation.",@"Error in the search panel; Privacy & Security → Automation is the place in System Settings"):NSLocalizedString(@"The command did not finish.",@"Error in the search panel"));return;}
+  completion(!error?nil:error.code==errAEEventNotPermitted?NSLocalizedString(@"macOS blocked this command. Allow Ultrahound in Privacy & Security → Automation.",@"Error in the search panel; Privacy & Security → Automation is the place in System Settings"):NSLocalizedString(@"The command did not finish.",@"Error in the search panel"));return;}
  if([command isEqual:@"command:lock"]){
   // macOS has no public call to lock the screen; this private one can change in a later macOS.
   void *login=dlopen("/System/Library/PrivateFrameworks/login.framework/Versions/Current/login",RTLD_LAZY);int (*lock)(void)=login?(int (*)(void))dlsym(login,"SACLockScreenImmediate"):NULL;

@@ -29,7 +29,7 @@ int main(void) { @autoreleasepool {
  // A settings pane ranks with applications, above a file with a better match and below an application with an equal one.
  SHSearchSnapshot *panes=[[SHSearchSnapshot alloc] initWithEntries:@[E(1,@"storage",@"/work/storage",@"file"),E(2,@"Storage",@"/settings/Storage.appex",@"settings"),E(3,@"Storage Tool",@"/apps/Storage Tool.app",@"app")] generation:1];
  assert(([[[panes search:@"storage" cancelled:nil] valueForKey:@"id"] isEqual:@[@2,@3,@1]]));
- assert(([[[panes search:@"" cancelled:nil] valueForKey:@"id"] isEqual:@[@3]]));
+ assert([panes search:@"" cancelled:nil].count==0);
  // A term that starts a later word precedes a term inside a word: System Settings leads panes whose file names end in Settings.
  SHSearchSnapshot *words=[[SHSearchSnapshot alloc] initWithEntries:@[@{@"id":@1,@"name":@"Family",@"path":@"/x/FamilySettings.appex",@"relative":@"FamilySettings.appex",@"alias":@"FamilySettings",@"type":@"settings"},E(2,@"System Settings",@"/apps/System Settings.app",@"app")] generation:1];
  for(NSString *q in @[@"settings",@"sett"])assert(([[[words search:q cancelled:nil] valueForKey:@"id"] isEqual:@[@2,@1]]));
@@ -43,7 +43,7 @@ int main(void) { @autoreleasepool {
  for(NSString *q in expected)assert([[[system search:q cancelled:nil] firstObject][@"path"] isEqual:expected[q]]);
  assert(([[[system search:@"lock" cancelled:nil] valueForKey:@"path"] isEqual:@[@"command:lock",@"/work/lock notes"]]));
  assert(([[[system search:@"sleep" cancelled:nil] valueForKey:@"path"] isEqual:@[@"command:sleep",@"command:display",@"/apps/Sleep Tracker.app"]]));
- assert(([[[system search:@"" cancelled:nil] valueForKey:@"path"] isEqual:@[@"/apps/Sleep Tracker.app"]]));
+ assert([system search:@"" cancelled:nil].count==0);
  NSArray *typos=@[E(1,@"Claude",@"/apps/Claude.app",@"app"),E(2,@"claude.js",@"/work/claude.js",@"file"),E(3,@"Visual Studio Code",@"/apps/vsc.app",@"app"),E(4,@"mail",@"/work/mail",@"file"),E(5,@"main.c",@"/work/main.c",@"file"),E(6,@"Maps",@"/apps/Maps.app",@"app"),E(7,@"documentation",@"/work/documentation",@"file")];
  SHSearchSnapshot *t=[[SHSearchSnapshot alloc] initWithEntries:typos generation:1];
  for(NSString *q in @[@"calude",@"cluade",@"claide",@"clude",@"claudee",@"lcaude"])assert(([[[t search:q cancelled:nil] valueForKey:@"id"] isEqual:@[@1,@2]]));
@@ -68,9 +68,9 @@ int main(void) { @autoreleasepool {
  // A learned result reached only through a typing error stays below an exact match.
  [usage recordQuery:@"main" result:typos[3]];
  assert(([[[t search:@"main" preferred:[usage preferredForQuery:@"main"] cancelled:nil] valueForKey:@"id"] isEqual:@[@5,@4]]));
- assert(([[[s search:@"" preferred:[usage preferredForQuery:@""] cancelled:nil] valueForKey:@"id"] isEqual:@[@1,@3]]));
+ assert([s search:@"" preferred:[usage preferredForQuery:@""] cancelled:nil].count==0);
  [usage recordQuery:@"" result:entries[2]];
- assert(([[[s search:@"" preferred:[usage preferredForQuery:@""] cancelled:nil] valueForKey:@"id"] isEqual:@[@3,@1]]));
+ assert([s search:@"" preferred:[usage preferredForQuery:@""] cancelled:nil].count==0);
  assert(([[[s search:@"code" preferred:[usage preferredForQuery:@"code"] cancelled:nil] valueForKey:@"id"] isEqual:@[@5,@1,@2,@3,@4]]));
  // A name typed in full leads a choice made for a shorter query, until the user opens another result for the full query; a file with that name gets no such place.
  NSArray *mails=@[E(1,@"Mail",@"/apps/Mail.app",@"app"),E(2,@"Mailspring",@"/apps/Mailspring.app",@"app"),E(3,@"mail",@"/work/mail",@"file"),E(4,@"Activity Monitor",@"/apps/Activity Monitor.app",@"app"),E(5,@"Activity Monitor Helper",@"/apps/Activity Monitor Helper.app",@"app")];
@@ -94,7 +94,7 @@ int main(void) { @autoreleasepool {
  [NSFileManager.defaultManager removeItemAtURL:usageURL error:nil];
  assert([s search:[@"a" stringByPaddingToLength:100000 withString:@"a" startingAtIndex:0] cancelled:nil].count == 0);
  assert([s search:@"code" cancelled:^BOOL {return YES;}].count == 0);
- assert([s search:@"" cancelled:nil].count == 2);
+ assert([s search:@"" cancelled:nil].count == 0);
  // Completion: the typed start of a name, folded like search; nothing for a middle match, a longer text, or an empty one.
  assert([SHCompletion(@"Safari",@"saf") isEqual:@"ari"] && [SHCompletion(@"Café Notes",@"CAFE") isEqual:@" Notes"] && [SHCompletion(@"Safari",@"ｓａｆ") isEqual:@"ari"] && [SHCompletion(@"Safari",@"safari") isEqual:@""]);
  assert(!SHCompletion(@"Safari",@"fari") && !SHCompletion(@"Safari",@"safarix") && !SHCompletion(@"Safari",@""));
@@ -118,15 +118,15 @@ int main(void) { @autoreleasepool {
  assert([[[masked search:@"needle" cancelled:nil] firstObject][@"id"] isEqual:@2]);
  // A category word typed in full names its group; entriesOfType lists the group in name order, with kept entries such as commands and without excluded roots.
  for(NSString *q in @[@"commands",@" Commands ",@"COMMANDS"])assert([SHCategory(q) isEqual:@"command"]);
- assert([SHCategory(@"settings") isEqual:@"settings"] && [SHCategory(@"Emoji") isEqual:@"emoji"]);
- for(NSString *q in @[@"",@"command",@"comm",@"setting",@"settings.json",@"system settings",@"emojis"])assert(!SHCategory(q));
- assert([SHCategoryName(@"command") isEqual:@"Commands"] && [SHCategoryName(@"settings") isEqual:@"Settings"] && [SHCategoryName(@"emoji") isEqual:@"Emoji"]);
+ assert([SHCategory(@"settings") isEqual:@"settings"]);
+ for(NSString *q in @[@"",@"command",@"comm",@"setting",@"settings.json",@"system settings",@"emoji",@"emojis"])assert(!SHCategory(q));
+ assert([SHCategoryName(@"command") isEqual:@"Commands"] && [SHCategoryName(@"settings") isEqual:@"Settings"]);
  NSMutableArray *grouped=[SHCommands.entries mutableCopy];[grouped addObjectsFromArray:@[E(1,@"Wi-Fi",@"/s/Wi-Fi.appex",@"settings"),E(2,@"Bluetooth",@"/s/Bluetooth.appex",@"settings"),E(3,@"System Settings",@"/apps/System Settings.app",@"app"),@{@"id":@4,@"root":@"removed",@"name":@"Sound",@"path":@"/r/Sound.appex",@"relative":@"Sound.appex",@"type":@"settings"}]];
  SHSearchSnapshot *groups=[[SHSearchSnapshot alloc] initWithEntries:grouped generation:1];
  assert(([[[groups entriesOfType:@"settings"] valueForKey:@"name"] isEqual:@[@"Bluetooth",@"Sound",@"Wi-Fi"]]));
  assert(([[[[groups snapshotByExcludingRoots:[NSSet setWithObject:@"removed"]] entriesOfType:@"settings"] valueForKey:@"name"] isEqual:@[@"Bluetooth",@"Wi-Fi"]]));
  NSArray *listed=[groups entriesOfType:@"command"];assert(listed.count==SHCommands.entries.count);for(NSDictionary *c in SHCommands.entries)assert([listed containsObject:c]);
- assert([listed.firstObject[@"name"] isEqual:@"Eject All Disks"] && [groups entriesOfType:@"emoji"].count==0 && [groups entriesOfType:@"app"].count==1);
+ assert([listed.firstObject[@"name"] isEqual:@"Eject All Disks"] && [groups entriesOfType:@"app"].count==1);
 
  for (int k=0;k<20000;k++) {
   uint32_t a[64],b[64]; uint8_t boundaries[64]; size_t n=arc4random_uniform(64),m=arc4random_uniform(64);
