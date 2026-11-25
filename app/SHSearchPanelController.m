@@ -50,6 +50,7 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
 @implementation SHPanel
 - (BOOL)canBecomeKeyWindow{return YES;}
 - (BOOL)canBecomeMainWindow{return NO;}
+- (NSTimeInterval)animationResizeTime:(NSRect)newFrame {(void)newFrame;return 0.12;}
 - (BOOL)performKeyEquivalent:(NSEvent *)event {
  if([self.firstResponder isKindOfClass:NSTextView.class] && [(NSTextView *)self.firstResponder hasMarkedText])return NO;
  return (self.shortcut && self.shortcut(event)) || [super performKeyEquivalent:event];
@@ -168,12 +169,12 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
 - (void)place {
  CGFloat height=NSHeight(self.window.frame),band=self.bandHeight,note=_note.stringValue.length?MIN(ceil(_note.fittingSize.width),(Width-32)/2):0;
  _note.frame=NSMakeRect(Width-16-note,height-Top-band+5,note,16);_section.frame=NSMakeRect(16,height-Top-band+5,Width-32-note-(note?12:0),MAX(16,band-10));_scroll.frame=NSMakeRect(8,Bottom,Width-16,MAX(0,height-Top-band-Bottom));}
-// A taller panel grows at once; a shorter one waits for results to settle, so fast typing does not make it jump.
+// Coalesce height changes from successive queries; rows update immediately while the panel settles to their size.
 - (void)fit {
  [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resize) object:nil];
- CGFloat height=self.fittingHeight;if(height>=NSHeight(self.window.frame) || !self.window.isVisible)[self resize];else {[self place];[self performSelector:@selector(resize) withObject:nil afterDelay:0.15];}
+ CGFloat height=self.fittingHeight;if(!self.window.isVisible){[self resize];return;}[self place];if(height!=NSHeight(self.window.frame))[self performSelector:@selector(resize) withObject:nil afterDelay:0.06];
 }
-- (void)resize {if(!_top)return;NSRect frame=self.window.frame;CGFloat height=self.fittingHeight;if(height!=NSHeight(frame) || NSMaxY(frame)!=_top){[self.window setFrame:NSMakeRect(NSMinX(frame),_top-height,Width,height) display:YES];[self.window invalidateShadow];}[self place];}
+- (void)resize {if(!_top)return;NSRect frame=self.window.frame;CGFloat height=self.fittingHeight;if(height!=NSHeight(frame) || NSMaxY(frame)!=_top){[self.window setFrame:NSMakeRect(NSMinX(frame),_top-height,Width,height) display:NO animate:self.window.isVisible];[self.window invalidateShadow];}[self place];}
 // The logo and name sit at the right; the key hints take the rest and drop Close when they do not fit.
 - (void)layoutFooter {
  CGFloat width=ceil(_brand.fittingSize.width),left=Width-16-width;Seat(_brand,left,width);left-=6+14;_logo.frame=NSMakeRect(left,12,14,14);_menuButton.frame=NSMakeRect(left-4,6,Width-16-left+8,28);
