@@ -168,10 +168,9 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
 - (void)place {
  CGFloat height=NSHeight(self.window.frame),band=self.bandHeight,note=_note.stringValue.length?MIN(ceil(_note.fittingSize.width),(Width-32)/2):0;
  _note.frame=NSMakeRect(Width-16-note,height-Top-band+5,note,16);_section.frame=NSMakeRect(16,height-Top-band+5,Width-32-note-(note?12:0),MAX(16,band-10));_scroll.frame=NSMakeRect(8,Bottom,Width-16,MAX(0,height-Top-band-Bottom));}
-// Keep the panel's height while results fluctuate; shrink only after the query settles.
 - (void)fit {
  [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(resize) object:nil];
- CGFloat height=self.fittingHeight;if(!self.window.isVisible || height>=NSHeight(self.window.frame) || (!_history && !self.query.length))[self resize];else {[self place];[self performSelector:@selector(resize) withObject:nil afterDelay:0.15];}
+ [self resize];
 }
 - (void)resize {if(!_top)return;NSRect frame=self.window.frame;CGFloat height=self.fittingHeight;if(height!=NSHeight(frame) || NSMaxY(frame)!=_top){[self.window setFrame:NSMakeRect(NSMinX(frame),_top-height,Width,height) display:NO];[self.window invalidateShadow];}[self place];}
 // The logo and name sit at the right; the key hints take the rest and drop Close when they do not fit.
