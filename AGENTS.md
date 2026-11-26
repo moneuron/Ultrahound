@@ -1,122 +1,49 @@
-# Superhound
+# Ultrahound
 
-A native macOS launcher: one panel on a global shortcut that finds apps, files, emoji, and quick answers. Objective-C and AppKit, a C matcher, SQLite, FSEvents. Apple Silicon, macOS 15 or later. The only build dependency is the Apple Command Line Tools.
+## Project
 
-## Where the work is
+Ultrahound is a personal-use native macOS launcher for finding apps and files, opening System Settings and built-in commands, quick calculations and conversions, web searches, and clipboard history. It is a personal fork, not an official upstream release or a commercially supported product. It targets Apple Silicon and macOS 15 or later; the Apple Command Line Tools are the only build dependency.
 
-- All code is on `main`, merged from `feat/first-search-prototype` on 2026-10-05.
-- The installed app is `~/Applications/Superhound.app`, bundle ID `com.superhound.app`.
+The bundle identifier is `com.ultrahound.app`. Local state is stored in `~/Library/Application Support/Ultrahound/`. Search indexes names, not file contents; apps are scanned automatically and other folders only after the user selects them.
 
-## Commands
+## Current product scope
 
-| Command | Function |
-|---|---|
-| `scripts/build.sh [build number] [version]` | Compiles and signs `.build/Superhound.app` with the "Superhound" certificate from the keychain, or ad-hoc without it. Also writes the bundle's `Info.plist` and copies each `app/<locale>.lproj` folder. |
-| `scripts/test.sh` | Builds and runs the eleven Objective-C test suites with sanitizers. Run it before each commit. |
-| `scripts/install.sh .build/Superhound.app` | Replaces the installed app. It refuses while Superhound is in operation, and it keeps the previous bundle. |
-| `scripts/release.sh <version> <build number>` | From a clean commit: runs the tests, builds with the certificate, makes `.build/release/<version>/Superhound.zip`, and prints its SHA-256, the publish commands, and the superhound-web release vars. It does not publish. |
-| `scripts/benchmark.sh` | Measures query time, memory, and catalog speed at 10,000 and 100,000 records. |
-| `python3 -I scripts/strings.py [--check]` | Writes `app/en.lproj` from the `NSLocalizedString` calls in `app/` and `core/` and from the permission text in `scripts/build.sh`. `--check` fails when `app/en.lproj` is out of date, or when a locale has a missing or extra key, other format specifiers, or a file that does not parse. `scripts/test.sh` runs the check first. |
-| `scripts/update-emoji.py` | Rebuilds `app/emoji.tsv` from Unicode data. The only script that uses the internet. |
+- The search field has no placeholder. On first use it is empty, showing only the blinking insertion cursor; opening the panel focuses it. Switching between search and clipboard modes clears the field, while reopening the same mode can retain the previous query. An empty query shows no results; it is not a recent-apps view. `SHUsage` learns preferred results for matching queries, rather than suggesting recently used apps.
+- Keep the panel minimal, with the intended smooth, Spotlight-like presentation. It is a 600-point-wide dark, translucent panel; preserve its immediate keyboard focus and responsive search. Its height follows the result rows, up to eight rows, while the top edge stays put. Current show/hide and resize code has no explicit animation API; resizing sets the window frame directly. Keep future transitions smooth without delaying input or growth.
+- Supporter reminders, the supporter heart/promotion, and their related panel UI are absent. License activation/deactivation code remains; do not conflate it with supporter promotion.
+- Emoji and updater implementations/data remain in the repository for now, but are excluded from the shipped app by `scripts/build.sh` (`core/SHEmoji.m`, `core/SHUpdate.m`, and `app/SHUpdater.m`). They are not product features; do not wire them into the app without an explicit product decision. The app does not check for or download updates.
 
-To see a change in the live app: build with a build number one above the installed one, quit Superhound, install, then `open -g ~/Applications/Superhound.app`.
+## Branding and version
 
-## Code
+- The current hound logo artwork is in `docs/media/superhound.png`; `docs/media/logo.png` and `docs/media/logo-dark.png` are the documentation variants. The app resources are `app/AppIcon.icns` (the macOS app icon) and `app/LogoTemplate.png` (a 36×36 template image used in the menu bar and the search-panel footer). The template image is tinted by macOS in the menu bar.
+- `scripts/build.sh` copies the prepared ICNS and PNG into the app bundle; it does not generate them. There is no checked-in artwork-generation script. To regenerate the ICNS, export the master artwork at the standard iconset sizes and run `iconutil -c icns AppIcon.iconset -o app/AppIcon.icns`; export the 36×36 transparent template PNG separately.
+- The current marketing version is `1`. The About panel displays **Ultrahound**, **Version 1**, and **© 2026 moneuron**. The build script defaults to version `1` and build number `1`; its first argument is the build number and its second is the marketing version.
 
-### `core/`: logic with no window code
+## Structure
 
-| File | Function |
-|---|---|
-| `sh_match.c` | Matches one query word against one name. Ranks: 0 exact, 1 prefix, 2 word initials or the start of a later word, 3 substring, 5 and 6 typing errors, 9 absent. |
-| `SHSearchSnapshot.m` | The in-memory search list. Holds the ranking order (`rank:precedes:`; typing-error matches stay below exact matches, also when learned; a result opened for the exact query leads, then an app, settings pane, or command whose name or alias is the whole query, then other learned results), the empty-query app list, `SHCompletion` (the rest of a name after its typed start), `SHCategory` (the words commands, settings, and emoji in English or the user's language) with `entriesOfType:` for that group, and `SHFold` (case, accent, and width folding). |
-| `SHQueryController.m` | Runs searches off the main thread and drops results of an old query. |
-| `SHUsage.m` | Learned ranking. Records which result the user opened for which query, in `usage.plist`. |
-| `SHAnswer.m` | Quick answers: the arithmetic parser (a decimal comma or point, and group separators; a lone comma before 3 digits follows the region's decimal separator), answers in the region's number format, percent rules, the unit table, and colour values (hex, rgb, and hsl, each shown as another form; the panel draws a swatch and ⌘K copies each form). |
-| `SHWeb.m` | The web search URL of each engine (Google by default, DuckDuckGo, Bing, Brave Search, Kagi), and web addresses typed in the search field: http and https URLs, localhost with a port, IPv4 addresses with or without one, and hosts with a common web ending (a list that leaves out file extensions such as .md and .sh). |
-| `SHEmoji.m` | Emoji search by name and keyword over `app/emoji.tsv`, and the full list for the word emoji. |
-| `SHClipboard.m` | The clipboard history: the last 500 text copies, the skip rules for concealed and password copies, search, and `clipboard.plist`. |
-| `SHLicense.m` | The license of this Mac: the device ID, the check of the token that superhound.app signed, and `license.plist`. |
-| `SHUpdate.m` | Updates: the release file from `/api/latest`, the once-a-day rule, and the install of a downloaded zip (SHA-256, build number, signature check against a requirement, swap with a kept previous app). |
-| `SHSpotlight.m` | The rules for Spotlight's ⌘Space entry (64) in AppleSymbolicHotKeys: on or off, a change of only its enabled flag, and when an uninstall gives ⌘Space back. |
-| `SHCommands.m` | The system commands (Lock Screen, Sleep, Restart, Toggle Mute, Empty Trash, and others) as search entries. The name shows in the user's language; the alias keeps the English name. `SHLibrary` adds them to each snapshot. |
-| `SHLibrary.m` | Owns the search locations: the fixed app folders, the user's folders, scans, overlap between folders, and snapshot publication. |
-| `SHScanner.m` | Walks one folder and makes entries. Holds the skip rules (hidden items, packages, generated folders, online-only files) and the other names of built-in apps (older macOS names and Windows names, by bundle identifier), which go in the alias. |
-| `SHCatalog.m` | The SQLite cache of scanned entries. |
-| `SHChangeMonitor.m` | FSEvents watcher. Reports the changed directories so the library lists only those; a dropped or root event requests a full rescan. |
-| `SHMetrics.m` | Writes timing records to `performance.jsonl`. |
+- `app/`: AppKit entry point and integration. `SHAppDelegate` wires the menu bar, shortcuts, welcome/settings windows, library, clipboard, and licensing. `SHSearchPanelController` owns the focused search panel, result presentation, keyboard actions, Quick Look, and clipboard-history mode. `SHSettingsController` and `SHWelcomeController` manage setup and preferences. `SHHotKey`, `SHFolderAccess`, and `SHResultActions` handle shortcuts, selected-folder access, and opening/running results.
+- `core/`: UI-independent behavior. `sh_match.c` and `SHSearchSnapshot` match and rank results; `SHQueryController` runs cancellable searches off the main thread; `SHUsage` stores learned query/result preferences. `SHLibrary`, `SHScanner`, `SHCatalog`, and `SHChangeMonitor` scan selected locations, cache entries in SQLite, and react to FSEvents. Other active modules implement answers, web search/address detection, clipboard history, system commands, Spotlight shortcut handling, licensing, and metrics.
+- `tests/`: focused Objective-C tests. `scripts/test.sh` checks localization, builds the active suites with AddressSanitizer and UndefinedBehaviorSanitizer, and compares ranking output against `tests/snapshot-equivalence.expected`. It does not run `tests/install.sh`; the emoji and updater tests are not part of this script.
+- `scripts/`: build, install, test, release, benchmark, localization, and legacy emoji-data utilities. `docs/` is gitignored except for `docs/media/`; `README.md` is the user-facing project and privacy overview.
 
-### `app/`: windows and macOS integration
+## Build, sign, and verify
 
-| File | Function |
-|---|---|
-| `SHAppDelegate.m` | Start-up wiring, the menu bar item and its menu, Open at Login, the pasteboard check twice a second for the clipboard history, the Welcome window on the first launch (defaults key `setupShown`, the key of the older one-time Settings opening, so updated users do not see it) and its Welcome… menu item, the license, update, and About menu items, Uninstall Superhound… (frees the activation, gives ⌘Space back to Spotlight when Superhound took it, removes the login item, the data, the defaults, the app, and its kept previous versions), and `superhound://` links. |
-| `SHSearchPanelController.m` | The search panel and its clipboard history mode: the dark blurred borderless window, 600 pt wide, with a height that follows the rows (it grows at once and shrinks after 0.15 s); the shared columns (16 pt margin, 28 pt icon column, text at x 52); field (Return during a search opens the result when it arrives; Escape closes Quick Look before the panel; inline completion of the top result, off by default with defaults key `inlineCompletion`, where Tab or → keeps it, a deletion, a cut, another caret move, or a click in the field removes it, and `query` is the typed text without it), the label band ("Suggested", errors, no matches, which say that indexing still runs while a location is indexing, indexing note; an error that does not fit one line takes two), one-line app rows and two-line file rows with folder context, row order (web address unless a result has the typed text as its name or file name, answer, chosen before, apps, settings panes, and commands, emoji, clipboard items, files, and the web search in the last row; a category word lists its whole group after the results chosen before and the matching apps, and the label band names the group with its count), keys, a click or tap that opens a row (⌘-click shows it in Finder), the action menu (⌘K and right-click), Quick Look, copy and open, the footer (key hints, the Update to link, a yellow heart with Become a Supporter (unlicensed, opens the license key window) or Supporter (licensed), the logo and name, which open the menu bar menu and show in full white in a licensed copy), and the license reminder on every tenth opening (`unlicensedOpens` in the defaults). |
-| `SHSettingsController.m` | The Settings window (⌘,): the search locations with the item counts, the two shortcut recorders, the switch Use ⌘Space in place of Spotlight, the web search engine (defaults key `searchEngine`; the engines are in `SHWeb.m`), the switch Complete the top result as you type, and the Language menu (System Default or one of the seven languages, written as `AppleLanguages` in the app's defaults, the value the macOS per-app language setting uses; a change offers to relaunch with the macOS alert text). It shares `SHLabel`, `SHButton`, the location row `SHRootCell`, and the folder selection `SHChooseFolders` with the Welcome window. |
-| `SHHotKey.m` | Global shortcut registration, one object for each shortcut. It refuses the other shortcut's keys, and it keeps the previous keys when new keys fail to register. It also reads and writes Spotlight's ⌘Space shortcut in `com.apple.symbolichotkeys`, with a private call that applies the change at once. `replaceSpotlight:` is the Use ⌘Space in place of Spotlight switch for Settings and the Welcome window. `pause` stops a shortcut while a recorder in the app waits for keys, so the app's own keys reach the recorder. |
-| `SHWelcomeController.m` | The Welcome window in three steps: the two shortcut recorders (`SHShortcutButton`, shared with Settings), with the Spotlight switch when the search shortcut is ⌘Space and Spotlight still has it; the user's folders with their live state, Add Folder…, and the Documents and Accessibility permission notes; a first search, with the item count during and after indexing, an Open Search Panel button that closes the window and opens the panel, and a check after the first opened result in this launch. |
-| `SHFolderAccess.m` | Security-scoped bookmarks for the user's folders. |
-| `SHActivation.m` | Activation and deactivation requests to superhound.app, the license key window, and `superhound://activate?key=` links. The defaults key `licenseServer` points it at a local test server. |
-| `SHUpdater.m` | The daily update check, Check for Updates…, the download, and the relaunch (`SHRelaunch`, also used after a language change). An update must meet the running app's designated requirement, so only a build signed with the "Superhound" certificate can update. Defaults keys: `updateCheckAutomatically`, `updateCheckedAt`; `licenseServer` also points it at a local test server. |
-| `SHResultActions.m` | Opens a result, opens a web address in the default browser, opens a result with another app, shows it in Finder, moves it to the Trash, runs the system commands, and pastes with a ⌘V key press. |
-| `emoji.tsv` | Generated emoji data: emoji, name, keywords. Do not edit by hand. |
-| `en.lproj/`, `<locale>.lproj/` | `Localizable.strings` (the English text is the key) and `InfoPlist.strings` (the permission text). `scripts/strings.py` writes `en.lproj`; do not edit it by hand. The other locales are translations: ja, de, fr, es, zh-Hans, pt-BR. |
-| `AppIcon.icns` | The app icon, made from `docs/media/superhound.png` |
-| `LogoTemplate.png` | The 36 px template logo for the panel footer, made from `docs/media/logo.png` |
+On Apple Silicon macOS 15 or later with Command Line Tools installed:
 
-### `tests/` and `bench/`
+```sh
+scripts/test.sh
+scripts/build.sh [build-number] [version]
+codesign --verify --strict .build/Ultrahound.app
+```
 
-| File | Covers |
-|---|---|
-| `tests/search.m` | Ranking, typing errors, learned ranking, completion, category words and their groups, the query controller |
-| `tests/answer.m` | Calculator, unit conversion, and colours |
-| `tests/web.m` | Web addresses, the text that must not give one, and web search URLs |
-| `tests/emoji.m` | Emoji search |
-| `tests/clipboard.m` | Clipboard history rules, search, limits, and its file |
-| `tests/license.m` | Device ID, token checks with a WebCrypto test token, and the license file |
-| `tests/spotlight.m` | The Spotlight shortcut entry rules |
-| `tests/update.m` | The release file, the daily rule, and installs of signed test bundles, with each failure case |
-| `tests/catalog.m` | Scanner rules and the SQLite cache |
-| `tests/library.m` | Search locations with live file changes |
-| `tests/snapshot-equivalence.m` | 40 result sets compared with `snapshot-equivalence.expected`. A ranking change needs a reviewed update of that file. |
-| `tests/install.sh` | The install script. `scripts/test.sh` does not run it; run it by itself. |
-| `bench/` | Programs used by `scripts/benchmark.sh` |
+The app bundle is `.build/Ultrahound.app`. For example, `scripts/build.sh 2 1` produces version `1`, build `2`. The build script compiles the active Objective-C/C sources, writes `Info.plist`, copies localized resources and the app icons, then signs the bundle. It uses a valid signing identity named `Superhound` when available; otherwise it creates an ad-hoc signature. Ad-hoc signing is not Developer ID signing or notarization and macOS may treat it as a different app for privacy permissions. `codesign --verify --strict` checks signature integrity; use `codesign -dv --verbose=2 .build/Ultrahound.app` to inspect the signature details.
 
-## User data
+`scripts/install.sh .build/Ultrahound.app` verifies the bundle and signature, refuses to replace a running app, and keeps a previous bundle for rollback. `scripts/release.sh` is a separate legacy release flow that requires the `Superhound` identity and still contains upstream publishing references; review and adapt it before using it for an Ultrahound release.
 
-All in `~/Library/Application Support/Superhound/`:
+## Maintenance
 
-| File | Content |
-|---|---|
-| `folders.plist` | The user's search locations and their bookmarks |
-| `catalog.sqlite` | The scan cache; safe to delete, the app rebuilds it |
-| `usage.plist` | Learned ranking history: opened paths and their queries |
-| `clipboard.plist` | Clipboard history: copied text, its time, and the source app. Private; do not print it. |
-| `license.plist` | The license key and the activation token for this Mac. Private; do not print it. |
-| `performance.jsonl` | Timing records |
-
-## Docs
-
-All of `docs/` other than `docs/media/` is local: `.gitignore` excludes it, and the files are not on GitHub.
-
-| File | Content |
-|---|---|
-| `README.md` | Build, install, and use |
-| `docs/media/` | The only folder of `docs/` in git. The logo: `superhound.png` (the original), `logo.png` and `logo-dark.png` (for the README in light and dark mode) |
-| `docs/prototype-validation.md` | Measured results and open acceptance checks for the prototype |
-| `docs/superpowers/specs/2026-10-04-first-search-prototype-design.md` | The design of the first prototype |
-| `docs/superpowers/plans/2026-10-04-first-search-prototype.md` | The implementation plan of the first prototype |
-| `docs/early-planning-notes.md`, `docs/product.md`, `docs/architecture.md`, `docs/distribution.md`, `docs/validation.md`, `docs/decisions-and-research.md` | Early research and proposals from before the code existed. Check them against the code before use. |
-| `spikes/install-permissions/` (not committed to git) | The disposable install and folder-permission probe, with its findings |
-
-## Conventions
-
-- Keep `docs/` out of git, other than `docs/media/`. `.gitignore` excludes the rest.
-- Match the dense one-line style of the current Objective-C files.
-- Wrap user-visible text in `NSLocalizedString` with the English text as key, and give a comment when a short word, a format argument, or the length is not clear. Run `python3 -I scripts/strings.py` after a text change. Text that the code compares stays a fixed English value; show its translation separately, as `SHLibrary` does with a root's `state` and `label`.
-- The app makes two kinds of network request: license activation and deactivation in `SHActivation.m`, and the daily update check and download in `SHUpdater.m`. Neither sends personal data other than the license key and device ID at activation. Keep everything else offline.
-- The private signing key for activation tokens is `~/.config/superhound/license-signing-key.jwk`. Never print it or copy it into a repository.
-- The code signing certificate is "Superhound" in the login keychain (self-signed, until 2046), with copies in `~/.config/superhound/codesign-key.pem` and `codesign-cert.pem`. Never print the key or copy it into a repository. A different certificate makes macOS ask every user again for the Documents and Accessibility permissions.
-- Add tests for changes to `core/`. The panel window has no automated test; state when a change was not seen on screen.
-- Do not take full-screen captures to check the app. The screen shows the user's private windows. Ask the user to look instead.
-- One commit for each change, with a `feat:`, `fix:`, `perf:`, or `docs:` prefix.
-- In a `/harness` run, commit a step only after the `verifier` passes it.
+- Keep changes scoped; match the existing Objective-C/C patterns. Add tests for core behavior changes. Review `tests/snapshot-equivalence.expected` before changing search ranking.
+- User-visible strings in `app/` and active `core/` code use `NSLocalizedString`. After text changes, run `python3 -I scripts/strings.py`; run `python3 -I scripts/strings.py --check` or `scripts/test.sh` to validate generated English strings and locale consistency. Keep fixed comparison values separate from translated labels.
+- Keep ordinary search and indexing offline. Web requests are made by the chosen browser. The retained license activation/deactivation integration may send the license key and device identifier to its licensing service; do not add unrelated network traffic.
+- Clipboard history and licensing data are private local state; never print or expose their contents. Preserve the upstream copyright and attribution notices. This fork is copyright © 2026 moneuron and is distributed under the GNU Affero General Public License, version 3; `LICENSE` contains the license text.
+- The search-panel UI has no automated visual test. Do not use full-screen captures; ask the user to inspect visual changes when needed.
