@@ -196,7 +196,7 @@ static void Copy(NSString *text){NSPasteboard *board=NSPasteboard.generalPastebo
  if(open && _history==history){[self dismiss:YES];return;}
  if(!open)_previous=NSWorkspace.sharedWorkspace.frontmostApplication;
  if(_history!=history){_history=history;_field.stringValue=@"";_completion=nil;_error=nil;[_queries cancel];}
- _field.placeholderAttributedString=[[NSAttributedString alloc] initWithString:history?NSLocalizedString(@"Search clipboard history",@"Placeholder of the search field and its VoiceOver label in clipboard history mode"):NSLocalizedString(@"Search apps and files",@"Placeholder of the search field") attributes:@{NSFontAttributeName:_field.font,NSForegroundColorAttributeName:NSColor.secondaryLabelColor}];_field.accessibilityLabel=history?NSLocalizedString(@"Search clipboard history",@"Placeholder of the search field and its VoiceOver label in clipboard history mode"):NSLocalizedString(@"Search apps and selected folders",@"VoiceOver label of the search field");
+ _field.accessibilityLabel=history?NSLocalizedString(@"Search clipboard history",@"Placeholder of the search field and its VoiceOver label in clipboard history mode"):NSLocalizedString(@"Search apps and selected folders",@"VoiceOver label of the search field");
  [self layoutFooter];
  NSScreen *screen=NSScreen.mainScreen?:NSScreen.screens.firstObject;
  NSPoint mouse=NSEvent.mouseLocation;for(NSScreen *candidate in NSScreen.screens)if(NSPointInRect(mouse,candidate.frame)){screen=candidate;break;}

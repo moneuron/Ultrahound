@@ -372,9 +372,6 @@
 /* Button of the folder selection window */
 "Search This Folder" = "Search This Folder";
 
-/* Placeholder of the search field */
-"Search apps and files" = "Search apps and files";
-
 /* VoiceOver label of the search field */
 "Search apps and selected folders" = "Search apps and selected folders";
 
